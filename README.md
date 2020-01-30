@@ -1,2 +1,2 @@
-# findmythrone.com
-The website for the Throne app.
+# Throne-Web
+The Throne Web App.
