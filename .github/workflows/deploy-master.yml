@@ -1,8 +1,8 @@
 on:
   push:
     branches:
-      - develop
-name: Deploy develop branch
+      - master
+name: Deploy master branch
 jobs:
   build:
 
@@ -20,7 +20,7 @@ jobs:
       with:
         args: --acl public-read --follow-symlinks --delete
       env:
-        AWS_S3_BUCKET: ${{ secrets.AWS_S3_DEV_BUCKET }}
+        AWS_S3_BUCKET: ${{ secrets.AWS_S3_PROD_BUCKET }}
         AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
         AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         SOURCE_DIR: 'build'
