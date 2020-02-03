@@ -1,12 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import {
+  Typography,
+  List,
+  Icon,
+} from 'antd';
+
+const { Title } = Typography;
 
 const NearMe = (props) => {
   const { locations } = props;
+
   return (
     <>
-      <h1>Near Me</h1>
-      { locations.length > 0 ? locations.map((location) => (<li key={location}>{location}</li>)) : 'Loading locations....' }
+      <Icon type="environment" className="icon-title" />
+      <Title>Near Me</Title>
+      <List
+        bordered
+        dataSource={locations}
+        renderItem={(item) => (
+          <List.Item>
+            {item}
+          </List.Item>
+        )}
+      />
     </>
   );
 };
@@ -18,6 +35,5 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   locations: [],
 };
-
 
 export default NearMe;

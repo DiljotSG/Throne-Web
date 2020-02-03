@@ -1,8 +1,12 @@
 import React from 'react';
+import { Typography, Icon } from 'antd';
+
+const { Title } = Typography;
 
 const Profile = () => (
   <>
-    <h1>Profile</h1>
+    <Icon type="user" className="icon-title" />
+    <Title>User Name</Title>
   </>
 );
 
