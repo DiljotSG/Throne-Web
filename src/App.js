@@ -19,7 +19,7 @@ class App extends Component {
   }
 
   componentDidMount() {
-    fetch(process.env.REACT_APP_LOCATIONS)
+    fetch(process.env.REACT_APP_API_URL)
       .then((response) => response.json())
       .then((data) => this.setState({ locations: data }));
   }
