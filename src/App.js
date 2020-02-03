@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import {
   BrowserRouter as Router,
   Switch,
@@ -10,17 +10,38 @@ import { Nav } from './components';
 
 import './App.css';
 
-function App() {
-  return (
-    <Router>
-      <Nav />
-      <Switch>
-        <Route path="/" exact component={NearMe} />
-        <Route path="/map" component={Map} />
-        <Route path="/profile" component={Profile} />
-      </Switch>
-    </Router>
-  );
+class App extends Component {
+  constructor() {
+    super();
+    this.state = {
+      locations: [],
+    };
+  }
+
+  componentDidMount() {
+    fetch(process.env.REACT_APP_LOCATIONS)
+      .then((response) => response.json())
+      .then((data) => this.setState({ locations: data }));
+  }
+
+  render() {
+    const { locations } = this.state;
+
+    return (
+      <Router>
+        <Nav />
+        <Switch>
+          <Route path="/" exact>
+            <NearMe
+              locations={locations}
+            />
+          </Route>
+          <Route path="/map" component={Map} />
+          <Route path="/profile" component={Profile} />
+        </Switch>
+      </Router>
+    );
+  }
 }
 
 export default App;
