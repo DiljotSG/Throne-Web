@@ -1,13 +1,13 @@
 import React from 'react';
 import { mount } from 'enzyme';
 
-import NearMe from './NearMe';
+import NearMe from '../NearMe';
 
 describe('NearMe', () => {
   it('Renders the "Near me" page', () => {
     const component = mount(<NearMe />);
 
-    expect(component.find('h1').text()).toEqual('Near Me');
+    expect(component.find('Title').text()).toEqual('Near Me');
   });
 
   it('Displays a list of locations', () => {
