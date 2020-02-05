@@ -11,18 +11,25 @@ This repository contains the Throne Web application.
 
 Throne is a web and mobile application which allows users to find nearby washrooms tailored to their preferences and requirements. Throne presents up-to-date information by enabling users to provide feedback and information on the washrooms they visit.
 
-## Other Repos
-* [Throne-iOS](https://github.com/NickJosephson/Throne-iOS)
-* [Throne-Android](https://github.com/NickJosephson/Throne-Android)
-* [Throne-Backend](https://github.com/DiljotSG/Throne-Backend)
+### Production Web Application - `master` branch: https://app.findmythrone.com
 
-## Project Boards
-* [Main Application Board](https://github.com/DiljotSG/Throne-Backend/projects/1)
-* [iOS Board](https://github.com/NickJosephson/Throne-iOS/projects/1)
-* [Web Board](https://github.com/DiljotSG/Throne-Web/projects/1)
+### Development Web Application- `develop` branch: https://dev.findmythrone.com
 
+# Setup
 
-## Running Directions
+These are the setup instructions for macOS (requires Brew). Installing these dependencies should be similar for other platforms with the appropriate package managers for that platform.
+
+## Installing Node
+```shell
+brew install node
+```
+
+## Installing Yarn
+```shell
+brew install yarn
+```
+
+# Running Directions
 
 In the project directory, you can run:
 
@@ -56,3 +63,13 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Other Repos
+* [Throne-iOS](https://github.com/NickJosephson/Throne-iOS)
+* [Throne-Android](https://github.com/NickJosephson/Throne-Android)
+* [Throne-Backend](https://github.com/DiljotSG/Throne-Backend)
+
+## Project Boards
+* [Main Application Board](https://github.com/DiljotSG/Throne-Backend/projects/1)
+* [iOS Board](https://github.com/NickJosephson/Throne-iOS/projects/1)
+* [Web Board](https://github.com/DiljotSG/Throne-Web/projects/1)
