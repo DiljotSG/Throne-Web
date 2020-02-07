@@ -25,7 +25,7 @@ Android | [Throne-Android](https://github.com/NickJosephson/Throne-Android) | [A
 
 ### Development Web Application- `develop` branch: https://dev.findmythrone.com
 
-# Setup
+## Setup
 
 These are the setup instructions for macOS (requires Brew). Installing these dependencies should be similar for other platforms with the appropriate package managers for that platform.
 
@@ -39,7 +39,15 @@ brew install node
 brew install yarn
 ```
 
-# Running Directions
+## `.env` files
+
+Copy the `.env.example` file in the root folder to a new file called `.env.local`.
+
+Note: No changes need to be made to `.env`.
+
+If you want to run the backend locally, follow directions further down in the README.
+
+## Running Directions
 
 In the project directory, you can run:
 
@@ -73,3 +81,15 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+## Running backend locally
+
+To run the backend locally, first visit [Throne-Backend](https://github.com/DiljotSG/Throne-Backend) and follow all installation instructions there.
+
+Once the backend is running you must add/change the line in your `.env.local` file.
+
+```env
+REACT_APP_API_URL=http://localhost:<port>
+```
+
+Note: `port` must match the port number the backend is running at.
