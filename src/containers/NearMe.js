@@ -12,27 +12,27 @@ import { getWashrooms } from '../actions';
 
 const { Title } = Typography;
 
- class NearMe extends Component  {
-   constructor() {
-     super();
-   }
+class NearMe extends Component {
+  getWashrooms = () => {
+    const { getWashrooms } = this.props;
 
-   getWashrooms = (event) => {
-    this.props.getWashrooms();
-   }
+    getWashrooms();
+  }
 
-   render() {
+  render() {
+    const { washrooms } = this.props;
+
     return (
       <>
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
-        <Button onClick={this.getWashrooms}>Test redux action</Button>
+        <Button onClick={this.getWashrooms}>Get washrooms using redux</Button>
         <pre>
           { JSON.stringify(this.props) }
         </pre>
         <List
           bordered
-          dataSource={this.props.simpleReducer.locations}
+          dataSource={washrooms}
           renderItem={(item) => (
             <List.Item>
               {item}
@@ -41,23 +41,28 @@ const { Title } = Typography;
         />
       </>
     );
-   }
+  }
+}
+
+const mapStateToProps = (state) => {
+  const { washrooms } = state.washroomReducer;
+
+  return {
+    washrooms,
+  };
 };
 
-const mapStateToProps = state => ({
-  ...state
-})
-
-const mapDispatchToProps = dispatch => ({
-  getWashrooms: () => dispatch(getWashrooms())
-})
+const mapDispatchToProps = (dispatch) => ({
+  getWashrooms: () => dispatch(getWashrooms()),
+});
 
 NearMe.propTypes = {
-  locations: PropTypes.instanceOf(Array),
+  getWashrooms: PropTypes.func.isRequired,
+  washrooms: PropTypes.instanceOf(Array),
 };
 
 NearMe.defaultProps = {
-  locations: [],
+  washrooms: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NearMe);

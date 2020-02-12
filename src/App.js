@@ -1,19 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
+
 import { Layout } from 'antd';
 
-import { Provider } from 'react-redux'
-
-import { NearMe, Map, Profile } from './containers';
+import {
+  NearMe, Map, Profile, Settings,
+} from './containers';
 import { Nav } from './components';
 
 import './App.css';
-import Settings from './containers/Settings';
 
 const { Content } = Layout;
 
@@ -25,7 +22,7 @@ const App = ({ store }) => (
         <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
           <Switch>
             <Route path="/" exact>
-              <NearMe/>
+              <NearMe />
             </Route>
             <Route path="/map" component={Map} />
             <Route path="/profile" component={Profile} />
@@ -35,10 +32,10 @@ const App = ({ store }) => (
       </Content>
     </Layout>
   </Provider>
-)
+);
 
 App.propTypes = {
-  store: PropTypes.object.isRequired,
-}
+  store: PropTypes.shape({}).isRequired,
+};
 
 export default App;
