@@ -1,0 +1,1 @@
+export const GET_WASHROOMS = "GET_WASHROOMS";
