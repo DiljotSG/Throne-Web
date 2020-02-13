@@ -1,3 +1,5 @@
+# Please review our MASTER BRANCH when taking a snapshot!
+
 Master
 
 ![Node.js CI](https://github.com/DiljotSG/Throne-Web/workflows/Node.js%20CI/badge.svg?branch=master)
