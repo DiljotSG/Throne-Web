@@ -8,11 +8,19 @@ import {
 } from 'antd';
 
 import { connect } from 'react-redux';
-import { getWashrooms } from '../actions';
+import { getWashrooms } from '../actions/washroomActions';
 
 const { Title } = Typography;
 
 class NearMe extends Component {
+  componentDidMount() {
+    const { washrooms } = this.props;
+
+    if (washrooms.length === 0) {
+      this.getWashrooms();
+    }
+  }
+
   getWashrooms = () => {
     const { getWashrooms } = this.props;
 
@@ -20,7 +28,7 @@ class NearMe extends Component {
   }
 
   render() {
-    const { washrooms } = this.props;
+    const { washrooms, isFetching } = this.props;
 
     return (
       <>
@@ -31,6 +39,7 @@ class NearMe extends Component {
           { JSON.stringify(this.props) }
         </pre>
         <List
+          loading={isFetching}
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
@@ -45,9 +54,11 @@ class NearMe extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { washrooms } = state.washroomReducer;
+  const { washrooms, isFetching, status } = state.washroomReducer;
 
   return {
+    status,
+    isFetching,
     washrooms,
   };
 };
@@ -59,10 +70,12 @@ const mapDispatchToProps = (dispatch) => ({
 NearMe.propTypes = {
   getWashrooms: PropTypes.func.isRequired,
   washrooms: PropTypes.instanceOf(Array),
+  isFetching: PropTypes.bool,
 };
 
 NearMe.defaultProps = {
   washrooms: [],
+  isFetching: false,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(NearMe);

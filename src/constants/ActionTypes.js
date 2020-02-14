@@ -1,2 +1,4 @@
-// TODO: remove the lint ignore here once we have more action types
-export const GET_WASHROOMS = 'GET_WASHROOMS'; // eslint-disable-line import/prefer-default-export
+
+export const FAILURE = 'FAILURE';
+export const REQUEST_WASHROOMS = 'REQUEST_WASHROOMS';
+export const RECEIVE_WASHROOMS = 'RECEIVE_WASHROOMS';

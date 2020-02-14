@@ -1,3 +1,3 @@
-import * as types from './ActionTypes';
+import * as actions from './ActionTypes';
 
-export default types;
+export default actions;
