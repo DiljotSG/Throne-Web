@@ -15,10 +15,39 @@ describe('action reducer', () => {
       washroomReducer([], {
         type: actions.RECEIVE_WASHROOMS,
         washrooms: ['Washroom 1', 'Washroom 2'],
+        status: 200,
       }),
     ).toEqual(
       {
         washrooms: ['Washroom 1', 'Washroom 2'],
+        isFetching: false,
+        status: 200,
+      },
+    );
+  });
+
+  it('should handle REQUEST_WASHROOMS', () => {
+    expect(
+      washroomReducer([], {
+        type: actions.REQUEST_WASHROOMS,
+      }),
+    ).toEqual(
+      {
+        isFetching: true,
+      },
+    );
+  });
+
+  it('should handle FAILURE', () => {
+    expect(
+      washroomReducer([], {
+        type: actions.FAILURE,
+        status: 401,
+      }),
+    ).toEqual(
+      {
+        isFetching: false,
+        status: 401,
       },
     );
   });
