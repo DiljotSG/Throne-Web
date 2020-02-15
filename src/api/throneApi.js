@@ -3,7 +3,6 @@ class ThroneApi {
     try {
       const response = await fetch(`${process.env.REACT_APP_API_URL}/${url}`);
       return await response;
-      return response;
     } catch (error) {
       return error;
     }
