@@ -1,6 +1,6 @@
 import actions from '../constants';
 
-import washroomApi from '../api/washroomApi';
+import throneApi from '../api/throneApi';
 import { failure } from '.';
 
 export function requestWashrooms() {
@@ -21,7 +21,7 @@ export function getWashrooms() {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
 
-    return washroomApi.washrooms().then((response) => {
+    return throneApi.washrooms().then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
           dispatch(receiveWashrooms(washrooms, response.status));
