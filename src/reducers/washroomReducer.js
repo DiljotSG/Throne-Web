@@ -1,6 +1,8 @@
 import actions from '../constants';
 
-const washroomReducer = (state = {}, action) => {
+const initialState = { washrooms: [] };
+
+const washroomReducer = (state = initialState, action) => {
   switch (action.type) {
     case actions.REQUEST_WASHROOMS:
       return {
