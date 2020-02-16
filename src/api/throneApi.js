@@ -55,12 +55,12 @@ class ThroneApi {
     return this.getEndpoint(url);
   }
 
-  static async userReviews(id) {
+  static async reviewsForUser(id) {
     const url = this.createEndpointURL(`users/${id}/reviews`);
     return this.getEndpoint(url);
   }
 
-  static async userFavorites(id) {
+  static async favoritesForUser(id) {
     const url = this.createEndpointURL(`users/${id}/favorites`);
     return this.getEndpoint(url);
   }
