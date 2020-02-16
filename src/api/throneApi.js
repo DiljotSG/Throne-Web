@@ -1,8 +1,7 @@
 class ThroneApi {
   static async getEndpoint(url) {
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_URL}/${url}`);
-      return await response;
+      return await fetch(`${process.env.REACT_APP_API_URL}/${url}`);
     } catch (error) {
       return error;
     }
