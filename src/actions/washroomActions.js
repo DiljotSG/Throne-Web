@@ -21,7 +21,7 @@ export function getWashrooms() {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
 
-    return throneApi.washrooms().then((response) => {
+    return throneApi.getWashrooms().then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
           dispatch(receiveWashrooms(washrooms, response.status));
