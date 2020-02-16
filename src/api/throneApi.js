@@ -21,8 +21,8 @@ class ThroneApi {
     return this.getEndpoint(url);
   }
 
-  static async reviews(washroomID) {
-    const url = this.createEndpointURL(`washrooms/${washroomID}/reviews`);
+  static async reviewsForWashroom(id) {
+    const url = this.createEndpointURL(`washrooms/${id}/reviews`);
     return this.getEndpoint(url);
   }
 
