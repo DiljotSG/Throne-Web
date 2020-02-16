@@ -36,7 +36,7 @@ class ThroneApi {
     return this.getEndpoint(url);
   }
 
-  static async buildings(location = '', maxResults = 1000, amenities = [], radius = 1) {
+  static async buildings(location, maxResults, amenities, radius) {
     const url = this.createEndpointURL('buildings');
     url.searchParams.append('location', location);
     url.searchParams.append('maxResults', maxResults);
