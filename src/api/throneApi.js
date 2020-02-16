@@ -27,7 +27,7 @@ class ThroneApi {
   }
 
   static async review(id) {
-    const url = this.createEndpointURL(`reviews/${id}`)
+    const url = this.createEndpointURL(`reviews/${id}`);
     return this.getEndpoint(url);
   }
 
@@ -36,12 +36,12 @@ class ThroneApi {
     return this.getEndpoint(url);
   }
 
-  static async buildings(location="", maxResults=1000, amenities=[], radius=1) {
-    url = this.createEndpointURL('buildings');
-    url.searchParams.append("location", location);
-    url.searchParams.append("maxResults", maxResults);
-    url.searchParams.append("radius", radius);
-    url.searchParams.append("amenities", amenities);
+  static async buildings(location = '', maxResults = 1000, amenities = [], radius = 1) {
+    const url = this.createEndpointURL('buildings');
+    url.searchParams.append('location', location);
+    url.searchParams.append('maxResults', maxResults);
+    url.searchParams.append('radius', radius);
+    url.searchParams.append('amenities', amenities);
     return this.getEndpoint(url);
   }
 
