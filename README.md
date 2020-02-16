@@ -1,8 +1,8 @@
-Master
+Master - **Stable release branch for snapshot review.**
 
 ![Node.js CI](https://github.com/DiljotSG/Throne-Web/workflows/Node.js%20CI/badge.svg?branch=master)
 
-Develop
+Develop - **Unstable development branch for convergence of new features.**
 
 ![Node.js CI](https://github.com/DiljotSG/Throne-Web/workflows/Node.js%20CI/badge.svg?branch=develop)
 
