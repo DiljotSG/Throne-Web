@@ -1,50 +1,68 @@
 class ThroneApi {
   static async getEndpoint(url) {
     try {
-      return await fetch(`${process.env.REACT_APP_API_URL}/${url}`);
+      return await fetch(url);
     } catch (error) {
       return error;
     }
   }
 
+  static createEndpointURL(relativeURL) {
+    return new URL(relativeURL, `${process.env.REACT_APP_API_URL}`);
+  }
+
   static async washrooms() {
-    return this.getEndpoint('washrooms');
+    const url = this.createEndpointURL('washrooms');
+    return this.getEndpoint(url);
   }
 
   static async washroom(id) {
-    return this.getEndpoint(`washrooms/${id}`);
+    const url = this.createEndpointURL(`washrooms/${id}`);
+    return this.getEndpoint(url);
   }
 
   static async reviews(washroomID) {
-    return this.getEndpoint(`washrooms/${washroomID}/reviews`);
+    const url = this.createEndpointURL(`washrooms/${washroomID}/reviews`);
+    return this.getEndpoint(url);
   }
 
   static async review(id) {
-    return this.getEndpoint(`reviews/${id}`);
+    const url = this.createEndpointURL(`reviews/${id}`)
+    return this.getEndpoint(url);
   }
 
   static async building(id) {
-    return this.getEndpoint(`buildings/${id}`);
+    const url = this.createEndpointURL(`buildings/${id}`);
+    return this.getEndpoint(url);
   }
 
-  static async buildings(location, numOfResults, radius) {
-    return this.getEndpoint(`buildings/?location=${location}&numOfResults=${numOfResults}&radius=${radius}`);
+  static async buildings(location="", maxResults=1000, amenities=[], radius=1) {
+    url = this.createEndpointURL('buildings');
+    url.searchParams.append("location", location);
+    url.searchParams.append("maxResults", maxResults);
+    url.searchParams.append("radius", radius);
+    url.searchParams.append("amenities", amenities);
+    return this.getEndpoint(url);
   }
 
-  static async buildingsWashrooms(id) {
-    return this.getEndpoint(`buildings/${id}/washrooms`);
+  static async washroomsForBuilding(id) {
+    const url = this.createEndpointURL(`buildings/${id}/washrooms`);
+    return this.getEndpoint(url);
   }
 
   static async user(id) {
-    return this.getEndpoint(`users/${id}`);
+    const url = this.createEndpointURL(`users/${id}`);
+    return this.getEndpoint(url);
   }
 
   static async userReviews(id) {
-    return this.getEndpoint(`users/${id}/reviews`);
+    const url = this.createEndpointURL(`users/${id}/reviews`);
+    return this.getEndpoint(url);
   }
 
   static async userFavorites(id) {
-    return this.getEndpoint(`users/${id}/favorites`);
+    const url = this.createEndpointURL(`users/${id}/favorites`);
+    return this.getEndpoint(url);
   }
 }
 
