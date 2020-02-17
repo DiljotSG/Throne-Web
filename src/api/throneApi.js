@@ -1,7 +1,13 @@
 class ThroneApi {
   static async getEndpoint(url) {
+    const accessToken = localStorage.getItem('accessToken');
+
     try {
-      return await fetch(url);
+      return await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
     } catch (error) {
       return error;
     }
