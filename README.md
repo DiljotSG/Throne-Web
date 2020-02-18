@@ -20,7 +20,7 @@ Backend | [Throne-Backend](https://github.com/DiljotSG/Throne-Backend) | [Backen
 iOS | [Throne-iOS](https://github.com/NickJosephson/Throne-iOS) | [iOS Tasks](https://github.com/NickJosephson/Throne-iOS/projects/1)
 Android | [Throne-Android](https://github.com/NickJosephson/Throne-Android) | [Android Tasks](https://github.com/NickJosephson/Throne-Android/projects/1)
 
-# Live Websites
+## Live Websites
 
 **Production Web Application (Master Branch):** <https://app.findmythrone.com>
 
