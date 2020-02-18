@@ -17,6 +17,12 @@ export default class Auth {
     return true;
   }
 
+  static logout() {
+    localStorage.removeItem('idToken');
+    localStorage.removeItem('accessToken');
+    localStorage.removeItem('refreshToken');
+  }
+
   static refreshLogin() {
     // Use local storage values to refresh
   }
@@ -66,11 +72,6 @@ export default class Auth {
       localStorage.setItem('idToken', json.id_token);
       localStorage.setItem('accessToken', json.access_token);
       localStorage.setItem('refreshToken', json.refresh_token);
-
-      // console.log('Tokens set:');
-      // console.log(localStorage.getItem('idToken'));
-      // console.log(localStorage.getItem('accessToken'));
-      // console.log(localStorage.getItem('refreshToken'));
     }));
 
     return true;

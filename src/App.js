@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
 
-import { Layout, Spin } from 'antd';
+import { Layout, Spin, Button } from 'antd';
 import Auth from './services/Auth';
 
 import {
@@ -22,24 +22,53 @@ class App extends Component {
 
     this.state = {
       loggedIn: Auth.authenticated(),
+      authenticating: true,
     };
   }
 
   componentDidMount() {
     Auth.attemptLogin().then((loggedIn) => {
-      this.setState({ loggedIn });
+      this.setState({
+        authenticating: false,
+        loggedIn,
+      });
+    });
+  }
+
+  logout() {
+    Auth.logout();
+
+    this.setState({
+      loggedIn: false,
     });
   }
 
   render() {
     const { store } = this.props;
-    const { loggedIn } = this.state;
+    const { authenticating, loggedIn } = this.state;
+
+    if (authenticating) {
+      return (
+        <Layout className="layout">
+          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+            <Spin />
+          </Content>
+        </Layout>
+      );
+    }
 
     if (!loggedIn) {
       return (
         <Layout className="layout">
-          <h1>Logging you in...</h1>
-          <Spin />
+          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+            <h1>You must login to see this page.</h1>
+            <Button href={Auth.loginAddress()}>
+              Log in
+            </Button>
+            <Button href={Auth.signUpAddress()}>
+              Sign up
+            </Button>
+          </Content>
         </Layout>
       );
     }
@@ -47,7 +76,8 @@ class App extends Component {
     return (
       <Provider store={store}>
         <Layout className="layout">
-          <Nav />
+          <Nav logout={() => this.logout()} />
+          <Button onClick={Auth.refreshTokens}>Refresh auth token</Button>
           <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
             <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               <Switch>
