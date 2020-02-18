@@ -1,5 +1,7 @@
 # Running Directions
 
+Make sure to complete the project [setup](SETUP.md) before running the continuing.
+
 ## Run App
 
 1. Use the following to run the app in development mode:
