@@ -8,11 +8,10 @@ export default class Auth {
   static async attemptLogin() {
     const params = new URLSearchParams(window.location.search);
 
-    if (!this.authenticated()) {
+    if (!Auth.authenticated()) {
       if (params.has('code')) {
         return this.fetchTokens(params.get('code'));
       }
-      window.location.replace(this.loginAddress().href);
       return false;
     }
     return true;
@@ -27,14 +26,14 @@ export default class Auth {
     // console.log(`Fetching tokens for ${code}`);
 
     const path = 'oauth2/token';
-    const url = new URL(path, this.host);
+    const url = new URL(path, Auth.host);
 
-    url.searchParams.append('client_id', this.clientID);
+    url.searchParams.append('client_id', Auth.clientID);
     url.searchParams.append('grant_type', 'authorization_code');
     url.searchParams.append('code', code);
     url.searchParams.append('redirect_uri', process.env.REACT_APP_URL);
 
-    return this.setTokens(url);
+    return Auth.setTokens(url);
   }
 
   // Refresh a user's id, access, and refresh token
@@ -44,14 +43,14 @@ export default class Auth {
     const refreshToken = localStorage.getItem('refreshToken');
 
     const path = 'oauth2/token';
-    const url = new URL(path, this.host);
+    const url = new URL(path, Auth.host);
 
-    url.searchParams.append('client_id', this.clientID);
+    url.searchParams.append('client_id', Auth.clientID);
     url.searchParams.append('grant_type', 'refresh_token');
     url.searchParams.append('refresh_token', refreshToken);
     url.searchParams.append('redirect_uri', process.env.REACT_APP_URL);
 
-    return this.setTokens(url);
+    return Auth.setTokens(url);
   }
 
   // Set/refresh tokens given a URL
@@ -79,11 +78,11 @@ export default class Auth {
 
   static loginAddress() {
     const path = 'login';
-    const url = new URL(path, this.host);
+    const url = new URL(path, Auth.host);
 
-    url.searchParams.append('client_id', this.clientID);
+    url.searchParams.append('client_id', Auth.clientID);
     url.searchParams.append('response_type', 'code');
-    url.searchParams.append('scope', this.scope);
+    url.searchParams.append('scope', Auth.scope);
     url.searchParams.append('redirect_uri', process.env.REACT_APP_URL);
 
     return url;
@@ -91,11 +90,11 @@ export default class Auth {
 
   static signUpAddress() {
     const path = 'signup';
-    const url = new URL(path, this.host);
+    const url = new URL(path, Auth.host);
 
-    url.searchParams.append('client_id', this.clientID);
+    url.searchParams.append('client_id', Auth.clientID);
     url.searchParams.append('response_type', 'code');
-    url.searchParams.append('scope', this.scope);
+    url.searchParams.append('scope', Auth.scope);
     url.searchParams.append('redirect_uri', process.env.REACT_APP_URL);
 
     return url;
