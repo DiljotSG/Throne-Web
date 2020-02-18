@@ -15,7 +15,7 @@ describe('async actions', () => {
   });
 
   it('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
-    fetchMock.getOnce('https://testapi.com/washrooms', ['Washroom 1', 'Washroom 2']);
+    fetchMock.getOnce('https://testapi.com/washrooms/', ['Washroom 1', 'Washroom 2']);
     const expectedActions = [
       { type: types.REQUEST_WASHROOMS },
       { type: types.RECEIVE_WASHROOMS, status: 200, washrooms: ['Washroom 1', 'Washroom 2'] },
@@ -28,7 +28,7 @@ describe('async actions', () => {
   });
 
   it('creates FAILURE event when request fails', () => {
-    fetchMock.getOnce('https://testapi.com/washrooms', 401, { Authorization: 'Failed' });
+    fetchMock.getOnce('https://testapi.com/washrooms/', 401, { Authorization: 'Failed' });
 
     const expectedActions = [
       { type: types.REQUEST_WASHROOMS },

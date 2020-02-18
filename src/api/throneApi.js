@@ -12,7 +12,7 @@ class ThroneApi {
   }
 
   static async getWashrooms() {
-    const url = this.createEndpointURL('washrooms');
+    const url = this.createEndpointURL('washrooms/');
     return this.getEndpoint(url);
   }
 
@@ -22,7 +22,7 @@ class ThroneApi {
   }
 
   static async getReviewsForWashroom(id) {
-    const url = this.createEndpointURL(`washrooms/${id}/reviews`);
+    const url = this.createEndpointURL(`washrooms/${id}/reviews/`);
     return this.getEndpoint(url);
   }
 
@@ -46,7 +46,7 @@ class ThroneApi {
   }
 
   static async getWashroomsForBuilding(id) {
-    const url = this.createEndpointURL(`buildings/${id}/washrooms`);
+    const url = this.createEndpointURL(`buildings/${id}/washrooms/`);
     return this.getEndpoint(url);
   }
 
@@ -56,12 +56,12 @@ class ThroneApi {
   }
 
   static async getReviewsForUser(id) {
-    const url = this.createEndpointURL(`users/${id}/reviews`);
+    const url = this.createEndpointURL(`users/${id}/reviews/`);
     return this.getEndpoint(url);
   }
 
   static async getFavoritesForUser(id) {
-    const url = this.createEndpointURL(`users/${id}/favorites`);
+    const url = this.createEndpointURL(`users/${id}/favorites/`);
     return this.getEndpoint(url);
   }
 }
