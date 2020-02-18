@@ -1,6 +1,7 @@
 class ThroneApi {
   static async getEndpoint(url) {
     const accessToken = localStorage.getItem('accessToken');
+    // console.log(`Using access token ${accessToken}`);
 
     try {
       return await fetch(url, {
