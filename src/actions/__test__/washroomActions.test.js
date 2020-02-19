@@ -14,7 +14,7 @@ describe('async actions', () => {
     fetchMock.restore();
   });
 
-  it('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
+  it.only('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
     fetchMock.getOnce('https://testapi.com/washrooms', ['Washroom 1', 'Washroom 2']);
     const expectedActions = [
       { type: types.REQUEST_WASHROOMS },

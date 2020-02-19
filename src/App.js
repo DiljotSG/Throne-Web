@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-
 import { Layout, Spin, Button } from 'antd';
+
 import Auth from './services/Auth';
 
 import {

@@ -36,10 +36,7 @@ export default class Auth {
   // This is needed if the access token has expired (usually after 60 minutes).
   // If a refresh has already been attempted, a log out is performed.
   static async refreshLogin() {
-    console.log('Refreshing the login');
-
     if (Auth.refreshAttempted) {
-      console.log('Refresh already attempted. Logging out...');
       Auth.logout();
       return;
     }
@@ -56,8 +53,6 @@ export default class Auth {
 
   // Given a user's sign in code, fetch tokens associated with it
   static async fetchTokens(code) {
-    // console.log(`Fetching tokens for ${code}`);
-
     const path = 'oauth2/token';
     const url = new URL(path, Auth.host);
 
@@ -72,38 +67,35 @@ export default class Auth {
   // Refresh a user's id, access, and refresh token
   static async refreshTokens() {
     Auth.refreshAttempted = true;
-    const refreshToken = localStorage.getItem('refreshToken');
 
-    console.log(`Refreshing tokens with refresh token ${refreshToken}`);
+    const refreshToken = localStorage.getItem('refreshToken');
     const path = 'oauth2/token';
     const url = new URL(path, Auth.host);
 
     url.searchParams.append('client_id', Auth.clientID);
     url.searchParams.append('grant_type', 'refresh_token');
     url.searchParams.append('refresh_token', refreshToken);
-    url.searchParams.append('redirect_uri', process.env.REACT_APP_URL);
 
     return Auth.setTokens(url);
   }
 
   // Set/refresh tokens given a URL
   static async setTokens(url) {
-    console.log('Setting tokens');
-
     return fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     }).then((response) => response.json().then((json) => {
-      console.log(response);
       localStorage.setItem('idToken', json.id_token);
       localStorage.setItem('accessToken', json.access_token);
-      if ('refresh_token' in json) { localStorage.setItem('refreshToken', json.refresh_token); }
-      return response;
-    }));
 
-    // return true;
+      if ('refresh_token' in json) {
+        localStorage.setItem('refreshToken', json.refresh_token);
+      }
+
+      return response;
+    })).catch((error) => { throw (error); });
   }
 
   static loginAddress() {
@@ -139,7 +131,6 @@ export default class Auth {
       && (accessToken != null && accessToken !== 'undefined')
       && (refreshToken != null && refreshToken !== 'undefined');
 
-    console.log('Authenticated:', authenticated);
     return authenticated;
   }
 }
