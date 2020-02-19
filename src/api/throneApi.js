@@ -3,28 +3,13 @@ import Auth from '../services/Auth';
 class ThroneApi {
   static async getEndpoint(url) {
     const accessToken = localStorage.getItem('accessToken');
-    // console.log(`Using access token ${accessToken}`);
-    // fetch(process.env.REACT_APP_API_URL, {
-    //   headers: {
-    //     Authorization: `Bearer ${accessToken}`,
-    //   },
-    // }).then((response) => console.log(response.status));
-
     let response = await this.getRequest(url, accessToken);
-    // console.log(response);
 
-    if (response.ok) {
-      // console.log('ok');
-      // return response;
-    } else {
-      // console.log('not ok');
-      await Auth.refreshTokens();
-
+    if (response.status === 401) {
+      await Auth.refreshLogin();
       response = await this.getRequest(url, accessToken);
-
-      // console.log(response);
     }
-    Auth.logout();
+
     return response;
   }
 

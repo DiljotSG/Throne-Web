@@ -16,6 +16,14 @@ import './App.css';
 
 const { Content } = Layout;
 
+function requireAuth() {
+  if (!Auth.authenticated()) {
+    this.setState({
+      loggedIn: false,
+    });
+  }
+}
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -77,11 +85,11 @@ class App extends Component {
       <Provider store={store}>
         <Layout className="layout">
           <Nav logout={() => this.logout()} />
-          <Button onClick={Auth.refreshTokens}>Refresh auth token</Button>
           <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+            <Button onClick={Auth.refreshLogin}>Refresh login</Button>
             <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               <Switch>
-                <Route path="/" exact>
+                <Route path="/" exact onEnter={requireAuth}>
                   <NearMe />
                 </Route>
                 <Route path="/map" component={Map} />

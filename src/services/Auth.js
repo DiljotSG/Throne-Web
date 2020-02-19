@@ -5,12 +5,19 @@ export default class Auth {
 
   static scope = 'email openid';
 
+  static refreshAttempted = false;
+
   static async attemptLogin() {
     const params = new URLSearchParams(window.location.search);
 
     if (!Auth.authenticated()) {
       if (params.has('code')) {
-        return this.fetchTokens(params.get('code'));
+        const response = await this.fetchTokens(params.get('code'));
+
+        // clear the query parameter
+        window.location.href = window.location.origin;
+
+        return response.ok;
       }
       return false;
     }
@@ -21,10 +28,30 @@ export default class Auth {
     localStorage.removeItem('idToken');
     localStorage.removeItem('accessToken');
     localStorage.removeItem('refreshToken');
+    window.location.reload();
   }
 
-  static refreshLogin() {
-    // Use local storage values to refresh
+  // Refresh the access token.
+  //
+  // This is needed if the access token has expired (usually after 60 minutes).
+  // If a refresh has already been attempted, a log out is performed.
+  static async refreshLogin() {
+    console.log('Refreshing the login');
+
+    if (Auth.refreshAttempted) {
+      console.log('Refresh already attempted. Logging out...');
+      Auth.logout();
+      return;
+    }
+
+    const response = await Auth.refreshTokens();
+
+    if (response.ok) {
+      Auth.refreshAttempted = false;
+    } else {
+      Auth.refreshAttempted = false;
+      Auth.logout();
+    }
   }
 
   // Given a user's sign in code, fetch tokens associated with it
@@ -44,10 +71,10 @@ export default class Auth {
 
   // Refresh a user's id, access, and refresh token
   static async refreshTokens() {
-    // console.log('Refreshing tokens');
-
+    Auth.refreshAttempted = true;
     const refreshToken = localStorage.getItem('refreshToken');
 
+    console.log(`Refreshing tokens with refresh token ${refreshToken}`);
     const path = 'oauth2/token';
     const url = new URL(path, Auth.host);
 
@@ -61,20 +88,22 @@ export default class Auth {
 
   // Set/refresh tokens given a URL
   static async setTokens(url) {
-    // console.log('Setting tokens');
+    console.log('Setting tokens');
 
-    await fetch(url, {
+    return fetch(url, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     }).then((response) => response.json().then((json) => {
+      console.log(response);
       localStorage.setItem('idToken', json.id_token);
       localStorage.setItem('accessToken', json.access_token);
-      localStorage.setItem('refreshToken', json.refresh_token);
+      if ('refresh_token' in json) { localStorage.setItem('refreshToken', json.refresh_token); }
+      return response;
     }));
 
-    return true;
+    // return true;
   }
 
   static loginAddress() {
@@ -110,7 +139,7 @@ export default class Auth {
       && (accessToken != null && accessToken !== 'undefined')
       && (refreshToken != null && refreshToken !== 'undefined');
 
-    // console.log('Authenticated:', authenticated);
+    console.log('Authenticated:', authenticated);
     return authenticated;
   }
 }
