@@ -1,7 +1,25 @@
+import Auth from '../services/Auth';
+
 class ThroneApi {
   static async getEndpoint(url) {
+    const accessToken = localStorage.getItem('accessToken');
+    let response = await this.getRequest(url, accessToken);
+
+    if (response.status === 401) {
+      await Auth.refreshLogin();
+      response = await this.getRequest(url, accessToken);
+    }
+
+    return response;
+  }
+
+  static async getRequest(url, accessToken) {
     try {
-      return await fetch(url);
+      return await fetch(url, {
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+        },
+      });
     } catch (error) {
       return error;
     }
