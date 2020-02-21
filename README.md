@@ -12,6 +12,8 @@ This repository contains the Throne Web application.
 
 Throne is a web and mobile application which allows users to find nearby washrooms tailored to their preferences and requirements. Throne presents up-to-date information by enabling users to provide feedback and information on the washrooms they visit.
 
+The proposal for Throne can be found [here](docs/PROPOSAL.md).
+
 Throne Component | Repository | Project Board
 ------------ | ------------- | ------------
 All Components | - | [User Stories](https://github.com/DiljotSG/Throne-Backend/projects/1)
@@ -28,6 +30,6 @@ Android | [Throne-Android](https://github.com/NickJosephson/Throne-Android) | [A
 
 ## Documentation
 
-* [Setup](SETUP.md)
-* [Running](RUNNING.md)
-* [Testing](TESTING.md)
+* [Setup](docs/SETUP.md)
+* [Running](docs/RUNNING.md)
+* [Testing](docs/TESTING.md)
