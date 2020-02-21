@@ -16,7 +16,13 @@ export default function setupStore(initialState) {
 
 const store = setupStore({});
 
-fetchMock.get('https://testapi.com/washrooms', ['Washroom 1', 'Washroom 2']);
+fetchMock.get('https://testapi.com/washrooms', [
+  {
+    title: 'Washroom 1',
+  }, {
+    title: 'Washroom 2',
+  },
+]);
 
 describe('NearMe', () => {
   it('Renders the "Near me" page', async () => {

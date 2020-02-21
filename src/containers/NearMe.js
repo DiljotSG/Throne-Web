@@ -44,7 +44,7 @@ class NearMe extends Component {
           dataSource={washrooms}
           renderItem={(item) => (
             <List.Item>
-              {item}
+              {item.title}
             </List.Item>
           )}
         />
