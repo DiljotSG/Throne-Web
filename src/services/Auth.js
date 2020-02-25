@@ -8,21 +8,18 @@ export default class Auth {
   static refreshAttempted = false;
 
   static async attemptLogin() {
-    await Auth.refreshLogin();
-
     const params = new URLSearchParams(window.location.search);
 
     if (!Auth.authenticated()) {
       if (params.has('code')) {
         const response = await this.fetchTokens(params.get('code'));
 
-        // clear the query parameter
-        window.location.href = window.location.origin;
-
         return response.ok;
       }
       return false;
     }
+    await Auth.refreshLogin();
+
     return true;
   }
 
