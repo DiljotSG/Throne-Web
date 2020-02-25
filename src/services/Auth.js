@@ -8,6 +8,8 @@ export default class Auth {
   static refreshAttempted = false;
 
   static async attemptLogin() {
+    await Auth.refreshLogin();
+
     const params = new URLSearchParams(window.location.search);
 
     if (!Auth.authenticated()) {
