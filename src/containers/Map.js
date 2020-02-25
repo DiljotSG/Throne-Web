@@ -1,31 +1,32 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import ReactMapGL, { Marker, Popup } from 'react-map-gl';
 import PropTypes from 'prop-types';
 import {
   Typography,
-  Icon,
-  Button
+  Button,
 } from 'antd';
-import data from './buildings.json'
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
-const { Title } = Typography;
+import data from './buildings.json';
 
+const { Title } = Typography;
 
 class Map extends Component {
 
-  state = {
-    viewport: {
-      width: '100%',
-      height: '400px',
-      latitude: 49.8080954,
-      longitude: -97.1375209,
-      zoom: 14
-    },
-    selected: null
-  };
-
-
+  constructor(props) {
+    super(props);
+    // Don't call this.setState() here!
+    this.state = {
+      viewport: {
+        width: '100%',
+        height: '400px',
+        latitude: 49.8080954,
+        longitude: -97.1375209,
+        zoom: 14,
+      },
+      selected: null,
+    };
+  }
 
   componentDidMount() {
     const { washrooms } = this.props;
@@ -65,7 +66,7 @@ class Map extends Component {
 
                 onClick={(event) => this.setState({ selected: building })}
               >
-                🧻
+                <span role="img">🧻</span>
               </Button>
             </Marker>
 
@@ -89,6 +90,7 @@ class Map extends Component {
     )
   }
 }
+
 const mapStateToProps = (state) => {
   const { washrooms, isFetching, status } = state.washroomReducer;
 
