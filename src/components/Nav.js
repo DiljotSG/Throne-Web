@@ -8,7 +8,7 @@ import './Nav.css';
 
 const { Header } = Layout;
 
-const Nav = ({ location }) => (
+const Nav = ({ location, logout }) => (
   <Header>
     <div className="logo" />
     <Menu
@@ -21,11 +21,13 @@ const Nav = ({ location }) => (
       <Menu.Item key="/map"><NavLink to="/map">Map</NavLink></Menu.Item>
       <Menu.Item key="/profile"><NavLink to="/profile">Profile</NavLink></Menu.Item>
       <Menu.Item key="/settings"><NavLink to="/settings"><Icon type="setting" /></NavLink></Menu.Item>
+      <Menu.Item key="/logout" onClick={logout}>Logout</Menu.Item>
     </Menu>
   </Header>
 );
 
 Nav.propTypes = {
+  logout: PropTypes.func.isRequired,
   location: PropTypes.shape({
     pathname: PropTypes.string,
   }).isRequired,

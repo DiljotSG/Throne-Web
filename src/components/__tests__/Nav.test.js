@@ -9,7 +9,9 @@ describe('Nav', () => {
   it('Renders the Nav page', () => {
     const component = mount(
       <Router>
-        <Nav />
+        <Nav
+          logout={() => {}}
+        />
       </Router>,
     );
     expect(component.find('NavLink').length).toEqual(4);

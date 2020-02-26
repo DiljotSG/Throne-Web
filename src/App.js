@@ -1,47 +1,96 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
-import { Layout } from 'antd';
+import PropTypes from 'prop-types';
+import { Switch, Route } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
-import { NearMe, Map, Profile } from './pages';
+import { Layout, Spin, Button } from 'antd';
+
+import Auth from './services/Auth';
+
+import {
+  NearMe, Map, Profile, Settings,
+} from './containers';
 import { Nav } from './components';
 
 import './App.css';
-import Settings from './pages/Settings';
 
 const { Content } = Layout;
 
+function requireAuth() {
+  if (!Auth.authenticated()) {
+    this.setState({
+      loggedIn: false,
+    });
+  }
+}
+
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
+
     this.state = {
-      locations: [],
+      loggedIn: Auth.authenticated(),
+      authenticating: true,
     };
   }
 
   componentDidMount() {
-    fetch(process.env.REACT_APP_API_URL)
-      .then((response) => response.json())
-      .then((data) => this.setState({ locations: data }));
+    Auth.attemptLogin().then((loggedIn) => {
+      this.setState({
+        authenticating: false,
+        loggedIn,
+      });
+    });
+  }
+
+  logout() {
+    Auth.logout();
+
+    this.setState({
+      loggedIn: false,
+    });
   }
 
   render() {
-    const { locations } = this.state;
+    const { store } = this.props;
+    const { authenticating, loggedIn } = this.state;
+
+    if (authenticating) {
+      return (
+        <Layout className="layout">
+          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+            <Spin />
+          </Content>
+        </Layout>
+      );
+    }
+
+    if (!loggedIn) {
+      return (
+        <Layout className="layout">
+          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+            <h1>You must login to see this page.</h1>
+            <Button href={Auth.loginAddress()}>
+              Log in
+            </Button>
+            <Button href={Auth.signUpAddress()}>
+              Sign up
+            </Button>
+          </Content>
+        </Layout>
+      );
+    }
 
     return (
-      <Layout className="layout">
-        <Router>
-          <Nav />
+      <Provider store={store}>
+        <Layout className="layout">
+          <Nav logout={() => this.logout()} />
           <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+            <Button onClick={Auth.refreshLogin}>Refresh login</Button>
             <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               <Switch>
-                <Route path="/" exact>
-                  <NearMe
-                    locations={locations}
-                  />
+                <Route path="/" exact onEnter={requireAuth}>
+                  <NearMe />
                 </Route>
                 <Route path="/map" component={Map} />
                 <Route path="/profile" component={Profile} />
@@ -49,10 +98,14 @@ class App extends Component {
               </Switch>
             </div>
           </Content>
-        </Router>
-      </Layout>
+        </Layout>
+      </Provider>
     );
   }
 }
+
+App.propTypes = {
+  store: PropTypes.shape({}).isRequired,
+};
 
 export default App;

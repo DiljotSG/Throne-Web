@@ -1,6 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
 import App from './App';
+import configureStore from './store';
 
-ReactDOM.render(<App />, document.getElementById('root'));
+import './index.css';
+
+const store = configureStore();
+
+ReactDOM.render(
+  <Router>
+    <App store={store} />
+  </Router>,
+  document.getElementById('root'),
+);
