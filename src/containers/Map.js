@@ -12,10 +12,8 @@ import data from './buildings.json';
 const { Title } = Typography;
 
 class Map extends Component {
-
   constructor(props) {
     super(props);
-    // Don't call this.setState() here!
     this.state = {
       viewport: {
         width: '100%',
@@ -44,50 +42,57 @@ class Map extends Component {
 
   render() {
     const { buildings } = data;
+    const { viewport, selected } = this.state;
     return (
       <>
         <Title>Map</Title>
         <ReactMapGL
-          {...this.state.viewport}
-          onViewportChange={(viewport) => this.setState({ viewport })}
+          {...viewport}
+          onViewportChange={(newView) => this.setState({ viewport: newView })}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           mapStyle="mapbox://styles/mapbox/dark-v10"
         >
           {buildings.map((building) => (
-            <Marker key={building.id}
+            <Marker
+              key={building.id}
               latitude={building.location.latitude}
               longitude={building.location.longitude}
-              onClick={(event) => this.setState({ selected: building })}
+              onClick={() => this.setState({ selected: building })}
             >
               <Button
                 type="link"
                 shape="circle"
                 size="small"
 
-                onClick={(event) => this.setState({ selected: building })}
+                onClick={() => this.setState({ selected: building })}
               >
                 <span role="img">🧻</span>
               </Button>
             </Marker>
 
           ))}
-          {this.state.selected ? (
+          {selected ? (
             <Popup
-              key={this.state.selected.id}
-              latitude={this.state.selected.location.latitude}
-              longitude={this.state.selected.location.longitude}
-              onClose={(event) => this.setState({ selected: null })}
+              key={selected.id}
+              latitude={selected.location.latitude}
+              longitude={selected.location.longitude}
+              onClose={() => this.setState({ selected: null })}
             >
               <div>
-                <h4>{this.state.selected.title}</h4>
-                <p>OverallRating: {this.state.selected.overall_rating}</p>
+                <h4>
+                  {selected.title}
+                </h4>
+                <p>
+                  OverallRating:
+                  {selected.overall_rating}
+                </p>
               </div>
 
             </Popup>
           ) : null}
         </ReactMapGL>
       </>
-    )
+    );
   }
 }
 
