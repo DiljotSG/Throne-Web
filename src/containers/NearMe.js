@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { NavLink } from 'react-router-dom';
 import {
   Typography,
   List,
@@ -36,15 +37,17 @@ class NearMe extends Component {
         <Title>Near Me</Title>
         <Button onClick={this.getWashrooms}>Get washrooms using redux</Button>
         <pre>
-          { JSON.stringify(this.props) }
+          {JSON.stringify(this.props)}
         </pre>
         <List
           loading={isFetching}
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
-            <List.Item>
-              {item.title}
+            <List.Item key={`/washrrom/${item.id}`}>
+              <NavLink to={`/washrrom/${item.id}`}>
+                {item.title}
+              </NavLink>
             </List.Item>
           )}
         />
