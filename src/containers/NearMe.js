@@ -5,11 +5,12 @@ import {
   Typography,
   List,
   Icon,
-  Button,
 } from 'antd';
 
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
+
+import { StarRating } from '../components';
 
 const { Title } = Typography;
 
@@ -35,7 +36,6 @@ class NearMe extends Component {
       <>
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
-        <Button onClick={this.getWashrooms}>Get washrooms using redux</Button>
         <pre>
           {JSON.stringify(this.props)}
         </pre>
@@ -48,6 +48,9 @@ class NearMe extends Component {
               key={`/washrooms/${item.id}`}>
               <NavLink to={`/washrooms/${item.id}`}>
                 {item.title}
+                <StarRating
+                  rating={item.overall_rating}
+                />
               </NavLink>
             </List.Item>
           )}
