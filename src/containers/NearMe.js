@@ -9,6 +9,8 @@ import {
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
 
+import { StarRating } from '../components';
+
 const { Title } = Typography;
 
 class NearMe extends Component {
@@ -43,6 +45,9 @@ class NearMe extends Component {
           renderItem={(item) => (
             <List.Item>
               {item.title}
+              <StarRating
+                rating={item.overall_rating}
+              />
             </List.Item>
           )}
         />
