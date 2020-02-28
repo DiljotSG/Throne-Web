@@ -4,7 +4,6 @@ import {
   Typography,
   List,
   Icon,
-  Button,
 } from 'antd';
 
 import { connect } from 'react-redux';
@@ -34,7 +33,6 @@ class NearMe extends Component {
       <>
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
-        <Button onClick={this.getWashrooms}>Get washrooms using redux</Button>
         <pre>
           { JSON.stringify(this.props) }
         </pre>
