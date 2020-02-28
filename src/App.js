@@ -100,8 +100,4 @@ App.propTypes = {
   store: PropTypes.shape({}).isRequired,
 };
 
-if ('REACT_APP_MAPBOX_TOKEN' in process.env) {
-  console.log('It worked!'); // eslint-disable-line no-console
-}
-
 export default App;
