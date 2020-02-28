@@ -10,7 +10,7 @@ const { Content } = Layout;
 const Login = ({ loginAddress, signUpAddress }) => (
   <Layout className="layout">
     <div className="app-background">
-      <Content className="login-container" style={{ minHeight: '100vh' }}>
+      <Content className="login-container">
         <h1 className="login-title">
           Welcome to Throne
         </h1>
