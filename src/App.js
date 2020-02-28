@@ -68,17 +68,6 @@ class App extends Component {
     if (!loggedIn) {
       return (
         <Login auth={Auth} />
-        // <Layout className="layout">
-        //   <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
-        //     <h1>You must login to see this page.</h1>
-        //     <Button href={Auth.loginAddress()}>
-        //       Log in
-        //     </Button>
-        //     <Button href={Auth.signUpAddress()}>
-        //       Sign up
-        //     </Button>
-        //   </Content>
-        // </Layout>
       );
     }
 
