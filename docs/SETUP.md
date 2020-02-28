@@ -33,3 +33,10 @@ Copy the `.env.example` file found in the root folder to a new file named `.env.
 **Note:**
 
 * No changes need to be made to `.env`.
+
+## Mapbox
+1. Retrieve the token from slack (or[ create your own](https://account.mapbox.com/))
+2. Add the token as an environment variable to `.env.local` and `env.example` like so:
+`REACT_APP_MAPBOX_TOKEN="<TokenHere>"`
+
+Instuctions on how to create a Mapbox account and token can be found in [this PR](https://github.com/DiljotSG/Throne-Web/pull/64).
