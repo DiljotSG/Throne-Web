@@ -86,7 +86,6 @@ class App extends Component {
         <Layout className="layout">
           <Nav logout={() => this.logout()} />
           <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
-            <Button onClick={Auth.refreshLogin}>Refresh login</Button>
             <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
               <Switch>
                 <Route path="/" exact onEnter={requireAuth}>
