@@ -9,16 +9,29 @@ const { Content } = Layout;
 
 const Login = ({ auth }) => (
   <Layout className="layout">
-    <div className="login-background">
-      <Content style={{ padding: '15% 0 0 0', minHeight: '100vh' }}>
-        <h1 style={{ textAlign: 'center', fontSize: '40pt', color: 'white' }}>
+    <div className="app-background">
+      <Content className="login-container" style={{ minHeight: '100vh' }}>
+        <h1 className="login-title">
           Welcome to Throne
         </h1>
-        <div style={{ paddingLeft: '46.5%', paddingRight: '50%' }}>
-          <Button type="primary" style={{ margin: '10px 10px 5px 17px' }} href={auth.loginAddress()}>
+        <div className="login-buttons-container">
+          <Button
+            className="login-button"
+            block
+            size="large"
+            shape="round"
+            type="primary"
+            href={auth.loginAddress()}
+          >
             Login
           </Button>
-          <Button style={{ margin: '5px 10px 10px 10px' }} href={auth.signUpAddress()}>
+          <Button
+            className="login-button"
+            block
+            size="large"
+            shape="round"
+            href={auth.signUpAddress()}
+          >
             Sign Up
           </Button>
         </div>

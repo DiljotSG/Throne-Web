@@ -1,4 +1,21 @@
-.login-background {
-    background: rgb(39,108,236);
-    background: linear-gradient(0deg, rgba(39,108,236,1) 0%, rgba(117,195,249,1) 100%);
+.login-button {
+    margin: 5px 0;
+}
+
+.login-container {
+    padding: 13% 15px;
+    max-width: 500px;
+    margin: auto;
+}
+
+.login-title {
+    text-align: center;
+    font-size: 40pt;
+    color: white;
+    padding-bottom: 30px;
+}
+
+.login-buttons-container {
+    max-width: 300px;
+    margin: auto;
 }
