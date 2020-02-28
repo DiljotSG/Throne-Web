@@ -67,7 +67,7 @@ class App extends Component {
 
     if (!loggedIn) {
       return (
-        <Login />
+        <Login auth={Auth} />
         // <Layout className="layout">
         //   <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
         //     <h1>You must login to see this page.</h1>
