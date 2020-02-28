@@ -16,8 +16,6 @@ jobs:
         node-version: 12.x
     - run: yarn install
     - run: yarn build:development
-      env:
-        MAPBOX_DEV_TOKEN: ${{ secrets.MAPBOX_DEV_TOKEN }}
     - uses: jakejarvis/s3-sync-action@master
       with:
         args: --acl public-read --follow-symlinks --delete
