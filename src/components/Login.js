@@ -41,8 +41,18 @@ const Login = ({ loginAddress, signUpAddress }) => (
 );
 
 Login.propTypes = {
-  loginAddress: PropTypes.string.isRequired,
-  signUpAddress: PropTypes.string.isRequired,
+  loginAddress: PropTypes.shape({
+    href: PropTypes.string,
+    origin: PropTypes.string,
+    host: PropTypes.string,
+    hostname: PropTypes.string,
+  }).isRequired,
+  signUpAddress: PropTypes.shape({
+    href: PropTypes.string,
+    origin: PropTypes.string,
+    host: PropTypes.string,
+    hostname: PropTypes.string,
+  }).isRequired,
 };
 
 export default Login;
