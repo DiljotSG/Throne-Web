@@ -7,7 +7,7 @@ import './Login.css';
 
 const { Content } = Layout;
 
-const Login = ({ auth }) => (
+const Login = ({ loginAddress, signUpAddress }) => (
   <Layout className="layout">
     <div className="app-background">
       <Content className="login-container" style={{ minHeight: '100vh' }}>
@@ -21,7 +21,7 @@ const Login = ({ auth }) => (
             size="large"
             shape="round"
             type="primary"
-            href={auth.loginAddress()}
+            href={loginAddress}
           >
             Login
           </Button>
@@ -30,7 +30,7 @@ const Login = ({ auth }) => (
             block
             size="large"
             shape="round"
-            href={auth.signUpAddress()}
+            href={signUpAddress}
           >
             Sign Up
           </Button>
@@ -41,7 +41,8 @@ const Login = ({ auth }) => (
 );
 
 Login.propTypes = {
-  auth: PropTypes.func.isRequired,
+  loginAddress: PropTypes.string.isRequired,
+  signUpAddress: PropTypes.string.isRequired,
 };
 
 export default Login;
