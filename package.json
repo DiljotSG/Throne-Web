@@ -23,8 +23,8 @@
   },
   "scripts": {
     "start": "env-cmd -f .env.local react-scripts start",
-    "build": "react-scripts build",
-    "build:development": "env-cmd -f .env.development yarn build",
+    "build": "env-cmd -f -x .env.production yarn build --REACT_APP_MAPBOX_TOKEN=\\$MAPBOX_PROD_TOKEN",
+    "build:development": "env-cmd -f -x .env.development yarn build --REACT_APP_MAPBOX_TOKEN=\\$MAPBOX_DEV_TOKEN",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "lint": "eslint ./src"
