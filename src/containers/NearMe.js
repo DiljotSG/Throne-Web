@@ -44,8 +44,9 @@ class NearMe extends Component {
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
-            <List.Item key={`/washrrom/${item.id}`}>
-              <NavLink to={`/washrrom/${item.id}`}>
+            <List.Item
+              key={`/washrooms/${item.id}`}>
+              <NavLink to={`/washrooms/${item.id}`}>
                 {item.title}
               </NavLink>
             </List.Item>

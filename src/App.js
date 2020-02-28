@@ -8,7 +8,7 @@ import { Layout, Spin, Button } from 'antd';
 import Auth from './services/Auth';
 
 import {
-  NearMe, Map, Profile, Settings,
+  NearMe, Map, Profile, Settings, WashroomDetails,
 } from './containers';
 import { Nav } from './components';
 
@@ -95,6 +95,7 @@ class App extends Component {
                 <Route path="/map" component={Map} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/washrooms/:id" component={WashroomDetails} />
               </Switch>
             </div>
           </Content>
