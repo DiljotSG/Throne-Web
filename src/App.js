@@ -10,7 +10,7 @@ import Auth from './services/Auth';
 import {
   NearMe, Map, Profile, Settings,
 } from './containers';
-import { Nav } from './components';
+import { Nav, Login } from './components';
 
 import './App.css';
 
@@ -67,17 +67,10 @@ class App extends Component {
 
     if (!loggedIn) {
       return (
-        <Layout className="layout">
-          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
-            <h1>You must login to see this page.</h1>
-            <Button href={Auth.loginAddress()}>
-              Log in
-            </Button>
-            <Button href={Auth.signUpAddress()}>
-              Sign up
-            </Button>
-          </Content>
-        </Layout>
+        <Login
+          loginAddress={Auth.loginAddress()}
+          signUpAddress={Auth.signUpAddress()}
+        />
       );
     }
 
