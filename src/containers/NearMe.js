@@ -6,11 +6,10 @@ import {
   List,
   Icon,
 } from 'antd';
-
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
-
 import { StarRating } from '../components';
+
 
 const { Title } = Typography;
 
@@ -45,12 +44,20 @@ class NearMe extends Component {
           dataSource={washrooms}
           renderItem={(item) => (
             <List.Item
-              key={`/washrooms/${item.id}`}>
-              <NavLink to={`/washrooms/${item.id}`}>
-                {item.title}
-                <StarRating
-                  rating={item.overall_rating}
-                />
+              key={item.id}
+            >
+              <NavLink
+                to={{
+                  pathname: `/washrooms/${item.id}`,
+                }}
+                className="LinkStyle"
+              >
+                <div>
+                  {item.title}
+                  <StarRating
+                    rating={item.overall_rating}
+                  />
+                </div>
               </NavLink>
             </List.Item>
           )}
@@ -61,7 +68,7 @@ class NearMe extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { washrooms, isFetching, status } = state.washroomReducer;
+  const { washrooms, isFetching, status } = state.washroomsReducer;
 
   return {
     status,

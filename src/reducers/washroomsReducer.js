@@ -1,20 +1,20 @@
 import actions from '../constants';
 
-const initialState = { washroom: '' };
+const initialState = { washrooms: [] };
 
-const washroomReducer = (state = initialState, action) => {
+const washroomsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.REQUEST_WASHROOM:
+    case actions.REQUEST_WASHROOMS:
       return {
         ...state,
         isFetching: true,
       };
-    case actions.RECEIVE_WASHROOM:
+    case actions.RECEIVE_WASHROOMS:
       return {
         ...state,
         isFetching: false,
         status: action.status,
-        washroom: action.washroom,
+        washrooms: action.washrooms,
       };
     case actions.FAILURE: {
       return {
@@ -28,4 +28,4 @@ const washroomReducer = (state = initialState, action) => {
   }
 };
 
-export default washroomReducer;
+export default washroomsReducer;
