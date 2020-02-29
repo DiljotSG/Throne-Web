@@ -25,11 +25,12 @@ class WashroomDetails extends Component {
     getWashroom(id);
   }
 
-  formatGender = (input) => {
-    if (input) return `${input.charAt(0).toUpperCase() + input.slice(1)}'s`;
+  formatString = (input) => {
+    if (input) {
+      return `${input.charAt(0).toUpperCase() + input.slice(1)}`.replace('_', ' ');
+    }
     return '';
   }
-
 
   render() {
     const { washroom, isFetching } = this.props;
@@ -43,7 +44,7 @@ class WashroomDetails extends Component {
         <Title>{washroom.title}</Title>
         <div>
           <h3>
-            {`Floor ${washroom.floor} | ${this.formatGender(washroom.gender)}`}
+            {`Floor ${washroom.floor} | ${this.formatString(washroom.gender)}'s`}
           </h3>
           <div className="in-line">
             <div className="rating-title"><b>Overall</b></div>
@@ -88,7 +89,7 @@ class WashroomDetails extends Component {
                 <List.Item
                   key={item}
                 >
-                  {item}
+                  {this.formatString(item)}
                 </List.Item>
               )}
             />
