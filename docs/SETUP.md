@@ -36,7 +36,8 @@ Copy the `.env.example` file found in the root folder to a new file named `.env.
 
 ## Adding a Mapbox Token
 1. Retrieve the token from slack (or[ create your own](https://account.mapbox.com/))
-2. Add the token as an environment variable to `.env.local` and `env.example` like so:
+2. Add the token as an environment variable to `.env.local` as follows
+
 `REACT_APP_MAPBOX_TOKEN="<TokenHere>"`
 
 ## Creating a Mapbox Account and Token
@@ -47,4 +48,3 @@ Copy the `.env.example` file found in the root folder to a new file named `.env.
 5. If you decide to create a second token, just use the default scopes
 
 The right column of your dashboard will show the number of free map loads you have. The free plan is 50,000 loads monthly for web and 25,000 for mobile.
-
