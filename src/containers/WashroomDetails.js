@@ -12,9 +12,8 @@ const { Title } = Typography;
 
 class WashroomDetails extends Component {
   componentDidMount() {
-    const { match } = this.props;
-    const id = eval(match.params.id);// eslint-disable-line no-eval
-    const { washroom } = this.props;
+    const { match, washroom } = this.props;
+    const { id } = match.params;
     if (washroom.id !== id) {
       this.getWashroom(id);
     }
