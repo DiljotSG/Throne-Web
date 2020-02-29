@@ -34,9 +34,6 @@ class NearMe extends Component {
       <>
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
-        <pre>
-          {JSON.stringify(this.props)}
-        </pre>
         <List
           loading={isFetching}
           bordered
@@ -49,12 +46,10 @@ class NearMe extends Component {
                 to={`/washrooms/${item.id}`}
                 className="LinkStyle"
               >
-                <div>
-                  {item.title}
-                  <StarRating
-                    rating={item.overall_rating}
-                  />
-                </div>
+                {item.title}
+                <StarRating
+                  rating={item.overall_rating}
+                />
               </NavLink>
             </List.Item>
           )}

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  Typography, List,
+  Typography, List, Spin,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
