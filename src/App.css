@@ -4,3 +4,14 @@
     background: rgb(93,163,231);
     background: linear-gradient(0deg, rgba(93,163,231,1) 0%, rgba(124,214,255,1) 100%);
 }
+
+.app-content {
+    padding: 30px 50px;
+    min-height: 100vh;
+}
+
+.app-switch-container {
+    background: #fff;
+    padding: 24px;
+    min-height: 280px;
+}
