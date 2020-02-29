@@ -36,7 +36,7 @@ class WashroomDetails extends Component {
     const { washroom, isFetching } = this.props;
     const ratings = washroom.average_ratings;
     if (isFetching) {
-      return (<div />);
+      return (<Spin />);
     }
 
     return (
