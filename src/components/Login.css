@@ -6,7 +6,7 @@
     padding: 13% 15px;
     max-width: 500px;
     margin: auto;
-    min-Height: 100vh;
+    min-Height: 100vh !important;
 }
 
 .login-title {

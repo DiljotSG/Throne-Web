@@ -45,9 +45,7 @@ class NearMe extends Component {
           renderItem={(item) => (
             <List.Item>
               {item.title}
-              <StarRating
-                rating={item.overall_rating}
-              />
+              <StarRating rating={item.overall_rating} />
             </List.Item>
           )}
         />

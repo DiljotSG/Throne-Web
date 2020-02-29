@@ -58,7 +58,7 @@ class App extends Component {
     if (authenticating) {
       return (
         <Layout className="layout">
-          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+          <Content className="app-content">
             <Spin />
           </Content>
         </Layout>
@@ -78,8 +78,8 @@ class App extends Component {
       <Provider store={store}>
         <Layout className="layout">
           <Nav logout={() => this.logout()} />
-          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
-            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          <Content className="app-content">
+            <div className="app-switch-container">
               <Switch>
                 <Route path="/" exact onEnter={requireAuth}>
                   <NearMe />
