@@ -35,7 +35,7 @@ Copy the `.env.example` file found in the root folder to a new file named `.env.
 * No changes need to be made to `.env`.
 
 ## Adding a Mapbox Token
-1. Retrieve the token from slack (or[ create your own](https://account.mapbox.com/))
+1. Retrieve the token from slack (or [create your own](https://account.mapbox.com/))
 2. Add the token as an environment variable to `.env.local` as follows
 
 `REACT_APP_MAPBOX_TOKEN="<TokenHere>"`
