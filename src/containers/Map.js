@@ -29,7 +29,7 @@ class Map extends Component {
           {...viewport} // eslint-disable-line react/jsx-props-no-spreading
           onViewportChange={(newView) => this.setState({ viewport: newView })}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
-          mapStyle="mapbox://styles/mapbox/dark-v10"
+          mapStyle="mapbox://styles/mapbox/streets-v11"
         />
       </>
     );
