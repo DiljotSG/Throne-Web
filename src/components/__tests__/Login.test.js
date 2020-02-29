@@ -1,13 +1,12 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { BrowserRouter as Router } from 'react-router-dom';
 
+import { BrowserRouter as Router } from 'react-router-dom';
 
 import Login from '../Login';
 
-
 describe('Login', () => {
-  it('knows that 2 and 2 make 4', () => {
+  it('page has text and two buttons', () => {
     const component = mount(
       <Router>
         <Login
