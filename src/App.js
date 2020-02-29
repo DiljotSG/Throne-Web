@@ -68,8 +68,8 @@ class App extends Component {
     if (!loggedIn) {
       return (
         <Login
-          loginAddress={Auth.loginAddress()}
-          signUpAddress={Auth.signUpAddress()}
+          loginAddress={Auth.loginAddress().href}
+          signUpAddress={Auth.signUpAddress().href}
         />
       );
     }
