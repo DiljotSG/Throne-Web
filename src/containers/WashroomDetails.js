@@ -10,21 +10,18 @@ import './WashroomDetails.css';
 
 const { Title } = Typography;
 
-
 class WashroomDetails extends Component {
   componentDidMount() {
     const { match } = this.props;
     const id = eval(match.params.id);// eslint-disable-line no-eval
     const { washroom } = this.props;
     if (washroom.id !== id) {
-      console.log("Reload");
       this.getWashroom(id);
     }
   }
 
   getWashroom = (id) => {
     const { getWashroom } = this.props; // eslint-disable-line no-shadow
-
     getWashroom(id);
   }
 

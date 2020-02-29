@@ -10,7 +10,6 @@ import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
 import { StarRating } from '../components';
 
-
 const { Title } = Typography;
 
 class NearMe extends Component {
