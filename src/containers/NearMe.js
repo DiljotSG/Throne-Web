@@ -46,9 +46,7 @@ class NearMe extends Component {
               key={item.id}
             >
               <NavLink
-                to={{
-                  pathname: `/washrooms/${item.id}`,
-                }}
+                to={`/washrooms/${item.id}`}
                 className="LinkStyle"
               >
                 <div>
