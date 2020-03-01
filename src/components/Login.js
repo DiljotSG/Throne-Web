@@ -5,7 +5,7 @@ import { Layout, Button } from 'antd';
 
 import './Login.css';
 
-const { Content } = Layout;
+const { Content } = Layout; 
 
 const Login = ({ loginAddress, signUpAddress }) => (
   <Layout className="layout">
