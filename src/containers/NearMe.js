@@ -4,12 +4,11 @@ import {
   Typography,
   List,
   Icon,
+  Rate,
 } from 'antd';
 
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
-
-import { StarRating } from '../components';
 
 const { Title } = Typography;
 
@@ -45,7 +44,12 @@ class NearMe extends Component {
           renderItem={(item) => (
             <List.Item>
               {item.title}
-              <StarRating rating={item.overall_rating} />
+              <br />
+              <Rate
+                disabled
+                allowHalf
+                value={item.overall_rating}
+              />
             </List.Item>
           )}
         />
