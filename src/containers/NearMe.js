@@ -4,12 +4,11 @@ import {
   Typography,
   List,
   Icon,
+  Rate,
 } from 'antd';
 
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
-
-import { StarRating } from '../components';
 
 const { Title } = Typography;
 
@@ -39,13 +38,19 @@ class NearMe extends Component {
           { JSON.stringify(this.props) }
         </pre>
         <List
+          className="near-me-list"
           loading={isFetching}
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item className="near-me-list-item">
               {item.title}
-              <StarRating rating={item.overall_rating} />
+              <br />
+              <Rate
+                disabled
+                allowHalf
+                value={item.overall_rating}
+              />
             </List.Item>
           )}
         />
