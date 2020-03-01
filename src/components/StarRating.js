@@ -11,6 +11,7 @@ const StarRating = ({ rating, total }) => (
   <div className="StarRating">
     {[...Array(total)].map((x, i) => (
       <Icon
+        key={i} // eslint-disable-line react/no-array-index-key
         type="star"
         theme={starFilled(i, rating) ? 'filled' : ''}
         className={starFilled(i, rating) ? 'star-filled' : 'star-empty'}
