@@ -37,9 +37,9 @@ describe('NearMe', () => {
   it('Displays a list of locations', async () => {
     await act(async () => {
       const component = mount(<NearMe store={store} />);
-      expect(component.find('li')).toHaveLength(2);
-      expect(component.find('li').first().text()).toEqual('Washroom 1');
-      expect(component.find('li').at(1).text()).toEqual('Washroom 2');
+      expect(component.find('li.near-me-list-item')).toHaveLength(2);
+      expect(component.find('li.near-me-list-item').first().text()).toEqual('Washroom 1');
+      expect(component.find('li.near-me-list-item').at(1).text()).toEqual('Washroom 2');
     });
   });
 });

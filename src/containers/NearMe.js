@@ -38,11 +38,12 @@ class NearMe extends Component {
           { JSON.stringify(this.props) }
         </pre>
         <List
+          className="near-me-list"
           loading={isFetching}
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
-            <List.Item>
+            <List.Item className="near-me-list-item">
               {item.title}
               <br />
               <Rate
