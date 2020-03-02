@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
-import ReactMapGL from 'react-map-gl';
+import ReactMapGL, { GeolocateControl } from 'react-map-gl';
 import {
   Typography,
 } from 'antd';
+
+import './Map.css';
 
 const { Title } = Typography;
 
@@ -30,7 +32,13 @@ class Map extends Component {
           onViewportChange={(newView) => this.setState({ viewport: newView })}
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v11"
-        />
+        >
+          <GeolocateControl
+            className="geolocate-control"
+            positionOptions={{ enableHighAccuracy: true }}
+            trackUserLocation
+          />
+        </ReactMapGL>
       </>
     );
   }
