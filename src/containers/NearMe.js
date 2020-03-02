@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
 import WashroomListItem from '../components/WashroomListItem';
 
+
 const { Title } = Typography;
 
 class NearMe extends Component {
@@ -34,6 +35,7 @@ class NearMe extends Component {
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
         <List
+          className="near-me-list"
           loading={isFetching}
           bordered
           dataSource={washrooms}

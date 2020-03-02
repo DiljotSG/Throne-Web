@@ -6,3 +6,4 @@ import WashroomListItem from './WashroomListItem';
 export {
   Nav, Login, StarRating, WashroomListItem,
 };
+
