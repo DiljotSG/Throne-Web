@@ -2,13 +2,13 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
   Typography,
-  List,
   Icon,
-  Rate,
 } from 'antd';
 
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
+
+import NearMeList from '../components/NearMeList';
 
 const { Title } = Typography;
 
@@ -34,25 +34,10 @@ class NearMe extends Component {
       <>
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
-        <pre>
-          { JSON.stringify(this.props) }
-        </pre>
-        <List
-          className="near-me-list"
-          loading={isFetching}
-          bordered
-          dataSource={washrooms}
-          renderItem={(item) => (
-            <List.Item className="near-me-list-item">
-              {item.title}
-              <br />
-              <Rate
-                disabled
-                allowHalf
-                value={item.overall_rating}
-              />
-            </List.Item>
-          )}
+
+        <NearMeList
+          data={washrooms}
+          fetching={isFetching}
         />
       </>
     );
