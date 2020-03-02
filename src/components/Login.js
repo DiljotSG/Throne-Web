@@ -11,6 +11,7 @@ const Login = ({ loginAddress, signUpAddress }) => (
   <Layout className="layout">
     <div className="app-background">
       <Content className="login-container">
+        <img src="/img/logo_transparent.png" alt="Throne Logo" />
         <h1 className="login-title">
           Welcome to Throne
         </h1>

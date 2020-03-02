@@ -34,9 +34,6 @@ class NearMe extends Component {
       <>
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
-        <pre>
-          { JSON.stringify(this.props) }
-        </pre>
         <List
           className="near-me-list"
           loading={isFetching}

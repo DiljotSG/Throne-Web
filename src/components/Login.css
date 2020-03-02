@@ -4,14 +4,15 @@
 
 .login-container {
     padding: 13% 15px;
-    max-width: 500px;
+    max-width: 550px;
     margin: auto;
+    text-align: center;
     min-Height: 100vh !important;
 }
 
 .login-title {
-    text-align: center;
     font-size: 40pt;
+    font-weight: 700;
     color: white;
     padding-bottom: 30px;
 }
