@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import {
   Typography,
   List,
@@ -8,7 +7,7 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
-import { StarRating } from '../components';
+import WashroomListItem from '../components/WashroomListItem';
 
 const { Title } = Typography;
 
@@ -40,17 +39,10 @@ class NearMe extends Component {
           dataSource={washrooms}
           renderItem={(item) => (
             <List.Item
+              className="washroom-list-item-style"
               key={item.id}
             >
-              <NavLink
-                to={`/washrooms/${item.id}`}
-                className="LinkStyle"
-              >
-                {item.title}
-                <StarRating
-                  rating={item.overall_rating}
-                />
-              </NavLink>
+              <WashroomListItem item={item} />
             </List.Item>
           )}
         />
