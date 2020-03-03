@@ -1,13 +1,25 @@
 import actions from '../constants';
 
-const initialState = { washroom: {} };
+const initialState = { washroom: {}, washrooms: [] };
 
 const washroomReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actions.REQUEST_WASHROOMS:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case actions.REQUEST_WASHROOM:
       return {
         ...state,
         isFetching: true,
+      };
+    case actions.RECEIVE_WASHROOMS:
+      return {
+        ...state,
+        isFetching: false,
+        status: action.status,
+        washrooms: action.washrooms,
       };
     case actions.RECEIVE_WASHROOM:
       return {

@@ -1,14 +1,12 @@
 import React, { Component } from 'react';
 import {
-  Typography, List, Spin,
+  List, Rate, Spin,
 } from 'antd';
+import { startCase, round } from 'lodash';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { StarRating } from '../components';
 import { getWashroom } from '../actions/washroomActions';
 import './WashroomDetails.css';
-
-const { Title } = Typography;
 
 class WashroomDetails extends Component {
   componentDidMount() {
@@ -24,71 +22,93 @@ class WashroomDetails extends Component {
     getWashroom(id);
   }
 
-  formatString = (input) => {
-    if (input) {
-      return `${input.charAt(0).toUpperCase() + input.slice(1)}`.replace('_', ' ');
-    }
-    return '';
-  }
-
   render() {
-    const { washroom, isFetching } = this.props;
-    const ratings = washroom.average_ratings;
-    if (isFetching) {
-      return (<Spin />);
+    let washroomItem;
+    const { location, isFetching, washroom } = this.props;
+    try {
+      washroomItem = location.state.washroom;
+    } catch (TypeError) {
+      washroomItem = washroom;
+      if (isFetching) {
+        return (<Spin />);
+      }
     }
+    const ratings = washroomItem.average_ratings;
 
     return (
       <>
-        <Title>{washroom.title}</Title>
+        <h2>{washroomItem.title}</h2>
         <div>
           <h3>
-            {`Floor ${washroom.floor} | ${this.formatString(washroom.gender)}'s`}
+            {`Floor ${washroomItem.floor} | ${startCase(washroomItem.gender)}'s`}
           </h3>
           <div className="in-line">
-            <div className="rating-title"><b>Overall</b></div>
+            <div className="rating-title"><b>Overall Rating</b></div>
             <div className="rating-value">
-              <StarRating
-                rating={washroom.overall_rating}
+              <Rate
+                disabled
+                defaultValue={washroomItem.overall_rating}
+                allowHalf
+                className="overall-rate"
               />
             </div>
           </div>
           <div className="in-line">
             <div className="rating-title">Cleanliness</div>
             <div className="rating-value">
-              {ratings ? ratings.cleanliness : ''}
+              <Rate
+                disabled
+                defaultValue={ratings ? round(ratings.cleanliness, 1) : 0}
+                allowHalf
+                className="rate"
+              />
+
             </div>
           </div>
           <div className="in-line">
             <div className="rating-title">Privacy</div>
             <div className="rating-value">
-              {ratings ? ratings.privacy : ''}
+              <Rate
+                disabled
+                defaultValue={ratings ? round(ratings.privacy, 1) : 0}
+                allowHalf
+                className="rate"
+              />
             </div>
           </div>
           <div className="in-line">
             <div className="rating-title">Paper Quality</div>
             <div className="rating-value">
-              {ratings ? ratings.toilet_paper_quality : ''}
+              <Rate
+                disabled
+                defaultValue={ratings ? round(ratings.toilet_paper_quality, 1) : 0}
+                allowHalf
+                className="rate"
+              />
             </div>
           </div>
           <div className="in-line">
             <div className="rating-title">Smell</div>
             <div className="rating-value">
-              {ratings ? ratings.smell : ''}
+              <Rate
+                disabled
+                defaultValue={ratings ? round(ratings.smell, 1) : 0}
+                allowHalf
+                className="rate"
+              />
             </div>
           </div>
           <div className="amenities-div">
             <List
               header={<b>Amenities</b>}
-              loading={isFetching}
               bordered
               size="small"
-              dataSource={washroom.amenities}
+              dataSource={washroomItem.amenities}
               renderItem={(item) => (
                 <List.Item
                   key={item}
                 >
-                  {this.formatString(item)}
+                  {startCase(item)}
                 </List.Item>
               )}
             />
@@ -99,6 +119,7 @@ class WashroomDetails extends Component {
     );
   }
 }
+
 const mapStateToProps = (state) => {
   const { washroom, isFetching, status } = state.washroomReducer;
   return {
@@ -121,11 +142,21 @@ WashroomDetails.propTypes = {
       id: PropTypes.number.isRequired,
     }).isRequired,
   }).isRequired,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      washroom: PropTypes.object,
+    }),
+  }),
 };
 
 WashroomDetails.defaultProps = {
   washroom: null,
   isFetching: false,
+  location: PropTypes.shape({
+    state: PropTypes.shape({
+      washroom: {},
+    }),
+  }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WashroomDetails);

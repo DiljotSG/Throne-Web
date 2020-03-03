@@ -15,7 +15,6 @@ const { Title } = Typography;
 class NearMe extends Component {
   componentDidMount() {
     const { washrooms } = this.props;
-
     if (washrooms.length === 0) {
       this.getWashrooms();
     }
@@ -60,7 +59,7 @@ class NearMe extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { washrooms, isFetching, status } = state.washroomsReducer;
+  const { washrooms, isFetching, status } = state.washroomReducer;
 
   return {
     status,
