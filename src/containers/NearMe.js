@@ -41,7 +41,7 @@ class NearMe extends Component {
           dataSource={washrooms}
           renderItem={(item) => (
             <List.Item
-              className="washroom-list-item-style"
+              className="washroom-list-item"
               key={item.id}
             >
               <WashroomListItem item={item} />

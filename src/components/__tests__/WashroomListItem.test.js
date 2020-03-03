@@ -17,11 +17,13 @@ const washroom = {
     cleanliness: 3,
     toilet_paper_quality: 4,
   },
+  overall_rating: 5,
   amenities: ['air_dryer'],
+  is_favorite: true,
 };
 
 describe('WashroomListItem', () => {
-  it('Renders the Nav page', () => {
+  it('Renders List Item', () => {
     const component = mount(
       <Router>
         <WashroomListItem
@@ -29,9 +31,10 @@ describe('WashroomListItem', () => {
         />
       </Router>,
     );
-    expect(component.find('NavLink').at(0).prop('href')).toBe('/washrooms/1');
-    // expect(component.find('').at(0).text()).toEqual('Near Me');
-    // expect(component.find('NavLink').at(1).text()).toEqual('Map');
-    console.log(component);
+
+    expect(component.find('NavLink').length).toEqual(1);
+    expect(component.find('Rate').at(0).prop('defaultValue')).toBe(5);
+    expect(component.find('div').at(0).text()).toEqual("Washroom 1Floor 2Woman's 👑");
+    expect(component.find('div').at(17).text()).toEqual('Distance19m');
   });
 });
