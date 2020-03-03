@@ -1,27 +1,35 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
-import { StartCase } from 'react-lodash';
-import StarRating from './StarRating';
 import './WashroomListItem.css';
+import { Rate } from 'antd';
+import { startCase } from 'lodash';
 
 const WashroomListItem = ({ item }) => (
   <NavLink
-    to={`/washrooms/${item.id}`}
+    to={{
+      pathname: `/washrooms/${item.id}`,
+      state: { washroom: item },
+    }}
     className="link-style"
   >
     <div className="left-side">
       {item.title}
       <div className="in-line">
-        <StarRating
-          rating={item.overall_rating}
+        <Rate
+          disabled
+          defaultValue={item.overall_rating}
+          allowHalf
+          className="rating"
         />
         <span className="in-line-text">
           {`Floor ${item.floor}`}
         </span>
         <span className="in-line-text">
-          <StartCase string={`${item.gender}`} />
-          &apos;s
+          <span>
+            {startCase(item.gender)}
+            &apos;s
+          </span>
         </span>
         {item.is_favorite ? <span aria-label="Favorite" role="img" className="in-line-text"> 👑</span> : null}
       </div>
