@@ -11,6 +11,7 @@ const Login = ({ loginAddress, signUpAddress }) => (
   <Layout className="layout">
     <div className="app-background">
       <Content className="login-container">
+        <img src="/img/logo_transparent.png" alt="Throne Logo" />
         <h1 className="login-title">
           Welcome to Throne
         </h1>
@@ -41,18 +42,8 @@ const Login = ({ loginAddress, signUpAddress }) => (
 );
 
 Login.propTypes = {
-  loginAddress: PropTypes.shape({
-    href: PropTypes.string,
-    origin: PropTypes.string,
-    host: PropTypes.string,
-    hostname: PropTypes.string,
-  }).isRequired,
-  signUpAddress: PropTypes.shape({
-    href: PropTypes.string,
-    origin: PropTypes.string,
-    host: PropTypes.string,
-    hostname: PropTypes.string,
-  }).isRequired,
+  loginAddress: PropTypes.string.isRequired,
+  signUpAddress: PropTypes.string.isRequired,
 };
 
 export default Login;

@@ -3,7 +3,7 @@ import { mount } from 'enzyme';
 
 import fetchMock from 'fetch-mock';
 import { act } from 'react-dom/test-utils';
-
+import { BrowserRouter as Router } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
@@ -18,16 +18,40 @@ const store = setupStore({});
 
 fetchMock.get('https://testapi.com/washrooms', [
   {
+    id: 1,
     title: 'Washroom 1',
+    gender: 'men',
+    floor: 2,
+    average_rating: {
+      smell: 1,
+      privacy: 2,
+      cleanliness: 3,
+      toilet_paper_quality: 4,
+    },
+    overall_rating: 5,
+    amenities: ['air_dryer'],
+    is_favorite: true,
   }, {
+    id: 2,
     title: 'Washroom 2',
+    gender: 'women',
+    floor: 1,
+    average_rating: {
+      smell: 1,
+      privacy: 2,
+      cleanliness: 3,
+      toilet_paper_quality: 4,
+    },
+    overall_rating: 5,
+    amenities: ['air_dryer'],
+    is_favorite: false,
   },
 ]);
 
 describe('NearMe', () => {
   it('Renders the "Near me" page', async () => {
     await act(async () => {
-      const component = mount(<NearMe store={store} />);
+      const component = mount(<Router><NearMe store={store} /></Router>);
 
       expect(component.find('Title').text()).toEqual('Near Me');
     });
@@ -36,10 +60,10 @@ describe('NearMe', () => {
 
   it('Displays a list of locations', async () => {
     await act(async () => {
-      const component = mount(<NearMe store={store} />);
-      expect(component.find('li')).toHaveLength(2);
-      expect(component.find('li').first().text()).toEqual('Washroom 1');
-      expect(component.find('li').at(1).text()).toEqual('Washroom 2');
+      const component = mount(<Router><NearMe store={store} /></Router>);
+      expect(component.find('li.near-me-list-item')).toHaveLength(2);
+      expect(component.find('li.near-me-list-item').first().text()).toEqual("Washroom 1Floor 2Men's 👑Distance19m");
+      expect(component.find('li.near-me-list-item').at(1).text()).toEqual("Washroom 2Floor 1Women'sDistance19m");
     });
   });
 });

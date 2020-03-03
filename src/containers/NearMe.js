@@ -8,7 +8,7 @@ import {
 } from 'antd';
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
-import { StarRating } from '../components';
+import { WashroomListItem } from '../components';
 
 const { Title } = Typography;
 
@@ -34,22 +34,16 @@ class NearMe extends Component {
         <Icon type="environment" className="icon-title" />
         <Title>Near Me</Title>
         <List
+          className="near-me-list"
           loading={isFetching}
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
             <List.Item
+              className="near-me-list-item"
               key={item.id}
             >
-              <NavLink
-                to={`/washrooms/${item.id}`}
-                className="LinkStyle"
-              >
-                {item.title}
-                <StarRating
-                  rating={item.overall_rating}
-                />
-              </NavLink>
+              <WashroomListItem item={item} />
             </List.Item>
           )}
         />
