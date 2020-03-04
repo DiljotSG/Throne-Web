@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './WashroomListItem.css';
-import { Rate } from 'antd';
 import { startCase } from 'lodash';
+import { Rate } from 'antd';
 
 const WashroomListItem = ({ item }) => (
   <NavLink
@@ -27,7 +27,6 @@ const WashroomListItem = ({ item }) => (
         </span>
         <span className="in-line-text">
           {startCase(item.gender)}
-          &apos;s
         </span>
         {item.is_favorite ? <span aria-label="Favorite" role="img" className="in-line-text"> 👑</span> : null}
       </div>
