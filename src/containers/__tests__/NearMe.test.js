@@ -61,8 +61,8 @@ describe('NearMe', () => {
     await act(async () => {
       const component = mount(<Router><NearMe store={store} /></Router>);
       expect(component.find('li.near-me-list-item')).toHaveLength(2);
-      expect(component.find('li.near-me-list-item').first().text()).toBe("Washroom 1");
-      expect(component.find('li.near-me-list-item').at(1).text()).toBe("Washroom 2");
+      expect(component.find('li.near-me-list-item').first().text()).toBe('Washroom 1');
+      expect(component.find('li.near-me-list-item').at(1).text()).toBe('Washroom 2');
     });
   });
 });
