@@ -5,6 +5,7 @@ describe('action reducer', () => {
   it('should return the initial state', () => {
     expect(washroomReducer(undefined, {})).toEqual(
       {
+        washroom: {},
         washrooms: [],
       },
     );

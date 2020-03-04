@@ -16,38 +16,72 @@ export default function setupStore(initialState) {
 
 const store = setupStore({});
 
-fetchMock.get('https://testapi.com/washrooms/1', [
+const washroom = {
+  id: 1,
+  title: 'Washroom 1',
+  gender: 'women',
+  floor: 2,
+  overall_rating: 5,
+  average_ratings: {
+    smell: 1,
+    privacy: 2,
+    cleanliness: 3,
+    toilet_paper_quality: 4,
+  },
+  amenities: ['air_dryer'],
+  is_favorite: false,
+};
+
+fetchMock.get('https://testapi.com/washrooms/1',
   {
+    id: 1,
     title: 'Washroom 1',
-    gender: 'woman',
+    gender: 'women',
     floor: 2,
-    average_rating: {
+    overall_rating: 5,
+    average_ratings: {
       smell: 1,
       privacy: 2,
       cleanliness: 3,
       toilet_paper_quality: 4,
     },
     amenities: ['air_dryer'],
-
-  },
-]);
+    is_favorite: false,
+  });
 
 describe('WashroomDetails', () => {
-  it('Renders the "WashroomDetails" page', async () => {
+  it('Displays the passed details', async () => {
     await act(async () => {
-      const component = mount(<WashroomDetails store={store} />);
+      const match = { params: { id: 1 } };
+      const location = { state: { washroom } };
+      const component = mount(<WashroomDetails store={store} match={match} location={location} />);
 
-      expect(component.find('Title').text()).toEqual('Washroom 1');
+      expect(component.find('h2').length).toEqual(1);
+      expect(component.find('Rate').at(0).prop('defaultValue')).toBe(5);
+      expect(component.find('Rate').at(2).prop('defaultValue')).toBe(3);
+      expect(component.find('Rate').at(4).prop('defaultValue')).toBe(2);
+      expect(component.find('Rate').at(6).prop('defaultValue')).toBe(4);
+      expect(component.find('Rate').at(8).prop('defaultValue')).toBe(1);
+      expect(component.find('h3').text()).toEqual("Floor 2 | Women's");
+      expect(component.find('li.ant-list-item').length).toEqual(1);
+      expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
     });
   });
 
 
-  it('Displays washroom details', async () => {
+  it('Fetches washroom details', async () => {
     await act(async () => {
-      const component = mount(<WashroomDetails store={store} />);
-      expect(component.find('h3').first().text()).toEqual("Floor 2 | Women's");
-      expect(component.find('li')).toHaveLength(1);
-      expect(component.find('li').first().text()).toEqual('Air Dryer');
+      const match = { params: { id: 1 } };
+      const component = mount(<WashroomDetails store={store} match={match} location={{}} />);
+      expect(component.find('h2').length).toEqual(1);
+      expect(component.find('Rate').at(0).prop('defaultValue')).toBe(5);
+      expect(component.find('Rate').at(2).prop('defaultValue')).toBe(3);
+      expect(component.find('Rate').at(4).prop('defaultValue')).toBe(2);
+      expect(component.find('Rate').at(6).prop('defaultValue')).toBe(4);
+      expect(component.find('Rate').at(8).prop('defaultValue')).toBe(1);
+      expect(component.find('h3').text()).toEqual("Floor 2 | Women's");
+      expect(component.find('li.ant-list-item').length).toEqual(1);
+      expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
     });
   });
 });

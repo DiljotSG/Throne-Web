@@ -135,7 +135,22 @@ const mapDispatchToProps = (dispatch) => ({
 
 WashroomDetails.propTypes = {
   getWashroom: PropTypes.func.isRequired,
-  washroom: PropTypes.object, // eslint-disable-line react/forbid-prop-types
+  washroom: PropTypes.shape({
+    id: PropTypes.number,
+    title: PropTypes.string,
+    gender: PropTypes.string,
+    floor: PropTypes.number,
+    overall_rating: PropTypes.number,
+    average_ratings: PropTypes.shape({
+      smell: PropTypes.number,
+      privacy: PropTypes.number,
+      cleanliness: PropTypes.number,
+      toilet_paper_quality: PropTypes.number,
+    }),
+    amenities: PropTypes.instanceOf(Array),
+    is_favorite: PropTypes.bool,
+
+  }),
   isFetching: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({

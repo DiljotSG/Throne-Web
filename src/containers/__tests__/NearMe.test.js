@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
-
 import NearMe from '../NearMe';
 
 export default function setupStore(initialState) {
@@ -62,8 +61,8 @@ describe('NearMe', () => {
     await act(async () => {
       const component = mount(<Router><NearMe store={store} /></Router>);
       expect(component.find('li.near-me-list-item')).toHaveLength(2);
-      expect(component.find('li.near-me-list-item').first().text()).toEqual("Washroom 1Floor 2Men's 👑Distance19m");
-      expect(component.find('li.near-me-list-item').at(1).text()).toEqual("Washroom 2Floor 1Women'sDistance19m");
+      expect(component.find('div.left-side').first().text()).toBe("Washroom 1Floor 2Men's 👑");
+      expect(component.find('div.left-side').at(1).text()).toBe("Washroom 2Floor 1Women's");
     });
   });
 });
