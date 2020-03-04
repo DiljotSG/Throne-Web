@@ -54,7 +54,7 @@ describe('NearMe', () => {
       const component = mount(
         <Router>
           <NearMe store={store} />
-        </Router>
+        </Router>,
       );
 
       expect(component.find('Title').text()).toEqual('Near Me');
@@ -67,12 +67,12 @@ describe('NearMe', () => {
       const component = mount(
         <Router>
           <NearMe store={store} />
-        </Router>
+        </Router>,
       );
 
       expect(component.find('WashroomListItem')).toHaveLength(2);
-      expect(component.find('WashroomListItem').first().prop('item').title).toEqual("Washroom 1");
-      expect(component.find('WashroomListItem').at(1).prop('item').title).toEqual("Washroom 2");
+      expect(component.find('WashroomListItem').first().prop('item').title).toEqual('Washroom 1');
+      expect(component.find('WashroomListItem').at(1).prop('item').title).toEqual('Washroom 2');
     });
   });
 });
