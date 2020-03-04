@@ -31,7 +31,7 @@ describe('WashroomListItem', () => {
 
     expect(component.find('NavLink').length).toEqual(1);
     expect(component.find('Rate').at(0).prop('value')).toBe(5);
-    expect(component.find('div').at(0).text()).toEqual("Washroom 1Floor 2Women 👑");
+    expect(component.find('div').at(0).text()).toEqual('Washroom 1Floor 2Women 👑');
     expect(component.find('div.right-side').first().text()).toEqual('Distance19m');
   });
 });
