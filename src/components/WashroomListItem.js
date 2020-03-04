@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './WashroomListItem.css';
-import { Rate } from 'antd';
 import { startCase } from 'lodash';
+import { Rate } from 'antd';
 
 const WashroomListItem = ({ item }) => (
   <NavLink
