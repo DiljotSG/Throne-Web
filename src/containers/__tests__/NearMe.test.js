@@ -51,7 +51,11 @@ fetchMock.get('https://testapi.com/washrooms', [
 describe('NearMe', () => {
   it('Renders the "Near me" page', async () => {
     await act(async () => {
-      const component = mount(<Router><NearMe store={store} /></Router>);
+      const component = mount(
+        <Router>
+          <NearMe store={store} />
+        </Router>
+      );
 
       expect(component.find('Title').text()).toEqual('Near Me');
     });
@@ -60,10 +64,15 @@ describe('NearMe', () => {
 
   it('Displays a list of locations', async () => {
     await act(async () => {
-      const component = mount(<Router><NearMe store={store} /></Router>);
-      expect(component.find('li.near-me-list-item')).toHaveLength(2);
-      expect(component.find('li.near-me-list-item').first().text()).toEqual("Washroom 1Floor 2Men's 👑Distance19m");
-      expect(component.find('li.near-me-list-item').at(1).text()).toEqual("Washroom 2Floor 1Women'sDistance19m");
+      const component = mount(
+        <Router>
+          <NearMe store={store} />
+        </Router>
+      );
+
+      expect(component.find('WashroomListItem')).toHaveLength(2);
+      expect(component.find('WashroomListItem').first().prop('item').title).toEqual("Washroom 1");
+      expect(component.find('WashroomListItem').at(1).prop('item').title).toEqual("Washroom 2");
     });
   });
 });

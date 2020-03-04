@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import './WashroomListItem.css';
-import { Rate } from 'antd';
+import { Rate, Col, Row } from 'antd';
 import { startCase } from 'lodash';
 
 const WashroomListItem = ({ item }) => (
@@ -10,33 +10,36 @@ const WashroomListItem = ({ item }) => (
     to={{
       pathname: `/washrooms/${item.id}`,
       state: { washroom: item },
-    }}
+    }
+    }
     className="link-style"
   >
-    <div className="left-side">
-      {item.title}
-      <div className="in-line">
-        <Rate
-          disabled
-          defaultValue={item.overall_rating}
-          allowHalf
-          className="rating"
-        />
-        <span className="in-line-text">
-          {`Floor ${item.floor}`}
+    <Row className="row">
+      <Col flex="auto" className="left-side">
+        {item.title}
+        <div className="in-line">
+          <Rate
+            disabled
+            value={item.overall_rating}
+            allowHalf
+            className="rating"
+          />
+          <span className="in-line-text">
+            {`Floor ${item.floor}`}
+          </span>
+          <span className="in-line-text">
+            {startCase(item.gender)}
+            &apos;s
         </span>
-        <span className="in-line-text">
-          {startCase(item.gender)}
-          &apos;s
-        </span>
-        {item.is_favorite ? <span aria-label="Favorite" role="img" className="in-line-text"> 👑</span> : null}
-      </div>
-    </div>
-    <div className="right-side">
-      Distance
-      <h4>19m</h4>
-    </div>
-  </NavLink>
+          {item.is_favorite ? <span aria-label="Favorite" role="img" className="in-line-text"> 👑</span> : null}
+        </div>
+      </Col>
+      <Col flex="80px" className="right-side">
+        Distance
+        <h4>19m</h4>
+      </Col>
+    </Row>
+  </NavLink >
 );
 
 WashroomListItem.propTypes = {
