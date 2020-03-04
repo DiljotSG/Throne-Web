@@ -27,7 +27,6 @@ const WashroomListItem = ({ item }) => (
         </span>
         <span className="in-line-text">
           {startCase(item.gender)}
-          &apos;s
         </span>
         {item.is_favorite ? <span aria-label="Favorite" role="img" className="in-line-text"> 👑</span> : null}
       </div>
