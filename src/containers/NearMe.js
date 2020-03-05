@@ -6,8 +6,10 @@ import {
   Icon,
 } from 'antd';
 import { connect } from 'react-redux';
-import { NavLink } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
+import { WashroomListItem } from '../components';
+
+import './NearMe.css';
 
 const { Title } = Typography;
 
@@ -42,14 +44,7 @@ class NearMe extends Component {
               className="near-me-list-item"
               key={item.id}
             >
-              <NavLink
-                to={{
-                  pathname: `/washrooms/${item.id}`,
-                  state: { washroom: item },
-                }}
-              >
-                {item.title}
-              </NavLink>
+              <WashroomListItem item={item} />
             </List.Item>
           )}
         />
