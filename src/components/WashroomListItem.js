@@ -11,7 +11,13 @@ const { Title, Text } = Typography;
 const renderFavoriteIcon = (isFavourite) => {
   if (isFavourite) {
     return (
-      <span aria-label="Favorite" role="img"> 👑</span>
+      <span
+        aria-label="Favorite"
+        role="img"
+        className="list-item-favorite"
+      >
+        👑
+      </span>
     );
   }
 
