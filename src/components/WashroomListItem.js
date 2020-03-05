@@ -29,10 +29,10 @@ const WashroomListItem = ({ item }) => (
   <Row className="list-item">
     <Col span={20}>
       <Text
-        className="list-item-title"
+        className="list-item-comment"
         strong
       >
-        {item.title}
+        {item.comment}
       </Text>
       <div className="in-line">
         <Rate
@@ -71,7 +71,7 @@ const WashroomListItem = ({ item }) => (
 WashroomListItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
+    comment: PropTypes.string.isRequired,
     overall_rating: PropTypes.number.isRequired,
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
