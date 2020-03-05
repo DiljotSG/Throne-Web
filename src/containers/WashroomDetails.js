@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin,
+  List, Rate, Spin, Row, Col, Divider,
 } from 'antd';
 import { startCase, round } from 'lodash';
 import PropTypes from 'prop-types';
@@ -37,84 +37,91 @@ class WashroomDetails extends Component {
 
     return (
       <>
-        <h2>{washroomItem.title}</h2>
-        <div>
-          <h3>
-            {`Floor ${washroomItem.floor} | ${startCase(washroomItem.gender)}'s`}
-          </h3>
-          <div className="in-line">
-            <div className="rating-title"><b>Overall Rating</b></div>
-            <div className="rating-value">
-              <Rate
-                disabled
-                defaultValue={washroomItem.overall_rating}
-                allowHalf
-                className="overall-rate"
-              />
-            </div>
-          </div>
-          <div className="in-line">
-            <div className="rating-title">Cleanliness</div>
-            <div className="rating-value">
-              <Rate
-                disabled
-                defaultValue={ratings ? round(ratings.cleanliness, 1) : 0}
-                allowHalf
-                className="rate"
-              />
-
-            </div>
-          </div>
-          <div className="in-line">
-            <div className="rating-title">Privacy</div>
-            <div className="rating-value">
-              <Rate
-                disabled
-                defaultValue={ratings ? round(ratings.privacy, 1) : 0}
-                allowHalf
-                className="rate"
-              />
-            </div>
-          </div>
-          <div className="in-line">
-            <div className="rating-title">Paper Quality</div>
-            <div className="rating-value">
-              <Rate
-                disabled
-                defaultValue={ratings ? round(ratings.toilet_paper_quality, 1) : 0}
-                allowHalf
-                className="rate"
-              />
-            </div>
-          </div>
-          <div className="in-line">
-            <div className="rating-title">Smell</div>
-            <div className="rating-value">
-              <Rate
-                disabled
-                defaultValue={ratings ? round(ratings.smell, 1) : 0}
-                allowHalf
-                className="rate"
-              />
-            </div>
-          </div>
-          <div className="amenities-div">
-            <List
-              header={<b>Amenities</b>}
-              bordered
-              size="small"
-              dataSource={washroomItem.amenities}
-              renderItem={(item) => (
-                <List.Item
-                  key={item}
-                >
-                  {startCase(item)}
-                </List.Item>
-              )}
+        <Row>
+          <Col span={18}>
+            <h2>{washroomItem.title}</h2>
+          </Col>
+          <Col span={6} className="rating-value">
+            <h2>{washroomItem.is_favorite ? '👑' : ''}</h2>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>
+            <h3>
+              {`Floor ${washroomItem.floor} | ${startCase(washroomItem.gender)}`}
+            </h3>
+          </Col>
+          <Col flex="auto">
+            <Divider />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}><b>Overall Rating</b></Col>
+          <Col span={12} className="rating-value">
+            <Rate
+              disabled
+              value={washroomItem.overall_rating}
+              allowHalf
+              className="overall-rate"
             />
-          </div>
-          <div />
-        </div>
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>Cleanliness</Col>
+          <Col span={12} className="rating-value">
+            <Rate
+              disabled
+              value={ratings ? round(ratings.cleanliness, 1) : 0}
+              allowHalf
+              className="rate"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>Privacy</Col>
+          <Col span={12} className="rating-value">
+            <Rate
+              disabled
+              value={ratings ? round(ratings.privacy, 1) : 0}
+              allowHalf
+              className="rate"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>Paper Quality</Col>
+          <Col span={12} className="rating-value">
+            <Rate
+              disabled
+              value={ratings ? round(ratings.toilet_paper_quality, 1) : 0}
+              allowHalf
+              className="rate"
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col span={12}>Smell</Col>
+          <Col span={12} className="rating-value">
+            <Rate
+              disabled
+              value={ratings ? round(ratings.smell, 1) : 0}
+              allowHalf
+              className="rate"
+            />
+          </Col>
+        </Row>
+        <List
+          header={<b>Amenities</b>}
+          size="small"
+          dataSource={washroomItem.amenities}
+          renderItem={(item) => (
+            <List.Item
+              key={item}
+            >
+              {startCase(item)}
+            </List.Item>
+          )}
+        />
       </>
     );
   }

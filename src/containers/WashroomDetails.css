@@ -1,20 +1,5 @@
-.in-line {
-  display:flex;
-  flex-direction:row;
-}
-
-.rating-title {
-  width:50%; 
-}
-
 .rating-value {
-  width: 50%;
   text-align: right;
-}
-
-.amenities-div {
-  margin-bottom: 12px;
-  margin-top: 12px;
 }
 
 .overall-rate {
