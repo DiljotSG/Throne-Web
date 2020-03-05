@@ -5,7 +5,7 @@ import WashroomListItem from '../WashroomListItem';
 
 const washroom = {
   id: 1,
-  title: 'Washroom 1',
+  comment: 'Washroom 1',
   gender: 'women',
   floor: 2,
   average_rating: {

@@ -19,7 +19,7 @@ const store = setupStore({});
 fetchMock.get('https://testapi.com/washrooms', [
   {
     id: 1,
-    title: 'Washroom 1',
+    comment: 'Washroom 1',
     gender: 'men',
     floor: 2,
     average_rating: {
@@ -33,7 +33,7 @@ fetchMock.get('https://testapi.com/washrooms', [
     is_favorite: true,
   }, {
     id: 2,
-    title: 'Washroom 2',
+    comment: 'Washroom 2',
     gender: 'women',
     floor: 1,
     average_rating: {
@@ -74,15 +74,15 @@ describe('NearMe', () => {
 
       const listItem1 = component.find('WashroomListItem').first();
 
-      expect(listItem1.prop('item').title).toEqual('Washroom 1');
-      expect(listItem1.find('.list-item-title').first().text()).toEqual('Washroom 1');
+      expect(listItem1.prop('item').comment).toEqual('Washroom 1');
+      expect(listItem1.find('.list-item-comment').first().text()).toEqual('Washroom 1');
       expect(listItem1.find('.list-item-floor').first().text()).toEqual('Floor 2');
       expect(listItem1.find('.list-item-gender').first().text()).toEqual('Men');
 
       const listItem2 = component.find('WashroomListItem').at(1);
 
-      expect(listItem2.prop('item').title).toEqual('Washroom 2');
-      expect(listItem2.find('.list-item-title').first().text()).toEqual('Washroom 2');
+      expect(listItem2.prop('item').comment).toEqual('Washroom 2');
+      expect(listItem2.find('.list-item-comment').first().text()).toEqual('Washroom 2');
       expect(listItem2.find('.list-item-floor').first().text()).toEqual('Floor 1');
       expect(listItem2.find('.list-item-gender').first().text()).toEqual('Women');
     });
