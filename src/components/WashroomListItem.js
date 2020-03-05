@@ -1,41 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { NavLink } from 'react-router-dom';
 import './WashroomListItem.css';
 import { startCase } from 'lodash';
-import { Rate } from 'antd';
+import {
+  Row, Col, Typography, Divider, Rate,
+} from 'antd';
+
+const { Title, Text } = Typography;
+
+const renderFavoriteIcon = (isFavourite) => {
+  if (isFavourite) {
+    return (
+      <span aria-label="Favorite" role="img"> 👑</span>
+    );
+  }
+
+  return null;
+};
 
 const WashroomListItem = ({ item }) => (
-  <NavLink
-    to={{
-      pathname: `/washrooms/${item.id}`,
-      state: { washroom: item },
-    }}
-    className="link-style"
-  >
-    <div className="left-side">
-      {item.title}
+  <Row className="list-item">
+    <Col span={20}>
+      <Text
+        className="list-item-title"
+        strong
+      >
+        {item.title}
+      </Text>
       <div className="in-line">
         <Rate
           disabled
           value={item.overall_rating}
           allowHalf
-          className="rating"
+          className="list-item-rating"
         />
-        <span className="in-line-text">
+        <Divider type="vertical" />
+        <Text className="list-item-floor">
           {`Floor ${item.floor}`}
-        </span>
-        <span className="in-line-text">
+        </Text>
+        <Divider type="vertical" />
+        <Text className="list-item-gender">
           {startCase(item.gender)}
-        </span>
-        {item.is_favorite ? <span aria-label="Favorite" role="img" className="in-line-text"> 👑</span> : null}
+        </Text>
+        <Divider type="vertical" />
+        {renderFavoriteIcon(item.is_favorite)}
       </div>
-    </div>
-    <div className="right-side">
-      Distance
-      <h4>19m</h4>
-    </div>
-  </NavLink>
+    </Col>
+
+    <Col span={4}>
+      <div className="list-item-distance">
+        Distance
+        <Title
+          className="list-item-distance-value"
+          level={4}
+        >
+          19m
+        </Title>
+      </div>
+    </Col>
+  </Row>
 );
 
 WashroomListItem.propTypes = {
