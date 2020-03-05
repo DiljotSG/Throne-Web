@@ -9,6 +9,8 @@ import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
 import { WashroomListItem } from '../components';
 
+import './NearMe.css';
+
 const { Title } = Typography;
 
 class NearMe extends Component {

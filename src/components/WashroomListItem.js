@@ -1,10 +1,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import './WashroomListItem.css';
 import { startCase } from 'lodash';
 import {
   Row, Col, Typography, Divider, Rate,
 } from 'antd';
+
+import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
 

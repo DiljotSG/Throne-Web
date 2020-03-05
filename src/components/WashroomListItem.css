@@ -20,15 +20,6 @@
   margin: 2px 8px;
 }
 
-.near-me-list-item {
-  padding: 0px 8px !important;
-}
-
-.in-line {
-  display: flex;
-  flex-direction: row;
-}
-
 .list-item-distance {
   text-align: right;
 }
@@ -39,4 +30,9 @@
   margin-bottom: 8px !important;
   line-height: 90%;
   color: inherit !important;
+}
+
+.in-line {
+  display: flex;
+  flex-direction: row;
 }
