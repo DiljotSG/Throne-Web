@@ -29,11 +29,12 @@ describe('WashroomListItem', () => {
       </Router>,
     );
 
-    expect(component.find('NavLink').length).toEqual(1);
-    expect(component.find('Rate').at(0).prop('value')).toBe(5);
-    expect(component.find('.list-item-floor').first().text()).toEqual('Floor 2');
-    expect(component.find('.list-item-gender').first().text()).toEqual('Women');
-    expect(component.find('.list-item-favorite').first().text()).toEqual('👑');
-    expect(component.find('.distance-value').first().text()).toEqual('19m');
+    const listItem = component.find('Row.list-item');
+
+    expect(listItem.find('Rate').first().prop('value')).toBe(5);
+    expect(listItem.find('.list-item-floor').first().text()).toEqual('Floor 2');
+    expect(listItem.find('.list-item-gender').first().text()).toEqual('Women');
+    expect(listItem.find('.list-item-favorite').first().text()).toEqual('👑');
+    expect(listItem.find('.list-item-distance-value').first().text()).toEqual('19m');
   });
 });
