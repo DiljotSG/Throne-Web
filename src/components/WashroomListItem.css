@@ -1,6 +1,7 @@
 .list-item {
   padding: 5px 0;
   width: 100%;
+  color: inherit !important;
 }
 
 .list-item-comment {
