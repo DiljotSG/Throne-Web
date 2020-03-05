@@ -4,11 +4,12 @@ import {
   Typography,
   List,
   Icon,
-  Rate,
 } from 'antd';
-
 import { connect } from 'react-redux';
 import { getWashrooms } from '../actions/washroomActions';
+import { WashroomListItem } from '../components';
+
+import './NearMe.css';
 
 const { Title } = Typography;
 
@@ -40,14 +41,11 @@ class NearMe extends Component {
           bordered
           dataSource={washrooms}
           renderItem={(item) => (
-            <List.Item className="near-me-list-item">
-              {item.title}
-              <br />
-              <Rate
-                disabled
-                allowHalf
-                value={item.overall_rating}
-              />
+            <List.Item
+              className="near-me-list-item"
+              key={item.id}
+            >
+              <WashroomListItem item={item} />
             </List.Item>
           )}
         />
