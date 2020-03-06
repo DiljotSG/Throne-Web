@@ -52,18 +52,25 @@ fetchMock.get('https://testapi.com/washrooms/1',
 describe('WashroomDetails', () => {
   it('Displays the passed details', async () => {
     await act(async () => {
-      const match = { params: { id: 1 } };
+      const match = { params: { id: '1' } };
       const location = { state: { washroom } };
-      const component = mount(<WashroomDetails store={store} match={match} location={location} />);
+
+      const component = mount(
+        <WashroomDetails
+          store={store}
+          match={match}
+          location={location}
+        />,
+      );
 
       expect(component.find('h2').length).toEqual(2);
       expect(component.find('h2').first().text()).toEqual('Washroom 1');
       expect(component.find('h2').at(1).text()).toEqual('👑');
-      expect(component.find('Rate').at(0).prop('value')).toBe(5);
-      expect(component.find('Rate').at(2).prop('value')).toBe(3);
-      expect(component.find('Rate').at(4).prop('value')).toBe(2);
-      expect(component.find('Rate').at(6).prop('value')).toBe(4);
-      expect(component.find('Rate').at(8).prop('value')).toBe(1);
+      expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
+      expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
+      expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
+      expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
+      expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
       expect(component.find('h3').text()).toEqual('Floor 2 | Women');
       expect(component.find('li.ant-list-item').length).toEqual(1);
       expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
@@ -73,16 +80,24 @@ describe('WashroomDetails', () => {
 
   it('Fetches washroom details', async () => {
     await act(async () => {
-      const match = { params: { id: 1 } };
-      const component = mount(<WashroomDetails store={store} match={match} location={{}} />);
+      const match = { params: { id: '1' } };
+
+      const component = mount(
+        <WashroomDetails
+          store={store}
+          match={match}
+          location={{}}
+        />,
+      );
+
       expect(component.find('h2').length).toEqual(2);
       expect(component.find('h2').first().text()).toEqual('Washroom 1');
       expect(component.find('h2').at(1).text()).toEqual('👑');
-      expect(component.find('Rate').at(0).prop('value')).toBe(5);
-      expect(component.find('Rate').at(2).prop('value')).toBe(3);
-      expect(component.find('Rate').at(4).prop('value')).toBe(2);
-      expect(component.find('Rate').at(6).prop('value')).toBe(4);
-      expect(component.find('Rate').at(8).prop('value')).toBe(1);
+      expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
+      expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
+      expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
+      expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
+      expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
       expect(component.find('h3').text()).toEqual('Floor 2 | Women');
       expect(component.find('li.ant-list-item').length).toEqual(1);
       expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
