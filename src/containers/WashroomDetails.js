@@ -119,8 +119,7 @@ WashroomDetails.propTypes = {
     }),
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
-
-  }),
+  }).isRequired,
   isFetching: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
@@ -135,7 +134,6 @@ WashroomDetails.propTypes = {
 };
 
 WashroomDetails.defaultProps = {
-  washroom: null,
   isFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({
