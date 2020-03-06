@@ -6,19 +6,23 @@ import {
 } from 'antd';
 
 import './WashroomListItem.css';
+import { NavLink } from 'react-router-dom';
 
 const { Title, Text } = Typography;
 
 const renderFavoriteIcon = (isFavourite) => {
   if (isFavourite) {
     return (
-      <span
-        aria-label="Favorite"
-        role="img"
-        className="list-item-favorite"
-      >
-        👑
-      </span>
+      <>
+        <Divider type="vertical" />
+        <span
+          aria-label="Favorite"
+          role="img"
+          className="list-item-favorite"
+        >
+          👑
+        </span>
+      </>
     );
   }
 
@@ -26,46 +30,55 @@ const renderFavoriteIcon = (isFavourite) => {
 };
 
 const WashroomListItem = ({ item }) => (
-  <Row className="list-item">
-    <Col span={20}>
-      <Text
-        className="list-item-comment"
-        strong
-      >
-        {item.comment}
-      </Text>
-      <div className="in-line">
-        <Rate
-          disabled
-          value={item.overall_rating}
-          allowHalf
-          className="list-item-rating"
-        />
-        <Divider type="vertical" />
-        <Text className="list-item-floor">
-          {`Floor ${item.floor}`}
-        </Text>
-        <Divider type="vertical" />
-        <Text className="list-item-gender">
-          {startCase(item.gender)}
-        </Text>
-        <Divider type="vertical" />
-        {renderFavoriteIcon(item.is_favorite)}
-      </div>
-    </Col>
 
-    <Col span={4}>
-      <div className="list-item-distance">
-        Distance
-        <Title
-          className="list-item-distance-value"
-          level={4}
+  <NavLink
+    to={{
+      pathname: `/washrooms/${item.id}`,
+      state: { washroom: item },
+    }}
+    className="list-item"
+  >
+    <Row>
+      <Col span={20}>
+        <Text
+          className="list-item-comment"
+          strong
         >
-          19m
-        </Title>
-      </div>
-    </Col>
-  </Row>
+          {item.comment}
+        </Text>
+        <div className="in-line">
+          <Rate
+            disabled
+            value={item.overall_rating}
+            allowHalf
+            className="list-item-rating"
+          />
+          <Divider type="vertical" />
+          <Text className="list-item-floor">
+            {`Floor ${item.floor}`}
+          </Text>
+          <Divider type="vertical" />
+          <Text className="list-item-gender">
+            {startCase(item.gender)}
+          </Text>
+          {renderFavoriteIcon(item.is_favorite)}
+        </div>
+      </Col>
+
+      <Col span={4}>
+        <div className="list-item-distance">
+          Distance
+          <Title
+            className="list-item-distance-value"
+            level={4}
+          >
+            19m
+          </Title>
+        </div>
+      </Col>
+    </Row>
+  </NavLink>
+
 );
 
 WashroomListItem.propTypes = {

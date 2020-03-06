@@ -7,7 +7,6 @@ import { BrowserRouter as Router } from 'react-router-dom';
 import { applyMiddleware, createStore } from 'redux';
 import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
-
 import NearMe from '../NearMe';
 
 export default function setupStore(initialState) {

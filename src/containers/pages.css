@@ -2,3 +2,13 @@
   font-size: 30px;
   fill: #bbb;
 }
+
+.in-line {
+  display: flex;
+  flex-direction: row;
+}
+
+.LinkStyle {
+  color: inherit;
+  width: 100%;
+}

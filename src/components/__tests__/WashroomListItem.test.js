@@ -29,7 +29,7 @@ describe('WashroomListItem', () => {
       </Router>,
     );
 
-    const listItem = component.find('Row.list-item');
+    const listItem = component.find('Row');
 
     expect(listItem.find('Rate').first().prop('value')).toBe(5);
     expect(listItem.find('.list-item-floor').first().text()).toEqual('Floor 2');

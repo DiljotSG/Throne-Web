@@ -1,6 +1,7 @@
 .list-item {
   padding: 5px 0;
   width: 100%;
+  color: inherit !important;
 }
 
 .list-item-comment {
@@ -16,7 +17,7 @@
 
 .list-item .ant-divider-vertical {
   top: 0;
-  height: revert;
+  height: 1.2em;
   margin: 2px 8px;
 }
 
@@ -30,9 +31,4 @@
   margin-bottom: 8px !important;
   line-height: 90%;
   color: inherit !important;
-}
-
-.in-line {
-  display: flex;
-  flex-direction: row;
 }

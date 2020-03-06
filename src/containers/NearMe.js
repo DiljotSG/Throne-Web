@@ -16,7 +16,6 @@ const { Title } = Typography;
 class NearMe extends Component {
   componentDidMount() {
     const { washrooms } = this.props;
-
     if (washrooms.length === 0) {
       this.getWashrooms();
     }
