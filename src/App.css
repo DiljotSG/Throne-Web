@@ -6,7 +6,10 @@
 }
 
 .app-content {
-    padding: 30px 50px;
+    padding: 30px 15px;
+    width: 100%;
+    max-width: 1280px;
+    margin: auto;
     min-height: 100vh;
 }
 

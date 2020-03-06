@@ -8,6 +8,20 @@ import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import './WashroomDetails.css';
 
+const renderRating = (title, value, overall = false) => (
+  <Row>
+    <Col span={12}>{title}</Col>
+    <Col span={12} className="rate-value">
+      <Rate
+        disabled
+        value={value ? round(value, 1) : 0}
+        allowHalf
+        className={`rate rate-${overall ? 'overall' : 'average'}`}
+      />
+    </Col>
+  </Row>
+);
+
 class WashroomDetails extends Component {
   componentDidMount() {
     const { match, washroom } = this.props;
@@ -33,7 +47,6 @@ class WashroomDetails extends Component {
         return (<Spin />);
       }
     }
-    const ratings = washroomItem.average_ratings;
 
     return (
       <>
@@ -55,61 +68,11 @@ class WashroomDetails extends Component {
             <Divider />
           </Col>
         </Row>
-        <Row>
-          <Col span={12}><b>Overall Rating</b></Col>
-          <Col span={12} className="rating-value">
-            <Rate
-              disabled
-              value={washroomItem.overall_rating}
-              allowHalf
-              className="overall-rate"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>Cleanliness</Col>
-          <Col span={12} className="rating-value">
-            <Rate
-              disabled
-              value={ratings ? round(ratings.cleanliness, 1) : 0}
-              allowHalf
-              className="rate"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>Privacy</Col>
-          <Col span={12} className="rating-value">
-            <Rate
-              disabled
-              value={ratings ? round(ratings.privacy, 1) : 0}
-              allowHalf
-              className="rate"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>Paper Quality</Col>
-          <Col span={12} className="rating-value">
-            <Rate
-              disabled
-              value={ratings ? round(ratings.toilet_paper_quality, 1) : 0}
-              allowHalf
-              className="rate"
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>Smell</Col>
-          <Col span={12} className="rating-value">
-            <Rate
-              disabled
-              value={ratings ? round(ratings.smell, 1) : 0}
-              allowHalf
-              className="rate"
-            />
-          </Col>
-        </Row>
+        { renderRating('Overall', washroomItem.overall_rating, true)}
+        { renderRating('Cleanliness', washroomItem.average_ratings.cleanliness) }
+        { renderRating('Privacy', washroomItem.average_ratings.privacy) }
+        { renderRating('Paper Quality', washroomItem.average_ratings.toilet_paper_quality) }
+        { renderRating('Smell', washroomItem.average_ratings.smell) }
         <List
           header={<b>Amenities</b>}
           size="small"
@@ -161,7 +124,7 @@ WashroomDetails.propTypes = {
   isFetching: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
-      id: PropTypes.number.isRequired,
+      id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
   location: PropTypes.shape({

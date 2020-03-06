@@ -1,15 +1,17 @@
-.rating-value {
+.rate-value {
   text-align: right;
-}
-
-.overall-rate {
-  color: #5da3e7 !important;
-  font-size: 16px !important;
-  padding: 2px 4px !important;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .rate {
   font-size: 16px !important;
   margin-right: 4px !important;
+}
+
+.rate-average {
+  color: #ccc !important;
+}
+
+.rate-overall {
+  color: inherit;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
