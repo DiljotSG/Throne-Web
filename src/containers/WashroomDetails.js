@@ -52,7 +52,7 @@ class WashroomDetails extends Component {
       <>
         <Row>
           <Col span={18}>
-            <h2>{washroomItem.title}</h2>
+            <h2>{washroomItem.comment}</h2>
           </Col>
           <Col span={6} className="rating-value">
             <h2>{washroomItem.is_favorite ? '👑' : ''}</h2>
@@ -107,7 +107,7 @@ WashroomDetails.propTypes = {
   getWashroom: PropTypes.func.isRequired,
   washroom: PropTypes.shape({
     id: PropTypes.number,
-    title: PropTypes.string,
+    comment: PropTypes.string,
     gender: PropTypes.string,
     floor: PropTypes.number,
     overall_rating: PropTypes.number,

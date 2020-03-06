@@ -18,7 +18,7 @@ const store = setupStore({});
 
 const washroom = {
   id: 1,
-  title: 'Washroom 1',
+  comment: 'Washroom 1',
   gender: 'women',
   floor: 2,
   overall_rating: 5,
@@ -35,7 +35,7 @@ const washroom = {
 fetchMock.get('https://testapi.com/washrooms/1',
   {
     id: 1,
-    title: 'Washroom 1',
+    comment: 'Washroom 1',
     gender: 'women',
     floor: 2,
     overall_rating: 5,
