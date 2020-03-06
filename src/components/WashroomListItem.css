@@ -32,8 +32,3 @@
   line-height: 90%;
   color: inherit !important;
 }
-
-.in-line {
-  display: flex;
-  flex-direction: row;
-}
