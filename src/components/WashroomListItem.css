@@ -17,7 +17,7 @@
 
 .list-item .ant-divider-vertical {
   top: 0;
-  height: revert;
+  height: 1.2em;
   margin: 2px 8px;
 }
 

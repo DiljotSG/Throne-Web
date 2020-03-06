@@ -13,13 +13,16 @@ const { Title, Text } = Typography;
 const renderFavoriteIcon = (isFavourite) => {
   if (isFavourite) {
     return (
-      <span
-        aria-label="Favorite"
-        role="img"
-        className="list-item-favorite"
-      >
-        👑
-      </span>
+      <>
+        <Divider type="vertical" />
+        <span
+          aria-label="Favorite"
+          role="img"
+          className="list-item-favorite"
+        >
+          👑
+        </span>
+      </>
     );
   }
 
@@ -58,7 +61,6 @@ const WashroomListItem = ({ item }) => (
           <Text className="list-item-gender">
             {startCase(item.gender)}
           </Text>
-          <Divider type="vertical" />
           {renderFavoriteIcon(item.is_favorite)}
         </div>
       </Col>
