@@ -1,4 +1,4 @@
-import roundToHalf from '../NumUtils';
+import { roundToHalf } from '../NumUtils';
 
 describe('NumUtils', () => {
   describe('roundToHalf', () => {
