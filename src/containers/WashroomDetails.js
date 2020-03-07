@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 import { startCase, kebabCase } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
-import './WashroomDetails.css';
 import { roundToHalf } from '../utils/NumUtils';
+import './WashroomDetails.css';
 
 const renderRating = (title, value, overall = false) => (
   <Row>
