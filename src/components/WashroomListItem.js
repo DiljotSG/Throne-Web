@@ -5,8 +5,9 @@ import {
   Row, Col, Typography, Divider, Rate,
 } from 'antd';
 
-import './WashroomListItem.css';
 import { NavLink } from 'react-router-dom';
+import { roundToHalf } from '../utils/NumUtils';
+import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
 
@@ -49,7 +50,7 @@ const WashroomListItem = ({ item }) => (
         <div className="in-line">
           <Rate
             disabled
-            value={item.overall_rating}
+            value={roundToHalf(item.overall_rating)}
             allowHalf
             className="list-item-rating"
           />

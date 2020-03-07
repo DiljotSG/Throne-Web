@@ -2,10 +2,11 @@ import React, { Component } from 'react';
 import {
   List, Rate, Spin, Row, Col, Divider,
 } from 'antd';
-import { startCase, round, kebabCase } from 'lodash';
 import PropTypes from 'prop-types';
+import { startCase, kebabCase } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
+import { roundToHalf } from '../utils/NumUtils';
 import './WashroomDetails.css';
 
 const renderRating = (title, value, overall = false) => (
@@ -14,7 +15,7 @@ const renderRating = (title, value, overall = false) => (
     <Col span={12} className="rate-value">
       <Rate
         disabled
-        value={value ? round(value, 1) : 0}
+        value={roundToHalf(value)}
         allowHalf
         className={`rate rate-${kebabCase(title)} rate-${overall ? 'overall' : 'average'}`}
       />
