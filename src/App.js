@@ -81,7 +81,7 @@ class App extends Component {
           <Content className="app-content">
             <div className="app-switch-container">
               <Switch>
-                <Route path="/" exact onEnter={requireAuth}>
+                <Route path={['/', '/washrooms', '/buildings']} exact onEnter={requireAuth}>
                   <NearMe />
                 </Route>
                 <Route path="/map" component={Map} />

@@ -6,7 +6,9 @@ import {
   Icon,
   Tabs,
 } from 'antd';
+import { trim } from 'lodash';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
 
@@ -41,6 +43,7 @@ class NearMe extends Component {
 
   render() {
     const {
+      history,
       washrooms,
       buildings,
       washroomsFetching,
@@ -53,13 +56,14 @@ class NearMe extends Component {
         <Title>Near Me</Title>
 
         <Tabs
-          defaultActiveKey="1"
+          defaultActiveKey={trim(history.location.pathname, '/')}
           size="large"
           animated={false}
+          onChange={(activeKey) => { history.push(`/${activeKey}`); }}
         >
           <TabPane
             tab="Buildings"
-            key="1"
+            key="buildings"
           >
             <List
               className="near-me-list"
@@ -78,7 +82,7 @@ class NearMe extends Component {
           </TabPane>
           <TabPane
             tab="Washrooms"
-            key="2"
+            key="washrooms"
           >
             <List
               className="near-me-list"
@@ -136,6 +140,12 @@ NearMe.propTypes = {
   getBuildings: PropTypes.func.isRequired,
   washroomsFetching: PropTypes.bool,
   buildingsFetching: PropTypes.bool,
+  history: PropTypes.shape({
+    push: PropTypes.func,
+    location: PropTypes.shape({
+      pathname: PropTypes.string,
+    }),
+  }).isRequired,
 };
 
 NearMe.defaultProps = {
@@ -145,4 +155,4 @@ NearMe.defaultProps = {
   buildingsFetching: false,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(NearMe);
+export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NearMe));
