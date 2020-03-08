@@ -8,18 +8,33 @@ import './Map.css';
 
 const { Title } = Typography;
 
+const mapDimensions = {
+  width: '100%',
+  height: `${window.innerHeight - 200}px`,
+};
+
 class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
       viewport: {
-        width: '100%',
-        height: '400px',
+        ...mapDimensions,
         latitude: 49.8080954,
         longitude: -97.1375209,
         zoom: 14,
       },
     };
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
+  }
+
+  handleResize = () => {
+    let { viewport } = { ...this.state };
+    viewport = { ...viewport, ...mapDimensions };
+
+    this.setState({ viewport });
   }
 
   render() {
