@@ -47,7 +47,7 @@ const WashroomListItem = ({ item }) => (
         >
           {item.building_title}
         </Text>
-          <div className="in-line">
+        <div className="in-line">
           <Text className="list-item-gender">
             {genderAsEmoji(item.gender)}
           </Text>
@@ -62,7 +62,7 @@ const WashroomListItem = ({ item }) => (
           {renderFavoriteIcon(item.is_favorite)}
         </div>
         <div className="in-line">
-        <Rate
+          <Rate
             disabled
             value={roundToHalf(item.overall_rating)}
             allowHalf
