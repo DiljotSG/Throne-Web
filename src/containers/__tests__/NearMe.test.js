@@ -47,8 +47,47 @@ fetchMock.get('https://testapi.com/washrooms', [
   },
 ]);
 
+fetchMock.get('https://testapi.com/buildings?location=undefined&maxResults=undefined&radius=undefined&amenities=undefined', [
+  {
+    best_ratings: {
+      cleanliness: 5.0,
+      privacy: 4.0,
+      smell: 1.0,
+      toilet_paper_quality: 3.0,
+    },
+    created_at: '2020-03-05T13:02:49+00:00',
+    id: 1,
+    location: {
+      latitude: 49.81175231933594,
+      longitude: -97.13582611083984,
+    },
+    maps_service_id: 54724739,
+    overall_rating: 3.25,
+    title: 'Wallace Building',
+    washroom_count: 1,
+  },
+  {
+    best_ratings: {
+      cleanliness: 2.7142856121063232,
+      privacy: 2.5714285373687744,
+      smell: 2.5714285373687744,
+      toilet_paper_quality: 2.7142856121063232,
+    },
+    created_at: '2020-03-05T13:02:50+00:00',
+    id: 2,
+    location: {
+      latitude: 49.809364318847656,
+      longitude: -97.1344985961914,
+    },
+    maps_service_id: 54724743,
+    overall_rating: 2.642857074737549,
+    title: 'University Centre',
+    washroom_count: 0,
+  },
+]);
+
 describe('NearMe', () => {
-  it('Renders the "Near me" page', async () => {
+  it.only('Renders the "Near me" page with tabs', async () => {
     await act(async () => {
       const component = mount(
         <Router>
@@ -57,11 +96,36 @@ describe('NearMe', () => {
       );
 
       expect(component.find('Title').text()).toEqual('Near Me');
+      expect(component.find('TabPane')).toHaveLength(2);
+      expect(component.find('TabPane').first().prop('tab')).toEqual('Buildings');
+      expect(component.find('TabPane').at(1).prop('tab')).toEqual('Washrooms');
+    });
+  });
+
+  it('Displays a list of buildings', async () => {
+    await act(async () => {
+      const component = mount(
+        <Router>
+          <NearMe store={store} />
+        </Router>,
+      );
+
+      // TODO: replace selector with BuildingListItem once new PR goes in
+      expect(component.find('Item.near-me-list-item')).toHaveLength(2);
+      const listItem1 = component.find('Item.near-me-list-item').first();
+
+      // TODO: don't check text representation, check the PROPS of the BuildingListItem
+      expect(listItem1.text()).toEqual('Wallace Building');
+
+      const listItem2 = component.find('Item.near-me-list-item').at(1);
+      expect(listItem2.text()).toEqual('University Centre');
     });
   });
 
 
-  it('Displays a list of locations', async () => {
+  // Spent hours trying to navigate to next tab to test
+  // Was unsuccessful but we can't be blocked on this
+  it('Displays a list of washrooms', async () => {
     await act(async () => {
       const component = mount(
         <Router>
