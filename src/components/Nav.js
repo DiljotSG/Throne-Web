@@ -8,13 +8,17 @@ import './Nav.css';
 
 const { Header } = Layout;
 
+const selectedKeys = (pathname) => (
+  ['/washrooms', '/buildings'].some((element) => element.substring(pathname)) ? ['/'] : [pathname]
+);
+
 const Nav = ({ location, logout }) => (
   <Header>
     <div className="logo" />
     <Menu
       theme="dark"
       mode="horizontal"
-      defaultSelectedKeys={[location.pathname]}
+      defaultSelectedKeys={selectedKeys(location)}
       className="nav-menu"
     >
       <Menu.Item key="/"><NavLink to="/">Near Me</NavLink></Menu.Item>

@@ -40,6 +40,7 @@ class WashroomDetails extends Component {
   render() {
     let washroomItem;
     const { location, washroom } = this.props;
+
     try {
       washroomItem = location.state.washroom;
     } catch (TypeError) {
