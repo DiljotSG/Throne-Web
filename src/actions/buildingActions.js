@@ -51,7 +51,7 @@ export function getBuildings() {
 }
 
 export function getBuilding(id) {
-  return async function fetchBuildingsAsync(dispatch) {
+  return async function fetchBuildingAsync(dispatch) {
     dispatch(requestBuilding());
 
     return throneApi.getBuilding(id).then((response) => {

@@ -51,7 +51,7 @@ export function getWashrooms() {
 }
 
 export function getWashroom(id) {
-  return async function fetchWashroomsAsync(dispatch) {
+  return async function fetchWashroomAsync(dispatch) {
     dispatch(requestWashroom());
 
     return throneApi.getWashroom(id).then((response) => {
