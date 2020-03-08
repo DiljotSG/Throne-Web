@@ -1,12 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { startCase } from 'lodash';
 import {
   Row, Col, Typography, Divider, Rate,
 } from 'antd';
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
+import { genderAsEmoji } from '../utils/GenderUtils';
 import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
@@ -45,24 +45,29 @@ const WashroomListItem = ({ item }) => (
           className="list-item-comment"
           strong
         >
-          {item.comment}
+          {item.building_title}
         </Text>
-        <div className="in-line">
-          <Rate
-            disabled
-            value={roundToHalf(item.overall_rating)}
-            allowHalf
-            className="list-item-rating"
-          />
+          <div className="in-line">
+          <Text className="list-item-gender">
+            {genderAsEmoji(item.gender)}
+          </Text>
           <Divider type="vertical" />
           <Text className="list-item-floor">
             {`Floor ${item.floor}`}
           </Text>
           <Divider type="vertical" />
-          <Text className="list-item-gender">
-            {startCase(item.gender)}
+          <Text className="list-item-comment">
+            {item.comment}
           </Text>
           {renderFavoriteIcon(item.is_favorite)}
+        </div>
+        <div className="in-line">
+        <Rate
+            disabled
+            value={roundToHalf(item.overall_rating)}
+            allowHalf
+            className="list-item-rating"
+          />
         </div>
       </Col>
 

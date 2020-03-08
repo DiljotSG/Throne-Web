@@ -7,6 +7,7 @@ import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
+import { genderAsEmoji } from '../utils/GenderUtils';
 import './WashroomDetails.css';
 
 const renderRating = (title, value, overall = false) => (
@@ -55,18 +56,15 @@ class WashroomDetails extends Component {
       <>
         <Row>
           <Col span={18}>
-            <h2>{washroomItem.comment}</h2>
+            <h1>{washroomItem.building_title}</h1>
+            <h2>{`${genderAsEmoji(washroomItem.gender)} | Floor ${washroomItem.floor}`}</h2>
+            <h3>{washroomItem.comment}</h3>
           </Col>
           <Col span={6} className="rating-value">
             <h2>{washroomItem.is_favorite ? '👑' : ''}</h2>
           </Col>
         </Row>
         <Row>
-          <Col span={12}>
-            <h3>
-              {`Floor ${washroomItem.floor} | ${startCase(washroomItem.gender)}`}
-            </h3>
-          </Col>
           <Col flex="auto">
             <Divider />
           </Col>
