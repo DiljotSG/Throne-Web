@@ -91,6 +91,7 @@ WashroomListItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     comment: PropTypes.string.isRequired,
+    building_title: PropTypes.string.isRequired,
     overall_rating: PropTypes.number.isRequired,
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
