@@ -3,7 +3,7 @@ import {
   List, Rate, Spin, Row, Col, Divider,
 } from 'antd';
 import PropTypes from 'prop-types';
-import { startCase, kebabCase } from 'lodash';
+import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
@@ -27,7 +27,7 @@ class WashroomDetails extends Component {
   componentDidMount() {
     const { match, washroom } = this.props;
     const { id } = match.params;
-    if (washroom.id !== id) {
+    if (isEmpty(washroom)) {
       this.getWashroom(id);
     }
   }
@@ -39,15 +39,16 @@ class WashroomDetails extends Component {
 
   render() {
     let washroomItem;
-    const { location, isFetching, washroom } = this.props;
+    const { location, washroom } = this.props;
 
     try {
       washroomItem = location.state.washroom;
     } catch (TypeError) {
       washroomItem = washroom;
-      if (isFetching) {
-        return (<Spin />);
-      }
+    }
+
+    if (isEmpty(washroomItem)) {
+      return (<Spin />);
     }
 
     return (
@@ -70,11 +71,11 @@ class WashroomDetails extends Component {
             <Divider />
           </Col>
         </Row>
-        { renderRating('Overall', washroomItem.overall_rating, true)}
-        { renderRating('Cleanliness', washroomItem.average_ratings.cleanliness) }
-        { renderRating('Privacy', washroomItem.average_ratings.privacy) }
-        { renderRating('Paper Quality', washroomItem.average_ratings.toilet_paper_quality) }
-        { renderRating('Smell', washroomItem.average_ratings.smell) }
+        {renderRating('Overall', washroomItem.overall_rating, true)}
+        {renderRating('Cleanliness', washroomItem.average_ratings.cleanliness)}
+        {renderRating('Privacy', washroomItem.average_ratings.privacy)}
+        {renderRating('Paper Quality', washroomItem.average_ratings.toilet_paper_quality)}
+        {renderRating('Smell', washroomItem.average_ratings.smell)}
         <List
           header={<b>Amenities</b>}
           size="small"
@@ -122,7 +123,6 @@ WashroomDetails.propTypes = {
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
   }).isRequired,
-  isFetching: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -136,7 +136,6 @@ WashroomDetails.propTypes = {
 };
 
 WashroomDetails.defaultProps = {
-  isFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({
       washroom: {},
