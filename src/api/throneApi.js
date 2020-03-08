@@ -73,6 +73,11 @@ class ThroneApi {
     return this.getEndpoint(url);
   }
 
+  static async getCurrentUser() {
+    const url = this.createEndpointURL('users');
+    return this.getEndpoint(url);
+  }
+
   static async getReviewsForUser(id) {
     const url = this.createEndpointURL(`users/${id}/reviews`);
     return this.getEndpoint(url);
