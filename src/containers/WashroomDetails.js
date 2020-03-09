@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider,
+  List, Rate, Spin, Row, Col, Divider, Typography,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/DisplayUtils';
+import { genderAsEmoji, genderAsString } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
+
+const { Title, Text } = Typography;
 
 const renderRating = (title, value, overall = false) => (
   <Row>
@@ -54,24 +56,15 @@ class WashroomDetails extends Component {
 
     return (
       <>
-        <Row>
-          <Col span={18}>
-            <h1>
-              {washroomItem.building_title}
-            </h1>
-            <h2>
-              {`${genderAsEmoji(washroomItem.gender)} | Floor ${washroomItem.floor}`}
-            </h2>
-            <h3>
-              {washroomItem.comment}
-            </h3>
-          </Col>
-          <Col span={6} className="rating-value">
-            <h2>
-              {washroomItem.is_favorite ? '👑' : ''}
-            </h2>
-          </Col>
-        </Row>
+        <Title level={2}>
+          {`${washroomItem.building_title} ${washroomItem.is_favorite ? '👑' : ''}`}
+        </Title>
+        <Title level={4}>
+          {`${genderAsEmoji(washroomItem.gender)} ${genderAsString(washroomItem.gender)}`}
+        </Title>
+        <Text strong>
+          {`Floor ${washroomItem.floor} | ${washroomItem.comment}`}
+        </Text>
         <Row>
           <Col flex="auto">
             <Divider />
