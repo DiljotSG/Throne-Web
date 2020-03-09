@@ -70,7 +70,6 @@ const WashroomListItem = ({ item }) => (
           />
         </div>
       </Col>
-
       <Col span={4}>
         <div className="list-item-distance">
           Distance
