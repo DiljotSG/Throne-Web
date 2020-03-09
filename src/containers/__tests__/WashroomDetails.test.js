@@ -92,7 +92,6 @@ describe('WashroomDetails', () => {
         />,
       );
 
-      expect(component.find('h2').length).toEqual(1);
       expect(component.find('.details-title').first().text()).toBe('Science Library 👑');
       expect(component.find('.details-gender').first().text()).toBe('🚺 Women');
       expect(component.find('.details-floor-comment').first().text()).toBe('Floor 2 | Washroom 1');
