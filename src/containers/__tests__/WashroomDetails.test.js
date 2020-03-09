@@ -9,7 +9,6 @@ import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
 
 import WashroomDetails from '../WashroomDetails';
-import { genderAsEmoji } from '../../utils/DisplayUtils';
 
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
@@ -19,6 +18,7 @@ const store = setupStore({});
 
 const washroom = {
   id: 1,
+  building_title: 'Science Library',
   comment: 'Washroom 1',
   gender: 'women',
   floor: 2,
@@ -36,6 +36,7 @@ const washroom = {
 fetchMock.get('https://testapi.com/washrooms/1',
   {
     id: 1,
+    building_title: 'Science Library',
     comment: 'Washroom 1',
     gender: 'women',
     floor: 2,
@@ -64,15 +65,15 @@ describe('WashroomDetails', () => {
         />,
       );
 
-      expect(component.find('h2').length).toBe(2);
-      expect(component.find('h2').first().text()).toBe(`${genderAsEmoji('women')} | Floor 2`);
-      expect(component.find('h2').at(1).text()).toBe('👑');
+      expect(component.find('.details-title').length).toBe(5);
+      expect(component.find('.details-title').first().text()).toBe('Science Library 👑');
+      expect(component.find('.details-gender').first().text()).toBe(`🚺 Women`);
+      expect(component.find('.details-floor-comment').first().text()).toBe(`Floor 2 | Washroom 1`);
       expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
       expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
       expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
       expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('h3').text()).toBe('Washroom 1');
       expect(component.find('li.ant-list-item').length).toBe(1);
       expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer');
     });
@@ -91,15 +92,15 @@ describe('WashroomDetails', () => {
         />,
       );
 
-      expect(component.find('h2').length).toEqual(2);
-      expect(component.find('h2').first().text()).toBe(`${genderAsEmoji('women')} | Floor 2`);
-      expect(component.find('h2').at(1).text()).toEqual('👑');
+      expect(component.find('h2').length).toEqual(1);
+      expect(component.find('.details-title').first().text()).toBe('Science Library 👑');
+      expect(component.find('.details-gender').first().text()).toBe(`🚺 Women`);
+      expect(component.find('.details-floor-comment').first().text()).toBe(`Floor 2 | Washroom 1`);
       expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
       expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
       expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
       expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('h3').text()).toEqual('Washroom 1');
       expect(component.find('li.ant-list-item').length).toEqual(1);
       expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
     });

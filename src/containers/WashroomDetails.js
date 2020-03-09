@@ -56,13 +56,13 @@ class WashroomDetails extends Component {
 
     return (
       <>
-        <Title level={2}>
+        <Title className="details-title" level={2}>
           {`${washroomItem.building_title} ${washroomItem.is_favorite ? '👑' : ''}`}
         </Title>
-        <Title level={4}>
+        <Title className="details-gender" level={4}>
           {`${genderAsEmoji(washroomItem.gender)} ${genderAsString(washroomItem.gender)}`}
         </Title>
-        <Text strong>
+        <Text className="details-floor-comment" strong>
           {`Floor ${washroomItem.floor} | ${washroomItem.comment}`}
         </Text>
         <Row>
