@@ -42,7 +42,7 @@ const WashroomListItem = ({ item }) => (
     <Row>
       <Col span={20}>
         <Text
-          className="list-item-comment"
+          className="list-item-building-title"
           strong
         >
           {item.building_title}
