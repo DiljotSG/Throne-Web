@@ -1,13 +1,16 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider,
+  List, Rate, Spin, Row, Col, Divider, Typography,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
+import { genderAsEmoji, genderAsString } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
+
+const { Title, Text } = Typography;
 
 const renderRating = (title, value, overall = false) => (
   <Row>
@@ -53,20 +56,16 @@ class WashroomDetails extends Component {
 
     return (
       <>
+        <Title className="details-title" level={2}>
+          {`${washroomItem.building_title} ${washroomItem.is_favorite ? '👑' : ''}`}
+        </Title>
+        <Title className="details-gender" level={4}>
+          {`${genderAsEmoji(washroomItem.gender)} ${genderAsString(washroomItem.gender)}`}
+        </Title>
+        <Text className="details-floor-comment" strong>
+          {`Floor ${washroomItem.floor} | ${washroomItem.comment}`}
+        </Text>
         <Row>
-          <Col span={18}>
-            <h2>{washroomItem.comment}</h2>
-          </Col>
-          <Col span={6} className="rating-value">
-            <h2>{washroomItem.is_favorite ? '👑' : ''}</h2>
-          </Col>
-        </Row>
-        <Row>
-          <Col span={12}>
-            <h3>
-              {`Floor ${washroomItem.floor} | ${startCase(washroomItem.gender)}`}
-            </h3>
-          </Col>
           <Col flex="auto">
             <Divider />
           </Col>

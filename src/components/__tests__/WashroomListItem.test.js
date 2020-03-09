@@ -5,6 +5,7 @@ import WashroomListItem from '../WashroomListItem';
 
 const washroom = {
   id: 1,
+  building_title: 'Science Library',
   comment: 'Washroom 1',
   gender: 'women',
   floor: 2,
@@ -32,9 +33,11 @@ describe('WashroomListItem', () => {
     const listItem = component.find('Row');
 
     expect(listItem.find('Rate').first().prop('value')).toBe(5);
-    expect(listItem.find('.list-item-floor').first().text()).toEqual('Floor 2');
-    expect(listItem.find('.list-item-gender').first().text()).toEqual('Women');
-    expect(listItem.find('.list-item-favorite').first().text()).toEqual('👑');
-    expect(listItem.find('.list-item-distance-value').first().text()).toEqual('19m');
+    expect(listItem.find('.list-item-building-title').first().text()).toBe('Science Library');
+    expect(listItem.find('.list-item-comment').first().text()).toBe('Washroom 1');
+    expect(listItem.find('.list-item-floor').first().text()).toBe('Floor 2');
+    expect(listItem.find('.list-item-gender').first().text()).toBe('🚺');
+    expect(listItem.find('.list-item-favorite').first().text()).toBe('👑');
+    expect(listItem.find('.list-item-distance-value').first().text()).toBe('19m');
   });
 });
