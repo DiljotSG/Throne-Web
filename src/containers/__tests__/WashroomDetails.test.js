@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
 
 import WashroomDetails from '../WashroomDetails';
-import { genderAsEmoji } from '../../utils/GenderUtils';
+import { genderAsEmoji } from '../../utils/DisplayUtils';
 
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));

@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import WashroomListItem from '../WashroomListItem';
-import { genderAsEmoji } from '../../utils/GenderUtils';
+import { genderAsEmoji } from '../../utils/DisplayUtils';
 
 const washroom = {
   id: 1,
@@ -34,8 +34,8 @@ describe('WashroomListItem', () => {
     const listItem = component.find('Row');
 
     expect(listItem.find('Rate').first().prop('value')).toBe(5);
-    expect(listItem.find('Text').first().text()).toBe('Science Library');
-    expect(listItem.find('Text').at(3).text()).toBe('Washroom 1');
+    expect(listItem.find('.list-item-building-title').first().text()).toBe('Science Library');
+    expect(listItem.find('.list-item-comment').first().text()).toBe('Washroom 1');
     expect(listItem.find('.list-item-floor').first().text()).toBe('Floor 2');
     expect(listItem.find('.list-item-gender').first().text()).toBe(genderAsEmoji('women'));
     expect(listItem.find('.list-item-favorite').first().text()).toBe('👑');

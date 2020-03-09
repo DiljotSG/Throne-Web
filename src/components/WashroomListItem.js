@@ -6,7 +6,7 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/GenderUtils';
+import { genderAsEmoji } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
@@ -42,7 +42,7 @@ const WashroomListItem = ({ item }) => (
     <Row>
       <Col span={20}>
         <Text
-          className="list-item-comment"
+          className="list-item-building-title"
           strong
         >
           {item.building_title}
