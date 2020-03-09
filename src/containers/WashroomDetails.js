@@ -56,12 +56,20 @@ class WashroomDetails extends Component {
       <>
         <Row>
           <Col span={18}>
-            <h1>{washroomItem.building_title}</h1>
-            <h2>{`${genderAsEmoji(washroomItem.gender)} | Floor ${washroomItem.floor}`}</h2>
-            <h3>{washroomItem.comment}</h3>
+            <h1>
+              {washroomItem.building_title}
+            </h1>
+            <h2>
+              {`${genderAsEmoji(washroomItem.gender)} | Floor ${washroomItem.floor}`}
+            </h2>
+            <h3>
+              {washroomItem.comment}
+            </h3>
           </Col>
           <Col span={6} className="rating-value">
-            <h2>{washroomItem.is_favorite ? '👑' : ''}</h2>
+            <h2>
+              {washroomItem.is_favorite ? '👑' : ''}
+            </h2>
           </Col>
         </Row>
         <Row>

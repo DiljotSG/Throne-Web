@@ -9,6 +9,7 @@ import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
 
 import WashroomDetails from '../WashroomDetails';
+import { genderAsEmoji } from '../../utils/GenderUtils';
 
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
@@ -63,17 +64,17 @@ describe('WashroomDetails', () => {
         />,
       );
 
-      expect(component.find('h2').length).toEqual(2);
-      expect(component.find('h2').first().text()).toEqual('Washroom 1');
-      expect(component.find('h2').at(1).text()).toEqual('👑');
+      expect(component.find('h2').length).toBe(2);
+      expect(component.find('h2').first().text()).toBe(`${genderAsEmoji('women')} | Floor 2`);
+      expect(component.find('h2').at(1).text()).toBe('👑');
       expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
       expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
       expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
       expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('h3').text()).toEqual('Floor 2 | Women');
-      expect(component.find('li.ant-list-item').length).toEqual(1);
-      expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
+      expect(component.find('h3').text()).toBe('Washroom 1');
+      expect(component.find('li.ant-list-item').length).toBe(1);
+      expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer');
     });
   });
 
@@ -91,14 +92,14 @@ describe('WashroomDetails', () => {
       );
 
       expect(component.find('h2').length).toEqual(2);
-      expect(component.find('h2').first().text()).toEqual('Washroom 1');
+      expect(component.find('h2').first().text()).toBe(`${genderAsEmoji('women')} | Floor 2`);
       expect(component.find('h2').at(1).text()).toEqual('👑');
       expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
       expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
       expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
       expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('h3').text()).toEqual('Floor 2 | Women');
+      expect(component.find('h3').text()).toEqual('Washroom 1');
       expect(component.find('li.ant-list-item').length).toEqual(1);
       expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
     });
