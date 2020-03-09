@@ -5,7 +5,7 @@ export const genderAsString = (value) => {
     case 'men':
       return startCase(value);
     case 'women':
-      return startCase(startCase);
+      return startCase(value);
     case 'all':
       return 'Inclusive';
     default:
