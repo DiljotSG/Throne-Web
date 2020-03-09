@@ -14,6 +14,11 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: 12.x
+    - uses: TickX/var-to-dotenv@v1.1.1
+      with:
+        key: 'REACT_APP_MAPBOX_TOKEN'
+        value: ${{ secrets.MAPBOX_DEV_TOKEN }}
+        envPath: '.env.development'
     - run: yarn install
     - run: yarn build:development
     - uses: jakejarvis/s3-sync-action@master

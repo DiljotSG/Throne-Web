@@ -3,14 +3,14 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { Layout, Spin, Button } from 'antd';
+import { Layout, Spin } from 'antd';
 
 import Auth from './services/Auth';
 
 import {
-  NearMe, Map, Profile, Settings,
+  NearMe, Map, Profile, Settings, WashroomDetails,
 } from './containers';
-import { Nav } from './components';
+import { Nav, Login } from './components';
 
 import './App.css';
 
@@ -58,7 +58,7 @@ class App extends Component {
     if (authenticating) {
       return (
         <Layout className="layout">
-          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
+          <Content className="app-content">
             <Spin />
           </Content>
         </Layout>
@@ -67,17 +67,10 @@ class App extends Component {
 
     if (!loggedIn) {
       return (
-        <Layout className="layout">
-          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
-            <h1>You must login to see this page.</h1>
-            <Button href={Auth.loginAddress()}>
-              Log in
-            </Button>
-            <Button href={Auth.signUpAddress()}>
-              Sign up
-            </Button>
-          </Content>
-        </Layout>
+        <Login
+          loginAddress={Auth.loginAddress().href}
+          signUpAddress={Auth.signUpAddress().href}
+        />
       );
     }
 
@@ -85,16 +78,16 @@ class App extends Component {
       <Provider store={store}>
         <Layout className="layout">
           <Nav logout={() => this.logout()} />
-          <Content style={{ padding: '30px 50px', minHeight: '100vh' }}>
-            <Button onClick={Auth.refreshLogin}>Refresh login</Button>
-            <div style={{ background: '#fff', padding: 24, minHeight: 280 }}>
+          <Content className="app-content">
+            <div className="app-switch-container">
               <Switch>
-                <Route path="/" exact onEnter={requireAuth}>
+                <Route path={['/', '/washrooms', '/buildings']} exact onEnter={requireAuth}>
                   <NearMe />
                 </Route>
                 <Route path="/map" component={Map} />
                 <Route path="/profile" component={Profile} />
                 <Route path="/settings" component={Settings} />
+                <Route path="/washrooms/:id" component={WashroomDetails} />
               </Switch>
             </div>
           </Content>

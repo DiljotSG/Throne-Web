@@ -1,4 +1,5 @@
 import Nav from './Nav';
+import Login from './Login';
+import WashroomListItem from './WashroomListItem';
 
-// TODO: remove the lint ignore here once we have more components
-export { Nav }; // eslint-disable-line import/prefer-default-export
+export { Nav, Login, WashroomListItem };

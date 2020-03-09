@@ -25,10 +25,11 @@ module.exports = {
   ],
   rules: {
     "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
-    "import/no-extraneous-dependencies": ["error", {"devDependencies": true}],
+    "import/no-extraneous-dependencies": ["error", { "devDependencies": true }],
     'no-shadow': [
       'error',
       {
+        allow: ['getWashroom'],
         allow: ['getWashrooms'],
       },
     ],

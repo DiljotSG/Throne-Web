@@ -1,32 +1,32 @@
 import actions from '../constants';
 
-const initialState = { washroom: {}, washrooms: [] };
+const initialState = { building: {}, buildings: [] };
 
-const washroomReducer = (state = initialState, action) => {
+const buildingReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actions.REQUEST_WASHROOMS:
+    case actions.REQUEST_BUILDINGS:
       return {
         ...state,
         isFetching: true,
       };
-    case actions.REQUEST_WASHROOM:
+    case actions.REQUEST_BUILDING:
       return {
         ...state,
         isFetching: true,
       };
-    case actions.RECEIVE_WASHROOMS:
+    case actions.RECEIVE_BUILDINGS:
       return {
         ...state,
         isFetching: false,
         status: action.status,
-        washrooms: action.washrooms,
+        buildings: action.buildings,
       };
-    case actions.RECEIVE_WASHROOM:
+    case actions.RECEIVE_BUILDING:
       return {
         ...state,
         isFetching: false,
         status: action.status,
-        washroom: action.washroom,
+        building: action.building,
       };
     case actions.FAILURE: {
       return {
@@ -40,4 +40,4 @@ const washroomReducer = (state = initialState, action) => {
   }
 };
 
-export default washroomReducer;
+export default buildingReducer;
