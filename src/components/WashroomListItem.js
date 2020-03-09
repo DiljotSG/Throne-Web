@@ -6,7 +6,7 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/GenderUtils';
+import { genderAsEmoji } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
 const { Title, Text } = Typography;

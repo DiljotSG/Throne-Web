@@ -7,7 +7,7 @@ import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/GenderUtils';
+import { genderAsEmoji } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
 const renderRating = (title, value, overall = false) => (
