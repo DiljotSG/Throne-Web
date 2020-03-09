@@ -2,7 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import WashroomListItem from '../WashroomListItem';
-import { genderAsEmoji } from '../../utils/GenderUtils';
+import { genderAsEmoji } from '../../utils/DisplayUtils';
 
 const washroom = {
   id: 1,
