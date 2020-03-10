@@ -11,7 +11,7 @@ import {
   genderAsEmoji,
   genderAsString,
   amenityAsEmoji,
-  amenityAsString
+  amenityAsString,
 } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
@@ -88,7 +88,9 @@ class WashroomDetails extends Component {
             <List.Item
               key={item}
             >
-              {amenityAsString(item)} {amenityAsEmoji(item)}
+              {amenityAsString(String(item))}
+              {' '}
+              {amenityAsEmoji(String(item))}
             </List.Item>
           )}
         />
