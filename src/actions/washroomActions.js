@@ -68,3 +68,6 @@ export function getWashroom(id) {
     });
   };
 }
+
+// add getWashroomByBuilding(id) here
+// add action for getting washrooms but don't need to add one for recieving

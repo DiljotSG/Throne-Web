@@ -82,11 +82,19 @@ class BuildingDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { building, isFetching, status } = state.buildingReducer;
+  const { building, isFetching: buildingFetching, status: buildingStatus } = state.buildingReducer;
+  const {
+    washrooms,
+    isFetching: washroomsFetching,
+    status: washroomsStatus,
+  } = state.washroomReducer;
   return {
-    status,
-    isFetching,
     building,
+    buildingFetching,
+    buildingStatus,
+    washrooms,
+    washroomsFetching,
+    washroomsStatus,
   };
 };
 
@@ -138,7 +146,8 @@ BuildingDetails.defaultProps = {
   buildings: [],
   washroomsFetching: false,
   buildingsFetching: false,
-  isFetching: false,
+  buildingFetching: false,
+  washroomFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({
       washroom: {},
