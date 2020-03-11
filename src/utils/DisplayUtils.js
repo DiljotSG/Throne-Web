@@ -160,9 +160,25 @@ export const amenityAsEmoji = (value) => {
   }
 };
 
+export const ratingAsEmoji = (value) => {
+  switch (value) {
+    case 'cleanliness':
+      return '✨';
+    case 'privacy':
+      return '🤚';
+    case 'toilet_paper_quality':
+      return '🧻';
+    case 'smell':
+      return '👃';
+    default:
+      return '';
+  }
+};
+
 export default {
   genderAsString,
   genderAsEmoji,
   amenityAsString,
   amenityAsEmoji,
+  ratingAsEmoji,
 };
