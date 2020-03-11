@@ -33,6 +33,44 @@ const washroom = {
   is_favorite: true,
 };
 
+const reviews = [
+  {
+    comment: 'Not bad!',
+    created_at: '2020-03-05T19:19:40+00:00',
+    id: 1,
+    ratings: {
+      cleanliness: 3.0,
+      privacy: 2.0,
+      smell: 2.0,
+      toilet_paper_quality: 2.0,
+    },
+    upvote_count: 0,
+    user: {
+      id: 2,
+      profile_picture: 'default',
+      username: 'polima',
+    },
+    washroom_id: 1,
+  }, {
+    comment: 'Actually, kinda bad!',
+    created_at: '2020-03-05T22:18:07+00:00',
+    id: 2,
+    ratings: {
+      cleanliness: 5.0,
+      privacy: 3.0,
+      smell: 4.0,
+      toilet_paper_quality: 2.0,
+    },
+    upvote_count: 0,
+    user: {
+      id: 2,
+      profile_picture: 'default',
+      username: 'twophase',
+    },
+    washroom_id: 1,
+  },
+];
+
 fetchMock.get('https://testapi.com/washrooms/1',
   {
     id: 1,
@@ -50,6 +88,8 @@ fetchMock.get('https://testapi.com/washrooms/1',
     amenities: ['air_dryer'],
     is_favorite: true,
   });
+
+fetchMock.get('https://testapi.com/washrooms/1/reviews', reviews);
 
 describe('WashroomDetails', () => {
   it('Displays the passed details', async () => {
@@ -102,6 +142,32 @@ describe('WashroomDetails', () => {
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
       expect(component.find('li.ant-list-item').length).toBe(1);
       expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
+    });
+  });
+
+  it('Lists the reviews for a washroom', async () => {
+    await act(async () => {
+      const match = { params: { id: '1' } };
+
+      const component = mount(
+        <WashroomDetails
+          store={store}
+          match={match}
+          location={{}}
+        />,
+      );
+
+      expect(component.find('Comment').length).toBe(2);
+
+      const review1 = component.find('Comment').first();
+      expect(review1.prop('content')).toBe('Not bad!');
+      expect(review1.prop('author')).toBe('polima');
+      expect(review1.prop('datetime')).toBe('2020-03-05T19:19:40+00:00');
+
+      const review2 = component.find('Comment').at(1);
+      expect(review2.prop('content')).toBe('Actually, kinda bad!');
+      expect(review2.prop('author')).toBe('twophase');
+      expect(review2.prop('datetime')).toBe('2020-03-05T22:18:07+00:00');
     });
   });
 });
