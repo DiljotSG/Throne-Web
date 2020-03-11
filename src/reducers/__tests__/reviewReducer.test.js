@@ -14,7 +14,7 @@ const review1 = {
   user: {
     id: 2,
     profile_picture: 'default',
-    username: 'diljot',
+    username: 'twophase',
   },
   washroom_id: 1,
 };
@@ -32,7 +32,7 @@ const review2 = {
   user: {
     id: 2,
     profile_picture: 'default',
-    username: 'diljot',
+    username: 'twophase',
   },
   washroom_id: 1,
 };
