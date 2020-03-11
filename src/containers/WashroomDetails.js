@@ -33,44 +33,42 @@ const renderRating = (title, value, overall = false) => (
   </Row>
 );
 
-const renderReviews = (reviews) => (
-  <Card className="washroom-reviews">
-    <Title level={3}>
-      Reviews
-    </Title>
-    {isEmpty(reviews)
-      ? <Empty description="No reviews yet." />
-      : reviews.map((item) => (
-        <Comment
-          className="washroom-review"
-          key={item.created_at}
-          author={item.user.username}
-          avatar={(
-            <Avatar>
-              {item.user.username.charAt(0).toUpperCase()}
-            </Avatar>
-            )}
-          datetime={item.created_at}
-          content={(
-            <Row>
-              <Col sm={14} md={16} className="washroom-review-comment">
-                {item.comment}
-              </Col>
-              <Col sm={10} md={8} className="washroom-review-rating">
-                { Object.entries(item.ratings).map(([type, value], i) => (
-                  <React.Fragment key={type}>
-                    {i > 0 ? <Divider type="vertical" /> : ''}
-                    {ratingAsEmoji(type)}
-                    {value}
-                  </React.Fragment>
-                ))}
-              </Col>
-            </Row>
+const renderReviews = (reviews) => {
+  if (isEmpty(reviews)) {
+    return <Empty description="No reviews yet." />;
+  }
+
+  return (
+    reviews.map((item) => (
+      <Comment
+        className="washroom-review"
+        key={item.created_at}
+        author={item.user.username}
+        avatar={(
+          <Avatar>
+            {item.user.username.charAt(0).toUpperCase()}
+          </Avatar>
           )}
-        />
-      ))}
-  </Card>
-);
+        datetime={item.created_at}
+        content={(
+          <Row>
+            <Col sm={14} md={16} className="washroom-review-comment">
+              {item.comment}
+            </Col>
+            <Col sm={10} md={8} className="washroom-review-rating">
+              { Object.entries(item.ratings).map(([type, value], i) => (
+                <React.Fragment key={type}>
+                  {i > 0 ? <Divider type="vertical" /> : ''}
+                  {ratingAsEmoji(type)}
+                  {value}
+                </React.Fragment>
+              ))}
+            </Col>
+          </Row>
+        )}
+      />
+    )));
+};
 
 class WashroomDetails extends Component {
   componentDidMount() {
@@ -80,7 +78,12 @@ class WashroomDetails extends Component {
       this.getWashroom(id);
     }
 
-    this.getReviewsForWashroom(id);
+    // See if we have cached the reviews for this washroom already
+    const reviewsFetchedForWashroom = !isEmpty(reviews) && reviews[0].washroom_id === Number(id);
+
+    if (isEmpty(reviews) || !reviewsFetchedForWashroom) {
+      this.getReviewsForWashroom(id);
+    }
   }
 
   getWashroom = (id) => {
@@ -142,7 +145,12 @@ class WashroomDetails extends Component {
             </List.Item>
           )}
         />
-        { reviewsFetching ? <Skeleton active title={false} /> : renderReviews(reviews) }
+        <Card className="washroom-reviews">
+          <Title level={3}>
+            Reviews
+          </Title>
+          { reviewsFetching ? <Skeleton active title={false} /> : renderReviews(reviews) }
+        </Card>
       </>
     );
   }
@@ -192,6 +200,7 @@ WashroomDetails.propTypes = {
     PropTypes.shape({
       comment: PropTypes.string,
       created_at: PropTypes.string,
+      washroom_id: PropTypes.number,
       id: PropTypes.number,
       ratings: PropTypes.shape({
         cleanliness: PropTypes.number,
