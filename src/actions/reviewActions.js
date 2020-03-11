@@ -24,7 +24,7 @@ export const receiveReviews = (response, status) => (
 );
 
 export function getReviewsForUser(id) {
-  return async function fetchUserAsync(dispatch) {
+  return async function fetchReviewsAsync(dispatch) {
     dispatch(requestReviewsForUser());
 
     return throneApi.getReviewsForUser(id).then((response) => {
@@ -43,7 +43,7 @@ export function getReviewsForUser(id) {
 }
 
 export function getReviewsForWashroom(id) {
-  return async function fetchUserAsync(dispatch) {
+  return async function fetchReviewsAsync(dispatch) {
     dispatch(requestReviewsForUser());
 
     return throneApi.getReviewsForWashroom(id).then((response) => {
