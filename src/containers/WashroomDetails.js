@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, Card,
+  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, Card, Empty,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { kebabCase, isEmpty } from 'lodash';
@@ -33,14 +33,13 @@ const renderRating = (title, value, overall = false) => (
   </Row>
 );
 
-const renderReviews = (reviews, isFetching) => (
+const renderReviews = (reviews) => (
   <Card className="washroom-reviews">
     <Title level={3}>
       Reviews
     </Title>
-    {isFetching
-      ? <Skeleton active title={false} />
-
+    {isEmpty(reviews)
+      ? <Empty description="No reviews yet." />
       : reviews.map((item) => (
         <Comment
           className="washroom-review"
@@ -81,9 +80,7 @@ class WashroomDetails extends Component {
       this.getWashroom(id);
     }
 
-    if (isEmpty(reviews)) {
-      this.getReviewsForWashroom(id);
-    }
+    this.getReviewsForWashroom(id);
   }
 
   getWashroom = (id) => {
@@ -145,7 +142,7 @@ class WashroomDetails extends Component {
             </List.Item>
           )}
         />
-        { renderReviews(reviews, reviewsFetching) }
+        { reviewsFetching ? <Skeleton active title={false} /> : renderReviews(reviews) }
       </>
     );
   }
