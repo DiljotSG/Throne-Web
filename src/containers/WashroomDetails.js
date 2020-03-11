@@ -54,16 +54,16 @@ const renderReviews = (reviews, isFetching) => (
           datetime={item.created_at}
           content={(
             <Row>
-              <Col sm={14} md={16}>
+              <Col sm={14} md={16} className="washroom-review-comment">
                 {item.comment}
               </Col>
               <Col sm={10} md={8} className="washroom-review-rating">
                 { Object.entries(item.ratings).map(([type, value], i) => (
-                  <>
+                  <React.Fragment key={type}>
                     {i > 0 ? <Divider type="vertical" /> : ''}
                     {ratingAsEmoji(type)}
                     {value}
-                  </>
+                  </React.Fragment>
                 ))}
               </Col>
             </Row>
