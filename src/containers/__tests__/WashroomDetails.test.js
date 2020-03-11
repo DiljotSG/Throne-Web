@@ -75,7 +75,7 @@ describe('WashroomDetails', () => {
       expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
       expect(component.find('li.ant-list-item').length).toBe(1);
-      expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer');
+      expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
     });
   });
 
@@ -100,8 +100,8 @@ describe('WashroomDetails', () => {
       expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
       expect(component.find('Rate').find('.rate-paper-quality').first().prop('value')).toBe(4);
       expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('li.ant-list-item').length).toEqual(1);
-      expect(component.find('li.ant-list-item').first().text()).toEqual('Air Dryer');
+      expect(component.find('li.ant-list-item').length).toBe(1);
+      expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
     });
   });
 });

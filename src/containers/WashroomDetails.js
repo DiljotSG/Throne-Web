@@ -3,11 +3,16 @@ import {
   List, Rate, Spin, Row, Col, Divider, Typography,
 } from 'antd';
 import PropTypes from 'prop-types';
-import { startCase, kebabCase, isEmpty } from 'lodash';
+import { kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji, genderAsString } from '../utils/DisplayUtils';
+import {
+  genderAsEmoji,
+  genderAsString,
+  amenityAsEmoji,
+  amenityAsString,
+} from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
@@ -80,10 +85,10 @@ class WashroomDetails extends Component {
           size="small"
           dataSource={washroomItem.amenities}
           renderItem={(item) => (
-            <List.Item
-              key={item}
-            >
-              {startCase(item)}
+            <List.Item key={item}>
+              {amenityAsString(String(item))}
+              {' '}
+              {amenityAsEmoji(String(item))}
             </List.Item>
           )}
         />
