@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import {
-List, Rate, Spin, Row, Col, Divider, Typography,
+  List, Spin, Typography,
 } from 'antd';
 
-import { isEmpty } from 'lodash';
 import PropTypes from 'prop-types';
+import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getBuilding } from '../actions/buildingActions';
-import { getWashrooms } from '../actions/washroomActions';
+import { getWashroomsForBuilding } from '../actions/washroomActions';
 import './BuildingDetails.css';
 
 import { WashroomListItem } from '../components';
 
-const { Title, Text } = Typography;
+const { Title } = Typography;
 
 class BuildingDetails extends Component {
   componentDidMount() {
@@ -23,7 +23,7 @@ class BuildingDetails extends Component {
       this.getBuilding(id);
     }
     if (washrooms.length === 0) {
-      this.getWashrooms();
+      this.getWashroomsForBuilding(building.id);
     }
   }
 
@@ -32,9 +32,10 @@ class BuildingDetails extends Component {
     getBuilding(id);
   }
 
-  getWashrooms = () => {
-    const { getWashrooms } = this.props;
-    getWashrooms();
+  getWashroomsForBuilding = (id) => {
+    // eslint-disable-next-line react/prop-types
+    const { getWashroomsForBuilding } = this.props; // eslint-disable-line no-shadow
+    getWashroomsForBuilding(id);
   }
 
   render() {
@@ -82,7 +83,11 @@ class BuildingDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { building, isFetching: buildingFetching, status: buildingStatus } = state.buildingReducer;
+  const {
+    building,
+    isFetching: buildingFetching,
+    status: buildingStatus,
+  } = state.buildingReducer;
   const {
     washrooms,
     isFetching: washroomsFetching,
@@ -100,7 +105,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => ({
   getBuilding: (id) => dispatch(getBuilding(id)),
-  getWashrooms: () => dispatch(getWashrooms()),
+  getWashroomsForBuilding: (id) => dispatch(getWashroomsForBuilding(id)),
 });
 
 BuildingDetails.propTypes = {

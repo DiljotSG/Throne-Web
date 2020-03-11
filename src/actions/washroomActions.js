@@ -31,6 +31,12 @@ export const receiveWashroom = (response, status) => (
   }
 );
 
+export function requestWashroomsForBuilding() {
+  return {
+    type: actions.REQUEST_WASHROOMS_FOR_BUILDING,
+  };
+}
+
 export function getWashrooms() {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
@@ -69,5 +75,21 @@ export function getWashroom(id) {
   };
 }
 
-// add getWashroomByBuilding(id) here
-// add action for getting washrooms but don't need to add one for recieving
+export function getWashroomsForBuilding(id) {
+  return async function fetchWashroomsForBuildingAsync(dispatch) {
+    dispatch(requestWashroomsForBuilding());
+
+    return throneApi.getWashroomsForBuilding(id).then((response) => {
+      if (response.ok) {
+        response.json().then((washrooms) => {
+          dispatch(receiveWashrooms(washrooms, response.status));
+        });
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      throw (error);
+    });
+  };
+}

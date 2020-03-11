@@ -14,6 +14,11 @@ const washroomReducer = (state = initialState, action) => {
         ...state,
         isFetching: true,
       };
+    case actions.REQUEST_WASHROOMS_FOR_BUILDING:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case actions.RECEIVE_WASHROOMS:
       return {
         ...state,
