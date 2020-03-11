@@ -85,9 +85,7 @@ class WashroomDetails extends Component {
           size="small"
           dataSource={washroomItem.amenities}
           renderItem={(item) => (
-            <List.Item
-              key={item}
-            >
+            <List.Item key={item}>
               {amenityAsString(String(item))}
               {' '}
               {amenityAsEmoji(String(item))}
