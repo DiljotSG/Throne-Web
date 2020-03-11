@@ -13,6 +13,7 @@ import {
   genderAsString,
   amenityAsEmoji,
   amenityAsString,
+  ratingAsEmoji,
 } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
@@ -51,7 +52,22 @@ const renderReviews = (reviews, isFetching) => (
             </Avatar>
             )}
           datetime={item.created_at}
-          content={item.comment}
+          content={(
+            <Row>
+              <Col sm={14} md={16}>
+                {item.comment}
+              </Col>
+              <Col sm={10} md={8} className="washroom-review-rating">
+                { Object.entries(item.ratings).map(([type, value], i) => (
+                  <>
+                    {i > 0 ? <Divider type="vertical" /> : ''}
+                    {ratingAsEmoji(type)}
+                    {value}
+                  </>
+                ))}
+              </Col>
+            </Row>
+          )}
         />
       ))}
   </Card>
