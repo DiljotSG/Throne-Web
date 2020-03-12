@@ -21,7 +21,7 @@ const { Title, Text } = Typography;
 
 const renderRating = (type, value, overall = false) => (
   <Row>
-    <Col span={12}>{`${startCase(type)} ${ratingAsEmoji(type)}`}</Col>
+    <Col span={12}>{`${ratingAsEmoji(type)} ${startCase(type)}`}</Col>
     <Col span={12} className="rate-value">
       <Rate
         disabled
