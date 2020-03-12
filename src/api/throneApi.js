@@ -22,7 +22,7 @@ class ThroneApi {
       response = await this.postRequest(url, accessToken, data);
     }
 
-    return response; 
+    return response;
   }
 
   static async deleteEndpoint(url, data) {
@@ -34,7 +34,7 @@ class ThroneApi {
       response = await this.deleteRequest(url, accessToken, data);
     }
 
-    return response; 
+    return response;
   }
 
   static async getRequest(url, accessToken) {
@@ -78,7 +78,7 @@ class ThroneApi {
       return (error);
     }
   }
-  
+
   static createEndpointURL(relativeURL) {
     return new URL(relativeURL, `${process.env.REACT_APP_API_URL}`);
   }
@@ -139,12 +139,12 @@ class ThroneApi {
 
   static async addFavorite(id) {
     const url = this.createEndpointURL('users/favorites');
-    return this.postEndpoint(url, {'washroom_id': id});
+    return this.postEndpoint(url, { washroom_id: id });
   }
 
   static async removeFavorite(id) {
     const url = this.createEndpointURL('users/favorites');
-    return this.deleteEndpoint(url, {'washroom_id': id});
+    return this.deleteEndpoint(url, { washroom_id: id });
   }
 }
 
