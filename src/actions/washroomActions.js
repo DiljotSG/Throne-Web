@@ -31,6 +31,25 @@ export const receiveWashroom = (response, status) => (
   }
 );
 
+export function addFavorite() {
+  return {
+    type: actions.ADD_FAVORITE,
+  };
+}
+
+export function removeFavorite() {
+  return {
+    type: actions.REMOVE_FAVORITE,
+  };
+}
+
+export const recieveFavorite = (isFav) => (
+  {
+    type: actions.RECIEVE_FAVORITE,
+    is_favorite: isFav,
+  }
+);
+
 export function getWashrooms() {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
@@ -65,6 +84,40 @@ export function getWashroom(id) {
     }).catch((error) => {
       dispatch(failure());
       throw (error);
+    });
+  };
+}
+
+export function favoriteWashroom(id) {
+  return async function addFavoriteAsync(dispatch) {
+    dispatch(addFavorite());
+
+    return throneApi.addFavorite(id).then((response) => {
+      if (response.ok) {
+        dispatch(recieveFavorite(true));
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      return (error);
+    });
+  };
+}
+
+export function unfavoriteWashroom(id) {
+  return async function addFavoriteAsync(dispatch) {
+    dispatch(removeFavorite());
+
+    return throneApi.removeFavorite(id).then((response) => {
+      if (response.ok) {
+        dispatch(recieveFavorite(false));
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      return (error);
     });
   };
 }
