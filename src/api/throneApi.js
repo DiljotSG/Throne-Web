@@ -13,6 +13,30 @@ class ThroneApi {
     return response;
   }
 
+  static async postEndpoint(url, data) {
+    const accessToken = localStorage.getItem('accessToken');
+    let response = await this.postRequest(url, accessToken, data);
+
+    if (response.status === 401) {
+      await Auth.refreshLogin();
+      response = await this.postRequest(url, accessToken, data);
+    }
+
+    return response; 
+  }
+
+  static async deleteEndpoint(url, data) {
+    const accessToken = localStorage.getItem('accessToken');
+    let response = await this.deleteRequest(url, accessToken, data);
+
+    if (response.status === 401) {
+      await Auth.refreshLogin();
+      response = await this.deleteRequest(url, accessToken, data);
+    }
+
+    return response; 
+  }
+
   static async getRequest(url, accessToken) {
     try {
       return await fetch(url, {
@@ -25,6 +49,36 @@ class ThroneApi {
     }
   }
 
+  static async postRequest(url, accessToken, data) {
+    try {
+      return await fetch(url, {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      return error;
+    }
+  }
+
+  static async deleteRequest(url, accessToken, data) {
+    try {
+      return await fetch(url, {
+        method: 'DELETE',
+        headers: {
+          Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
+    } catch (error) {
+      return (error);
+    }
+  }
+  
   static createEndpointURL(relativeURL) {
     return new URL(relativeURL, `${process.env.REACT_APP_API_URL}`);
   }
@@ -83,9 +137,14 @@ class ThroneApi {
     return this.getEndpoint(url);
   }
 
-  static async getFavoritesForUser(id) {
-    const url = this.createEndpointURL(`users/${id}/favorites`);
-    return this.getEndpoint(url);
+  static async addFavorite(id) {
+    const url = this.createEndpointURL('users/favorites');
+    return this.postEndpoint(url, {'washroom_id': id});
+  }
+
+  static async removeFavorite(id) {
+    const url = this.createEndpointURL('users/favorites');
+    return this.deleteEndpoint(url, {'washroom_id': id});
   }
 }
 
