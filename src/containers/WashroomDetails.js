@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, Card, Empty, Button,
+  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, 
+  Card, Empty, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { kebabCase, isEmpty } from 'lodash';
@@ -114,22 +115,31 @@ class WashroomDetails extends Component {
 
     return (
       <>
-        <Title className="details-title" level={2}>
-          {`${washroom.building_title} ${washroom.is_favorite ? '👑' : ''}`}
-        </Title>
-        <Title className="details-gender" level={4}>
-          {`${genderAsEmoji(washroom.gender)} ${genderAsString(washroom.gender)}`}
-        </Title>
-        <Text className="details-floor-comment" strong>
-          {`Floor ${washroom.floor} | ${washroom.comment}`}
-        </Text>
         <Row>
-          <Button
-            type="primary"
-            onClick={() => (this.toggleFavorite())}
-          >
-            {washroom.is_favorite ? 'Unfavorite' : 'Favorite'}
-          </Button>
+          <Col span={12}>
+            <Title className="details-title" level={2}>
+              {`${washroom.building_title}`}
+            </Title>
+            <Title className="details-gender" level={4}>
+              {`${genderAsEmoji(washroom.gender)} ${genderAsString(washroom.gender)}`}
+            </Title>
+            <Text className="details-floor-comment" strong>
+              {`Floor ${washroom.floor} | ${washroom.comment}`}
+            </Text>
+          </Col>
+          <Col span={12}>
+            <Button
+              className="favorite-button"
+              type="primary"
+              shape="circle"
+              onClick={() => (this.toggleFavorite())}
+            >
+              <Icon
+                type="heart"
+                theme={washroom.is_favorite ? 'filled' : 'outlined'}
+              />
+            </Button>
+          </Col>
         </Row>
         <Row>
           <Col flex="auto">
