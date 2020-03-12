@@ -20,6 +20,7 @@ class ThroneApi {
         method,
         headers: {
           Authorization: `Bearer ${accessToken}`,
+          'Content-Type': 'application/json',
         },
         body: body ? JSON.stringify(body) : null,
       });
