@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, 
+  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton,
   Card, Empty, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
