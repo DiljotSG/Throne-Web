@@ -16,6 +16,10 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.favorite-button {
+  text-align: right;
+}
+
 @media only screen and (min-width: 576px) {
   .washroom-review-rating {
     text-align: right;

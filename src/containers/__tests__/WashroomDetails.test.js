@@ -16,23 +16,6 @@ export default function setupStore(initialState) {
 
 const store = setupStore({});
 
-const washroom = {
-  id: 1,
-  building_title: 'Science Library',
-  comment: 'Washroom 1',
-  gender: 'women',
-  floor: 2,
-  overall_rating: 5,
-  average_ratings: {
-    smell: 1,
-    privacy: 2,
-    cleanliness: 3,
-    toilet_paper_quality: 4,
-  },
-  amenities: ['air_dryer'],
-  is_favorite: true,
-};
-
 const reviews = [
   {
     comment: 'Not bad!',
@@ -92,82 +75,62 @@ fetchMock.get('https://testapi.com/washrooms/1',
 fetchMock.get('https://testapi.com/washrooms/1/reviews', reviews);
 
 describe('WashroomDetails', () => {
-  it('Displays the passed details', async () => {
-    await act(async () => {
-      const match = { params: { id: '1' } };
-      const location = { state: { washroom } };
-
-      const component = mount(
-        <WashroomDetails
-          store={store}
-          match={match}
-          location={location}
-        />,
-      );
-
-      expect(component.find('.details-title').length).toBe(5);
-      expect(component.find('.details-title').first().text()).toBe('Science Library 👑');
-      expect(component.find('.details-gender').first().text()).toBe('🚺 Women');
-      expect(component.find('.details-floor-comment').first().text()).toBe('Floor 2 | Washroom 1');
-      expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
-      expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
-      expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
-      expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('Rate').find('.rate-toilet-paper-quality').first().prop('value')).toBe(4);
-      expect(component.find('li.ant-list-item').length).toBe(1);
-      expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
-    });
-  });
-
-
   it('Fetches washroom details', async () => {
+    let component;
+
     await act(async () => {
       const match = { params: { id: '1' } };
 
-      const component = mount(
+      component = mount(
         <WashroomDetails
           store={store}
           match={match}
           location={{}}
         />,
       );
-
-      expect(component.find('.details-title').first().text()).toBe('Science Library 👑');
-      expect(component.find('.details-gender').first().text()).toBe('🚺 Women');
-      expect(component.find('.details-floor-comment').first().text()).toBe('Floor 2 | Washroom 1');
-      expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
-      expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
-      expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
-      expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
-      expect(component.find('Rate').find('.rate-toilet-paper-quality').first().prop('value')).toBe(4);
-      expect(component.find('li.ant-list-item').length).toBe(1);
-      expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
     });
+
+    component.update();
+
+    expect(component.find('.details-title').first().text()).toBe('Science Library');
+    expect(component.find('.details-gender').first().text()).toBe('🚺 Women');
+    expect(component.find('.details-floor-comment').first().text()).toBe('Floor 2 | Washroom 1');
+    expect(component.find('Rate').find('.rate-overall').first().prop('value')).toBe(5);
+    expect(component.find('Rate').find('.rate-cleanliness').first().prop('value')).toBe(3);
+    expect(component.find('Rate').find('.rate-privacy').first().prop('value')).toBe(2);
+    expect(component.find('Rate').find('.rate-toilet-paper-quality').first().prop('value')).toBe(4);
+    expect(component.find('Rate').find('.rate-smell').first().prop('value')).toBe(1);
+    expect(component.find('li.ant-list-item').length).toBe(1);
+    expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
   });
 
   it('Lists the reviews for a washroom', async () => {
+    let component;
+
     await act(async () => {
       const match = { params: { id: '1' } };
 
-      const component = mount(
+      component = mount(
         <WashroomDetails
           store={store}
           match={match}
           location={{}}
         />,
       );
-
-      expect(component.find('Comment').length).toBe(2);
-
-      const review1 = component.find('Comment').first();
-      expect(review1.find('.washroom-review-comment').first().text()).toBe('Not bad!');
-      expect(review1.prop('author')).toBe('polima');
-      expect(review1.prop('datetime')).toBe('2020-03-05T19:19:40+00:00');
-
-      const review2 = component.find('Comment').at(1);
-      expect(review2.find('.washroom-review-comment').first().text()).toBe('Actually, kinda bad!');
-      expect(review2.prop('author')).toBe('twophase');
-      expect(review2.prop('datetime')).toBe('2020-03-05T22:18:07+00:00');
     });
+
+    component.update();
+
+    expect(component.find('Comment').length).toBe(2);
+
+    const review1 = component.find('Comment').first();
+    expect(review1.find('.washroom-review-comment').first().text()).toBe('Not bad!');
+    expect(review1.prop('author')).toBe('polima');
+    expect(review1.prop('datetime')).toBe('2020-03-05T19:19:40+00:00');
+
+    const review2 = component.find('Comment').at(1);
+    expect(review2.find('.washroom-review-comment').first().text()).toBe('Actually, kinda bad!');
+    expect(review2.prop('author')).toBe('twophase');
+    expect(review2.prop('datetime')).toBe('2020-03-05T22:18:07+00:00');
   });
 });

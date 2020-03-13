@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Row, Col, Typography, Divider, Rate,
+  Row, Col, Typography, Divider, Rate, Icon,
 } from 'antd';
 
 import { NavLink } from 'react-router-dom';
@@ -21,7 +21,10 @@ const renderFavoriteIcon = (isFavourite) => {
           role="img"
           className="list-item-favorite"
         >
-          👑
+          <Icon
+            type="heart"
+            theme="filled"
+          />
         </span>
       </>
     );
@@ -46,6 +49,7 @@ const WashroomListItem = ({ item }) => (
           strong
         >
           {item.building_title}
+          {renderFavoriteIcon(item.is_favorite)}
         </Text>
         <div className="in-line">
           <Text className="list-item-gender">
@@ -59,7 +63,6 @@ const WashroomListItem = ({ item }) => (
           <Text className="list-item-comment">
             {item.comment}
           </Text>
-          {renderFavoriteIcon(item.is_favorite)}
         </div>
         <div className="in-line">
           <Rate

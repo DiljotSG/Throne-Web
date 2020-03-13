@@ -37,7 +37,7 @@ describe('WashroomListItem', () => {
     expect(listItem.find('.list-item-comment').first().text()).toBe('Washroom 1');
     expect(listItem.find('.list-item-floor').first().text()).toBe('Floor 2');
     expect(listItem.find('.list-item-gender').first().text()).toBe('🚺');
-    expect(listItem.find('.list-item-favorite').first().text()).toBe('👑');
     expect(listItem.find('.list-item-distance-value').first().text()).toBe('19m');
+    expect(listItem.find('.list-item-favorite').length).toBe(1);
   });
 });

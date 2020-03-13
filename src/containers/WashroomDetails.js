@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, Card, Empty,
+  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton,
+  Card, Empty, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
-import { getWashroom } from '../actions/washroomActions';
+import { getWashroom, favoriteWashroom, unfavoriteWashroom } from '../actions/washroomActions';
 import { getReviewsForWashroom } from '../actions/reviewActions';
 import { roundToHalf } from '../utils/NumUtils';
 import {
@@ -72,18 +73,11 @@ const renderReviews = (reviews) => {
 
 class WashroomDetails extends Component {
   componentDidMount() {
-    const { match, washroom, reviews } = this.props;
+    const { match } = this.props;
     const { id } = match.params;
-    if (isEmpty(washroom)) {
-      this.getWashroom(id);
-    }
 
-    // See if we have cached the reviews for this washroom already
-    const reviewsFetchedForWashroom = !isEmpty(reviews) && reviews[0].washroom_id === Number(id);
-
-    if (isEmpty(reviews) || !reviewsFetchedForWashroom) {
-      this.getReviewsForWashroom(id);
-    }
+    this.getWashroom(id);
+    this.getReviewsForWashroom(id);
   }
 
   getWashroom = (id) => {
@@ -96,40 +90,74 @@ class WashroomDetails extends Component {
     getReviewsForWashroom(id);
   }
 
-  render() {
-    let washroomItem;
+  toggleFavorite = () => {
     const {
-      location, washroom, reviews, reviewsFetching,
+      favoriteWashroom, // eslint-disable-line no-shadow
+      unfavoriteWashroom, // eslint-disable-line no-shadow
+      washroom,
     } = this.props;
 
-    try {
-      washroomItem = location.state.washroom;
-    } catch (TypeError) {
-      washroomItem = washroom;
+    if (!washroom.is_favorite) {
+      favoriteWashroom(washroom.id);
+    } else {
+      unfavoriteWashroom(washroom.id);
     }
+  }
 
-    if (isEmpty(washroomItem)) {
+  render() {
+    const {
+      washroom,
+      washroomFetching,
+      settingFavorite,
+      reviews,
+      reviewsFetching,
+    } = this.props;
+
+    if (washroomFetching || isEmpty(washroom)) {
       return (<Spin />);
     }
 
     return (
       <>
-        <Title className="details-title" level={2}>
-          {`${washroomItem.building_title} ${washroomItem.is_favorite ? '👑' : ''}`}
-        </Title>
-        <Title className="details-gender" level={4}>
-          {`${genderAsEmoji(washroomItem.gender)} ${genderAsString(washroomItem.gender)}`}
-        </Title>
-        <Text className="details-floor-comment" strong>
-          {`Floor ${washroomItem.floor} | ${washroomItem.comment}`}
-        </Text>
+        <Row>
+          <Col span={12}>
+            <Title className="details-title" level={2}>
+              {washroom.building_title}
+            </Title>
+            <Title className="details-gender" level={4}>
+              {`${genderAsEmoji(washroom.gender)} ${genderAsString(washroom.gender)}`}
+            </Title>
+            <Text className="details-floor-comment" strong>
+              {`Floor ${washroom.floor} | ${washroom.comment}`}
+            </Text>
+          </Col>
+          <Col
+            span={12}
+            className="favorite-button"
+          >
+            <Button
+              type={washroom.is_favorite ? 'primary' : ''}
+              shape="circle"
+              loading={settingFavorite}
+              onClick={() => (this.toggleFavorite())}
+            >
+              {!washroomFetching
+                ? (
+                  <Icon
+                    type="heart"
+                    theme={washroom.is_favorite ? 'filled' : 'outlined'}
+                  />
+                ) : ''}
+            </Button>
+          </Col>
+        </Row>
         <Row>
           <Col flex="auto">
             <Divider />
           </Col>
         </Row>
-        {renderRating('Overall', washroomItem.overall_rating, true)}
-        { Object.entries(washroomItem.average_ratings).map(([type, value]) => (
+        {renderRating('Overall', washroom.overall_rating, true)}
+        { Object.entries(washroom.average_ratings).map(([type, value]) => (
           <React.Fragment key={type}>
             {renderRating(type, value)}
           </React.Fragment>
@@ -137,7 +165,7 @@ class WashroomDetails extends Component {
         <List
           header={<b>Amenities</b>}
           size="small"
-          dataSource={washroomItem.amenities}
+          dataSource={washroom.amenities}
           renderItem={(item) => (
             <List.Item key={item}>
               {amenityAsString(String(item))}
@@ -158,16 +186,22 @@ class WashroomDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { washroom, isFetching, status } = state.washroomReducer;
+  const {
+    washroom,
+    isFetching: washroomFetching,
+    settingFavorite,
+    status: washroomStatus,
+  } = state.washroomReducer;
   const {
     reviews,
     isFetching: reviewsFetching,
     status: reviewsStatus,
   } = state.reviewReducer;
   return {
-    status,
-    isFetching,
     washroom,
+    washroomFetching,
+    settingFavorite,
+    washroomStatus,
     reviews,
     reviewsFetching,
     reviewsStatus,
@@ -177,9 +211,13 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => ({
   getWashroom: (id) => dispatch(getWashroom(id)),
   getReviewsForWashroom: (id) => dispatch(getReviewsForWashroom(id)),
+  favoriteWashroom: (id) => dispatch(favoriteWashroom(id)),
+  unfavoriteWashroom: (id) => dispatch(unfavoriteWashroom(id)),
 });
 
 WashroomDetails.propTypes = {
+  favoriteWashroom: PropTypes.func.isRequired,
+  unfavoriteWashroom: PropTypes.func.isRequired,
   getWashroom: PropTypes.func.isRequired,
   washroom: PropTypes.shape({
     id: PropTypes.number,
@@ -195,7 +233,10 @@ WashroomDetails.propTypes = {
     }),
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
+    building_title: PropTypes.string,
   }).isRequired,
+  washroomFetching: PropTypes.bool,
+  settingFavorite: PropTypes.bool,
   getReviewsForWashroom: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(
     PropTypes.shape({
@@ -231,6 +272,8 @@ WashroomDetails.propTypes = {
 };
 
 WashroomDetails.defaultProps = {
+  washroomFetching: false,
+  settingFavorite: false,
   reviewsFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({
