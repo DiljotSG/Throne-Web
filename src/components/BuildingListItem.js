@@ -11,7 +11,6 @@ import './BuildingListItem.css';
 const { Title, Text } = Typography;
 
 const BuildingListItem = ({ item }) => (
-
   <NavLink
     to={{
       pathname: `/buildings/${item.id}`,
@@ -21,9 +20,7 @@ const BuildingListItem = ({ item }) => (
   >
     <Row>
       <Col span={20}>
-        <Text
-          strong
-        >
+        <Text strong>
           {item.title}
         </Text>
         <div className="in-line">
@@ -53,7 +50,6 @@ const BuildingListItem = ({ item }) => (
       </Col>
     </Row>
   </NavLink>
-
 );
 
 BuildingListItem.propTypes = {

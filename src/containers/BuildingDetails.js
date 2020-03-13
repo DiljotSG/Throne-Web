@@ -47,7 +47,10 @@ class BuildingDetails extends Component {
 
     return (
       <>
-        <Title className="details-title" level={2}>
+        <Title
+          className="details-title"
+          level={2}
+        >
           { building.title }
         </Title>
         <Row>
