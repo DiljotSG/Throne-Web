@@ -106,10 +106,10 @@ class WashroomDetails extends Component {
 
   render() {
     const {
-      washroom, reviews, reviewsFetching,
+      washroom, washroomFetching, reviews, reviewsFetching,
     } = this.props;
 
-    if (isEmpty(washroom)) {
+    if (washroomFetching || isEmpty(washroom)) {
       return (<Spin />);
     }
 
@@ -130,14 +130,18 @@ class WashroomDetails extends Component {
           <Col span={12}>
             <Button
               className="favorite-button"
-              type="primary"
+              type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
+              loading={washroomFetching}
               onClick={() => (this.toggleFavorite())}
             >
-              <Icon
-                type="heart"
-                theme={washroom.is_favorite ? 'filled' : 'outlined'}
-              />
+              {!washroomFetching
+                ? (
+                  <Icon
+                    type="heart"
+                    theme={washroom.is_favorite ? 'filled' : 'outlined'}
+                  />
+                ) : ''}
             </Button>
           </Col>
         </Row>
@@ -175,16 +179,20 @@ class WashroomDetails extends Component {
 }
 
 const mapStateToProps = (state) => {
-  const { washroom, isFetching, status } = state.washroomReducer;
+  const {
+    washroom,
+    isFetching: washroomFetching,
+    status: washroomStatus,
+  } = state.washroomReducer;
   const {
     reviews,
     isFetching: reviewsFetching,
     status: reviewsStatus,
   } = state.reviewReducer;
   return {
-    status,
-    isFetching,
     washroom,
+    washroomFetching,
+    washroomStatus,
     reviews,
     reviewsFetching,
     reviewsStatus,
@@ -218,6 +226,7 @@ WashroomDetails.propTypes = {
     is_favorite: PropTypes.bool,
     building_title: PropTypes.string,
   }).isRequired,
+  washroomFetching: PropTypes.bool,
   getReviewsForWashroom: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(
     PropTypes.shape({
@@ -253,6 +262,7 @@ WashroomDetails.propTypes = {
 };
 
 WashroomDetails.defaultProps = {
+  washroomFetching: true,
   reviewsFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({

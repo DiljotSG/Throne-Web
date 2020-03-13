@@ -49,6 +49,7 @@ const WashroomListItem = ({ item }) => (
           strong
         >
           {item.building_title}
+          {renderFavoriteIcon(item.is_favorite)}
         </Text>
         <div className="in-line">
           <Text className="list-item-gender">
@@ -62,7 +63,6 @@ const WashroomListItem = ({ item }) => (
           <Text className="list-item-comment">
             {item.comment}
           </Text>
-          {renderFavoriteIcon(item.is_favorite)}
         </div>
         <div className="in-line">
           <Rate
