@@ -141,7 +141,7 @@ class WashroomDetails extends Component {
               loading={settingFavorite}
               onClick={() => (this.toggleFavorite())}
             >
-              {!washroomFetching
+              {!settingFavorite
                 ? (
                   <Icon
                     type="heart"
