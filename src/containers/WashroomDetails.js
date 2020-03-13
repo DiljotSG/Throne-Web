@@ -230,6 +230,7 @@ WashroomDetails.propTypes = {
     building_title: PropTypes.string,
   }).isRequired,
   washroomFetching: PropTypes.bool,
+  settingFavorite: PropTypes.bool,
   getReviewsForWashroom: PropTypes.func.isRequired,
   reviews: PropTypes.arrayOf(
     PropTypes.shape({
@@ -266,6 +267,7 @@ WashroomDetails.propTypes = {
 
 WashroomDetails.defaultProps = {
   washroomFetching: false,
+  settingFavorite: false,
   reviewsFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({
