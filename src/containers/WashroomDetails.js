@@ -28,7 +28,7 @@ const renderRating = (type, value, overall = false) => (
         disabled
         value={roundToHalf(value)}
         allowHalf
-        className={`rate rate-${kebabCase(type)} ${overall ? 'rate-overall' : ''}`}
+        className={`rate rate-${kebabCase(type)} rate-${overall ? 'overall' : 'average'}`}
       />
     </Col>
   </Row>

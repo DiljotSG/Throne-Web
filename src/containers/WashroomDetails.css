@@ -12,6 +12,10 @@
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
+.rate-average {
+  color: #FBD78C !important;
+}
+
 .favorite-button {
   text-align: right;
 }
