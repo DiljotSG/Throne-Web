@@ -31,17 +31,17 @@ const washroomReducer = (state = initialState, action) => {
     case actions.ADD_FAVORITE:
       return {
         ...state,
-        isFetching: true,
+        settingFavorite: true,
       };
     case actions.REMOVE_FAVORITE:
       return {
         ...state,
-        isFetching: true,
+        settingFavorite: true,
       };
     case actions.RECIEVE_FAVORITE:
       return {
         ...state,
-        isFetching: false,
+        settingFavorite: false,
         washroom: {
           ...state.washroom,
           is_favorite: action.is_favorite,

@@ -106,7 +106,7 @@ class WashroomDetails extends Component {
 
   render() {
     const {
-      washroom, washroomFetching, reviews, reviewsFetching,
+      washroom, washroomFetching, settingFavorite, reviews, reviewsFetching,
     } = this.props;
 
     if (washroomFetching || isEmpty(washroom)) {
@@ -132,7 +132,7 @@ class WashroomDetails extends Component {
               className="favorite-button"
               type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
-              loading={washroomFetching}
+              loading={settingFavorite}
               onClick={() => (this.toggleFavorite())}
             >
               {!washroomFetching
@@ -182,6 +182,7 @@ const mapStateToProps = (state) => {
   const {
     washroom,
     isFetching: washroomFetching,
+    settingFavorite,
     status: washroomStatus,
   } = state.washroomReducer;
   const {
@@ -192,6 +193,7 @@ const mapStateToProps = (state) => {
   return {
     washroom,
     washroomFetching,
+    settingFavorite,
     washroomStatus,
     reviews,
     reviewsFetching,
