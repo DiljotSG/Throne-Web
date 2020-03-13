@@ -19,25 +19,17 @@ const { TabPane } = Tabs;
 
 class NearMe extends Component {
   componentDidMount() {
-    const { washrooms, buildings } = this.props;
-
-    if (washrooms.length === 0) {
-      this.getWashrooms();
-    }
-    if (buildings.length === 0) {
-      this.getBuildings();
-    }
+    this.getWashrooms();
+    this.getBuildings();
   }
 
   getBuildings = () => {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
-
     getBuildings();
   }
 
   getWashrooms = () => {
     const { getWashrooms } = this.props;
-
     getWashrooms();
   }
 

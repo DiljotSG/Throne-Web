@@ -1,30 +1,26 @@
 import React, { Component } from 'react';
 import {
-  List, Spin, Typography,
+  List, Typography, Spin, Rate, Row,
 } from 'antd';
 
 import PropTypes from 'prop-types';
-import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding } from '../actions/washroomActions';
+import { roundToHalf } from '../utils/NumUtils';
 import './BuildingDetails.css';
 
 import { WashroomListItem } from '../components';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 
 class BuildingDetails extends Component {
   componentDidMount() {
-    const { match, building, washrooms } = this.props;
+    const { match } = this.props;
     const { id } = match.params;
 
-    if (building.id !== id) {
-      this.getBuilding(id);
-    }
-    if (washrooms.length === 0) {
-      this.getWashroomsForBuilding(building.id);
-    }
+    this.getBuilding(id);
+    this.getWashroomsForBuilding(id);
   }
 
   getBuilding = (id) => {
@@ -33,41 +29,47 @@ class BuildingDetails extends Component {
   }
 
   getWashroomsForBuilding = (id) => {
-    // eslint-disable-next-line react/prop-types
     const { getWashroomsForBuilding } = this.props; // eslint-disable-line no-shadow
     getWashroomsForBuilding(id);
   }
 
   render() {
-    let buildingItem;
-
     const {
-      location,
       building,
-      washrooms,
+      buildingFetching,
+      buildingWashrooms,
       washroomsFetching,
     } = this.props;
 
-    try {
-      buildingItem = location.state.building;
-    } catch (TypeError) {
-      buildingItem = building;
-    }
-
-    if (isEmpty(buildingItem)) {
+    if (buildingFetching) {
       return (<Spin />);
     }
 
     return (
       <>
         <Title className="details-title" level={2}>
-          {`${buildingItem.title}`}
+          { building.title }
         </Title>
+        <Row>
+          <Text>
+            { 'Overall Rating: ' }
+          </Text>
+          <Rate
+            className="rate-overall-color"
+            disabled
+            value={roundToHalf(building.overall_rating)}
+          />
+        </Row>
+        <Row>
+          <Text>
+            Washrooms Inside
+          </Text>
+        </Row>
         <List
           className="near-me-list"
           loading={washroomsFetching}
           bordered
-          dataSource={washrooms}
+          dataSource={buildingWashrooms}
           renderItem={(item) => (
             <List.Item
               className="near-me-list-item"
@@ -89,7 +91,7 @@ const mapStateToProps = (state) => {
     status: buildingStatus,
   } = state.buildingReducer;
   const {
-    washrooms,
+    washrooms: buildingWashrooms,
     isFetching: washroomsFetching,
     status: washroomsStatus,
   } = state.washroomReducer;
@@ -97,7 +99,7 @@ const mapStateToProps = (state) => {
     building,
     buildingFetching,
     buildingStatus,
-    washrooms,
+    buildingWashrooms,
     washroomsFetching,
     washroomsStatus,
   };
@@ -109,12 +111,11 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 BuildingDetails.propTypes = {
-  washrooms: PropTypes.instanceOf(Array),
-  buildings: PropTypes.instanceOf(Array),
-  getWashrooms: PropTypes.func.isRequired,
+  buildingWashrooms: PropTypes.instanceOf(Array),
+  getWashroomsForBuilding: PropTypes.func.isRequired,
   getBuilding: PropTypes.func.isRequired,
   washroomsFetching: PropTypes.bool,
-  buildingsFetching: PropTypes.bool,
+  buildingFetching: PropTypes.bool,
   building: PropTypes.shape({
     best_rating: PropTypes.shape({
       cleanliness: PropTypes.number.isRequired,
@@ -124,40 +125,22 @@ BuildingDetails.propTypes = {
     }).isRequired,
     created_at: PropTypes.string.isRequired,
     id: PropTypes.number.isRequired,
-    location: PropTypes.shape({
-      latitude: PropTypes.number.isRequired,
-      longitude: PropTypes.number.isRequired,
-    }).isRequired,
     maps_service_id: PropTypes.number.isRequired,
     overall_rating: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     washroom_count: PropTypes.number.isRequired,
   }).isRequired,
-  isFetching: PropTypes.bool,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
-  location: PropTypes.shape({
-    state: PropTypes.shape({
-      building: PropTypes.object,
-    }),
-  }),
 };
 
 BuildingDetails.defaultProps = {
-  washrooms: [],
-  buildings: [],
+  buildingWashrooms: [],
   washroomsFetching: false,
-  buildingsFetching: false,
   buildingFetching: false,
-  washroomFetching: false,
-  location: PropTypes.shape({
-    state: PropTypes.shape({
-      washroom: {},
-    }),
-  }),
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingDetails);
