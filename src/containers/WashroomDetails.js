@@ -3,7 +3,7 @@ import {
   List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton, Card, Empty,
 } from 'antd';
 import PropTypes from 'prop-types';
-import { kebabCase, isEmpty } from 'lodash';
+import { startCase, kebabCase, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom } from '../actions/washroomActions';
 import { getReviewsForWashroom } from '../actions/reviewActions';
@@ -19,15 +19,15 @@ import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
 
-const renderRating = (title, value, overall = false) => (
+const renderRating = (type, value, overall = false) => (
   <Row>
-    <Col span={12}>{title}</Col>
+    <Col span={12}>{`${ratingAsEmoji(type)} ${startCase(type)}`}</Col>
     <Col span={12} className="rate-value">
       <Rate
         disabled
         value={roundToHalf(value)}
         allowHalf
-        className={`rate rate-${kebabCase(title)} rate-${overall ? 'overall' : 'average'}`}
+        className={`rate rate-${kebabCase(type)} rate-${overall ? 'overall' : 'average'}`}
       />
     </Col>
   </Row>
@@ -129,10 +129,11 @@ class WashroomDetails extends Component {
           </Col>
         </Row>
         {renderRating('Overall', washroomItem.overall_rating, true)}
-        {renderRating('Cleanliness', washroomItem.average_ratings.cleanliness)}
-        {renderRating('Privacy', washroomItem.average_ratings.privacy)}
-        {renderRating('Paper Quality', washroomItem.average_ratings.toilet_paper_quality)}
-        {renderRating('Smell', washroomItem.average_ratings.smell)}
+        { Object.entries(washroomItem.average_ratings).map(([type, value]) => (
+          <React.Fragment key={type}>
+            {renderRating(type, value)}
+          </React.Fragment>
+        ))}
         <List
           header={<b>Amenities</b>}
           size="small"
