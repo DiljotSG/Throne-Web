@@ -264,7 +264,7 @@ WashroomDetails.propTypes = {
 };
 
 WashroomDetails.defaultProps = {
-  washroomFetching: true,
+  washroomFetching: false,
   reviewsFetching: false,
   location: PropTypes.shape({
     state: PropTypes.shape({
