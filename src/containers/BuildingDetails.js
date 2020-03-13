@@ -52,7 +52,7 @@ class BuildingDetails extends Component {
         </Title>
         <Row>
           <Text>
-            { 'Overall Rating: ' }
+            { 'Building: ' }
           </Text>
           <Rate
             className="rate-overall-color"
