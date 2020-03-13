@@ -43,10 +43,10 @@ export function removeFavorite() {
   };
 }
 
-export const recieveFavorite = (isFav) => (
+export const recieveFavorite = (isFavorite) => (
   {
     type: actions.RECIEVE_FAVORITE,
-    is_favorite: isFav,
+    is_favorite: isFavorite,
   }
 );
 
@@ -106,7 +106,7 @@ export function favoriteWashroom(id) {
 }
 
 export function unfavoriteWashroom(id) {
-  return async function addFavoriteAsync(dispatch) {
+  return async function removeFavoriteAsync(dispatch) {
     dispatch(removeFavorite());
 
     return throneApi.removeFavorite(id).then((response) => {

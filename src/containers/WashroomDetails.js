@@ -106,7 +106,11 @@ class WashroomDetails extends Component {
 
   render() {
     const {
-      washroom, washroomFetching, settingFavorite, reviews, reviewsFetching,
+      washroom,
+      washroomFetching,
+      settingFavorite,
+      reviews,
+      reviewsFetching,
     } = this.props;
 
     if (washroomFetching || isEmpty(washroom)) {
@@ -118,7 +122,7 @@ class WashroomDetails extends Component {
         <Row>
           <Col span={12}>
             <Title className="details-title" level={2}>
-              {`${washroom.building_title}`}
+              {washroom.building_title}
             </Title>
             <Title className="details-gender" level={4}>
               {`${genderAsEmoji(washroom.gender)} ${genderAsString(washroom.gender)}`}
@@ -127,9 +131,11 @@ class WashroomDetails extends Component {
               {`Floor ${washroom.floor} | ${washroom.comment}`}
             </Text>
           </Col>
-          <Col span={12}>
+          <Col
+            span={12}
+            className="favorite-button"
+          >
             <Button
-              className="favorite-button"
               type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
               loading={settingFavorite}
