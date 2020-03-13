@@ -3,3 +3,23 @@
   margin: 30px;
   padding: 10px;
 }
+
+.pop-up {
+  white-space: nowrap;
+}
+
+.pop-up-rating {
+  color: #5da3e7 !important;
+  font-size: 12px !important;
+}
+
+.show-more {
+  text-align: right;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.info-icon {
+  width: 40px;
+  font-size: large;
+}
