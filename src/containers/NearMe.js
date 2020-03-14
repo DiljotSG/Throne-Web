@@ -48,7 +48,7 @@ class NearMe extends Component {
         );
       });
     } else {
-      // If we can't get their location, just get washrooms
+      // If we can't get their location, this is the tests
       getWashrooms(null, null, maxResults, amenities, radius);
     }
   }
