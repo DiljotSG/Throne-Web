@@ -64,9 +64,9 @@ class BuildingDetails extends Component {
           />
         </Row>
         <Row>
-          <Text>
+          <Title level={4}>
             Washrooms Inside
-          </Text>
+          </Title>
         </Row>
         <List
           className="near-me-list"
