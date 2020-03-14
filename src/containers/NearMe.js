@@ -22,7 +22,7 @@ class NearMe extends Component {
     this.getWashrooms(
       1000, // max_results
       null, // amenities
-      1000, // radius
+      50000, // radius
     );
     this.getBuildings();
   }
