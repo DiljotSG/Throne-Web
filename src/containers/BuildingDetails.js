@@ -120,7 +120,7 @@ BuildingDetails.propTypes = {
   washroomsFetching: PropTypes.bool,
   buildingFetching: PropTypes.bool,
   building: PropTypes.shape({
-    best_rating: PropTypes.shape({
+    best_ratings: PropTypes.shape({
       cleanliness: PropTypes.number.isRequired,
       privacy: PropTypes.number.isRequired,
       smell: PropTypes.number.isRequired,

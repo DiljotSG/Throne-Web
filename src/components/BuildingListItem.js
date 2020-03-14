@@ -54,7 +54,7 @@ const BuildingListItem = ({ item }) => (
 
 BuildingListItem.propTypes = {
   item: PropTypes.shape({
-    best_rating: PropTypes.shape({
+    best_ratings: PropTypes.shape({
       cleanliness: PropTypes.number.isRequired,
       privacy: PropTypes.number.isRequired,
       smell: PropTypes.number.isRequired,
