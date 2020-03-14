@@ -35,8 +35,10 @@ class ThroneApi {
 
   static async getWashrooms(latitude, longitude, maxResults, amenities, radius) {
     const url = this.createEndpointURL('washrooms');
-    url.searchParams.append('latitude', latitude);
-    url.searchParams.append('longitude', longitude);
+    if (latitude && longitude) {
+      url.searchParams.append('latitude', latitude);
+      url.searchParams.append('longitude', longitude);
+    }
     url.searchParams.append('max_results', maxResults);
     url.searchParams.append('radius', radius);
     url.searchParams.append('amenities', amenities);

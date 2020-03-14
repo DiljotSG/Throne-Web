@@ -20,9 +20,9 @@ const { TabPane } = Tabs;
 class NearMe extends Component {
   componentDidMount() {
     this.getWashrooms(
-      100,
-      null,
-      1000
+      1000, // max_results
+      null, // amenities
+      1000, // radius
     );
     this.getBuildings();
   }
@@ -35,26 +35,21 @@ class NearMe extends Component {
 
   getWashrooms = (maxResults, amenities, radius) => {
     const { getWashrooms } = this.props;
-    
-    // Get the user location
-    if(navigator.geolocation) {
+
+    if (navigator.geolocation) {
+      // Get the user location
       navigator.geolocation.getCurrentPosition((location) => {
         getWashrooms(
           location.coords.latitude,
           location.coords.longitude,
           maxResults,
           amenities,
-          radius
+          radius,
         );
       });
     } else {
-      getWashrooms(
-        0,
-        0,
-        maxResults,
-        amenities,
-        radius
-      );
+      // If we can't get their location, just get washrooms
+      getWashrooms(null, null, maxResults, amenities, radius);
     }
   }
 

@@ -74,15 +74,18 @@ const WashroomListItem = ({ item }) => (
         </div>
       </Col>
       <Col span={4}>
-        <div className="list-item-distance">
-          Distance
-          <Title
-            className="list-item-distance-value"
-            level={4}
-          >
-            {item.distance > 1000 ? `${(item.distance / 1000).toFixed(2)} km` : `${(item.distance).toFixed(2)} m`}
-          </Title>
-        </div>
+        {item.distance
+          && (
+          <div className="list-item-distance">
+            Distance
+            <Title
+              className="list-item-distance-value"
+              level={4}
+            >
+              {item.distance > 1000 ? `${(item.distance / 1000).toFixed(2)} km` : `${(item.distance).toFixed(2)} m`}
+            </Title>
+          </div>
+          )}
       </Col>
     </Row>
   </NavLink>
@@ -98,7 +101,7 @@ WashroomListItem.propTypes = {
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
     is_favorite: PropTypes.bool.isRequired,
-    distance: PropTypes.number.isRequired,
+    distance: PropTypes.number,
   }),
 };
 
