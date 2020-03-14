@@ -12,10 +12,7 @@ const { Title, Text } = Typography;
 
 const BuildingListItem = ({ item }) => (
   <NavLink
-    to={{
-      pathname: `/buildings/${item.id}`,
-      state: { building: item },
-    }}
+    to={`/buildings/${item.id}`}
     className="list-item"
   >
     <Row>
