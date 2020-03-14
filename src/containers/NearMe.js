@@ -12,7 +12,7 @@ import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
 
-import { WashroomListItem } from '../components';
+import { WashroomListItem, BuildingListItem } from '../components';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
@@ -29,7 +29,6 @@ class NearMe extends Component {
 
   getBuildings = () => {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
-
     getBuildings();
   }
 
@@ -87,7 +86,7 @@ class NearMe extends Component {
                   className="near-me-list-item"
                   key={item.id}
                 >
-                  {item.title}
+                  <BuildingListItem item={item} />
                 </List.Item>
               )}
             />
