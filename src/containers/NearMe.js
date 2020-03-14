@@ -19,7 +19,7 @@ const { TabPane } = Tabs;
 
 class NearMe extends Component {
   componentDidMount() {
-    this.getWashrooms();
+    this.getWashrooms(49.81050491333008, -97.13350677490234, 100, null, 1000);
     this.getBuildings();
   }
 
@@ -29,10 +29,10 @@ class NearMe extends Component {
     getBuildings();
   }
 
-  getWashrooms = () => {
+  getWashrooms = (latitude, longitude, maxResults, amenities, radius) => {
     const { getWashrooms } = this.props;
 
-    getWashrooms();
+    getWashrooms(latitude, longitude, maxResults, amenities, radius);
   }
 
   render() {
@@ -123,7 +123,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getWashrooms: () => dispatch(getWashrooms()),
+  getWashrooms: (latitude, longitude, maxResults, amenities, radius) => { 
+    dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius))
+  },
   getBuildings: () => dispatch(getBuildings()),
 });
 
