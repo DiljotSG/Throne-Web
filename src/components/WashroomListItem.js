@@ -1,18 +1,18 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Row, Col, Typography, Divider, Rate,
+  Row, Col, Typography, Divider, Rate, Icon,
 } from 'antd';
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/DisplayUtils';
+import { genderAsEmoji, displayDistance } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
 
-const renderFavoriteIcon = (isFavourite) => {
-  if (isFavourite) {
+const renderFavoriteIcon = (isFavorite) => {
+  if (isFavorite) {
     return (
       <>
         <Divider type="vertical" />
@@ -21,7 +21,11 @@ const renderFavoriteIcon = (isFavourite) => {
           role="img"
           className="list-item-favorite"
         >
-          👑
+          <Icon
+            type="heart"
+            theme="filled"
+            className="list-icon-heart"
+          />
         </span>
       </>
     );
@@ -46,6 +50,7 @@ const WashroomListItem = ({ item }) => (
           strong
         >
           {item.building_title}
+          {renderFavoriteIcon(item.is_favorite)}
         </Text>
         <div className="in-line">
           <Text className="list-item-gender">
@@ -55,11 +60,14 @@ const WashroomListItem = ({ item }) => (
           <Text className="list-item-floor">
             {`Floor ${item.floor}`}
           </Text>
-          <Divider type="vertical" />
-          <Text className="list-item-comment">
-            {item.comment}
-          </Text>
-          {renderFavoriteIcon(item.is_favorite)}
+          {item.comment
+            && <Divider type="vertical" />}
+          {item.comment
+            && (
+            <Text className="list-item-comment">
+              {item.comment}
+            </Text>
+            )}
         </div>
         <div className="in-line">
           <Rate
@@ -71,15 +79,18 @@ const WashroomListItem = ({ item }) => (
         </div>
       </Col>
       <Col span={4}>
-        <div className="list-item-distance">
-          Distance
-          <Title
-            className="list-item-distance-value"
-            level={4}
-          >
-            19m
-          </Title>
-        </div>
+        {item.distance
+          && (
+          <div className="list-item-distance">
+            Distance
+            <Title
+              className="list-item-distance-value"
+              level={4}
+            >
+              {displayDistance(item.distance)}
+            </Title>
+          </div>
+          )}
       </Col>
     </Row>
   </NavLink>
@@ -95,6 +106,7 @@ WashroomListItem.propTypes = {
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
     is_favorite: PropTypes.bool.isRequired,
+    distance: PropTypes.number,
   }),
 };
 

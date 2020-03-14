@@ -7,11 +7,31 @@
   margin-right: 4px !important;
 }
 
-.rate-average {
-  color: #ccc !important;
-}
-
 .rate-overall {
   color: #5da3e7 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.rate-average {
+  color: #FBD78C !important;
+}
+
+.favorite-button {
+  text-align: right;
+}
+
+@media only screen and (min-width: 576px) {
+  .washroom-review-rating {
+    text-align: right;
+  }
+}
+
+.favorite-button-selected {
+  background-color: #E50000 !important;
+  border-color: #E50000 !important;
+}
+
+.favorite-button-unselected:hover {
+  color: #E50000 !important;
+  border-color: #E50000 !important;
 }

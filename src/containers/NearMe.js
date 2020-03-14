@@ -19,7 +19,11 @@ const { TabPane } = Tabs;
 
 class NearMe extends Component {
   componentDidMount() {
-    this.getWashrooms();
+    this.getWashrooms(
+      1000, // max_results
+      null, // amenities
+      1000, // radius
+    );
     this.getBuildings();
   }
 
@@ -28,9 +32,24 @@ class NearMe extends Component {
     getBuildings();
   }
 
-  getWashrooms = () => {
+  getWashrooms = (maxResults, amenities, radius) => {
     const { getWashrooms } = this.props;
-    getWashrooms();
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getWashrooms(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getWashrooms for the test cases without a location
+      getWashrooms(null, null, maxResults, amenities, radius);
+    }
   }
 
   render() {
@@ -121,7 +140,9 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getWashrooms: () => dispatch(getWashrooms()),
+  getWashrooms: (latitude, longitude, maxResults, amenities, radius) => {
+    dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius));
+  },
   getBuildings: () => dispatch(getBuildings()),
 });
 
