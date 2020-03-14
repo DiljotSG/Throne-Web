@@ -80,7 +80,9 @@ const WashroomListItem = ({ item }) => (
             className="list-item-distance-value"
             level={4}
           >
-            {item.distance.toFixed(2)} m
+            {item.distance.toFixed(2)}
+            {' '}
+            m
           </Title>
         </div>
       </Col>
@@ -98,7 +100,7 @@ WashroomListItem.propTypes = {
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
     is_favorite: PropTypes.bool.isRequired,
-    distance: PropTypes.number.isRequired
+    distance: PropTypes.number.isRequired,
   }),
 };
 

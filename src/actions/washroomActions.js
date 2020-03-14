@@ -54,7 +54,13 @@ export function getWashrooms(latitude, longitude, maxResults, amenities, radius)
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
 
-    return throneApi.getWashrooms(latitude, longitude, maxResults, amenities, radius).then((response) => {
+    return throneApi.getWashrooms(
+      latitude,
+      longitude,
+      maxResults,
+      amenities,
+      radius,
+    ).then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
           dispatch(receiveWashrooms(washrooms, response.status));

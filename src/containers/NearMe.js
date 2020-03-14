@@ -123,8 +123,8 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getWashrooms: (latitude, longitude, maxResults, amenities, radius) => { 
-    dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius))
+  getWashrooms: (latitude, longitude, maxResults, amenities, radius) => {
+    dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius));
   },
   getBuildings: () => dispatch(getBuildings()),
 });
