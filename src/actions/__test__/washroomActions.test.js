@@ -40,12 +40,12 @@ describe('async actions', () => {
     });
   });
 
-  it.only('create RECIEVE_FAVORITE event when washroom favorited', () => {
+  it.only('create RECEIVE_FAVORITE event when washroom favorited', () => {
     fetchMock.postOnce('https://testapi.com/users/favorites', 201, []);
 
     const expectedActions = [
       { type: types.ADD_FAVORITE },
-      { type: types.RECIEVE_FAVORITE, status: 201, is_favorite: true },
+      { type: types.RECEIVE_FAVORITE, status: 201, is_favorite: true },
     ];
 
     const store = mockStore({ status: 200, settingFavorite: false });
@@ -54,12 +54,12 @@ describe('async actions', () => {
     });
   });
 
-  it.only('create RECIEVE_FAVORITE event when washroom is unfavorited', () => {
+  it.only('create RECEIVE_FAVORITE event when washroom is unfavorited', () => {
     fetchMock.deleteOnce('https://testapi.com/users/favorites', 204, []);
 
     const expectedActions = [
       { type: types.REMOVE_FAVORITE },
-      { type: types.RECIEVE_FAVORITE, status: 204, is_favorite: false },
+      { type: types.RECEIVE_FAVORITE, status: 204, is_favorite: false },
     ];
 
     const store = mockStore({ status: 200, settingFavorite: false });
