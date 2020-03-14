@@ -4,6 +4,17 @@ const initialState = { reviews: [] };
 
 const reviewReducer = (state = initialState, action) => {
   switch (action.type) {
+    case actions.CREATE_REVIEW:
+      return {
+        ...state,
+        creatingReview: true,
+      };
+    case actions.RECEIVE_REVIEW:
+      return {
+        ...state,
+        creatingReview: false,
+        reviews: [...state.reviews, action.review],
+      };
     case actions.REQUEST_REVIEWS_FOR_USER:
       return {
         ...state,
