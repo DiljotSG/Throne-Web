@@ -94,7 +94,7 @@ const mapStateToProps = (state) => {
     status: buildingStatus,
   } = state.buildingReducer;
   const {
-    washrooms: buildingWashrooms,
+    buildingWashrooms,
     isFetching: washroomsFetching,
     status: washroomsStatus,
   } = state.washroomReducer;
