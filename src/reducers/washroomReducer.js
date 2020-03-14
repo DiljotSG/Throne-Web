@@ -28,6 +28,25 @@ const washroomReducer = (state = initialState, action) => {
         status: action.status,
         washroom: action.washroom,
       };
+    case actions.ADD_FAVORITE:
+      return {
+        ...state,
+        settingFavorite: true,
+      };
+    case actions.REMOVE_FAVORITE:
+      return {
+        ...state,
+        settingFavorite: true,
+      };
+    case actions.RECIEVE_FAVORITE:
+      return {
+        ...state,
+        settingFavorite: false,
+        washroom: {
+          ...state.washroom,
+          is_favorite: action.is_favorite,
+        },
+      };
     case actions.FAILURE: {
       return {
         ...state,
