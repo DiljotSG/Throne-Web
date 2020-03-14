@@ -59,14 +59,14 @@ const WashroomListItem = ({ item }) => (
           <Text className="list-item-floor">
             {`Floor ${item.floor}`}
           </Text>
-          {item.comment &&
-            <Divider type="vertical" />
-          }
-          {item.comment &&
+          {item.comment
+            && <Divider type="vertical" />}
+          {item.comment
+            && (
             <Text className="list-item-comment">
-             {item.comment}
+              {item.comment}
             </Text>
-          }
+            )}
         </div>
         <div className="in-line">
           <Rate

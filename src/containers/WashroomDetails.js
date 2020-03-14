@@ -129,7 +129,7 @@ class WashroomDetails extends Component {
             </Title>
             <Text className="details-floor-comment" strong>
               {`Floor ${washroom.floor}`}
-              {washroom.comment ? `| ${washroom.comment}` : ''}
+              {washroom.comment ? ` | ${washroom.comment}` : ''}
             </Text>
           </Col>
           <Col
