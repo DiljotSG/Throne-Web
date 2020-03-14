@@ -14,7 +14,7 @@ describe('async actions', () => {
     fetchMock.restore();
   });
 
-  it('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
+  it.only('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
     fetchMock.getOnce('https://testapi.com/washrooms', ['Washroom 1', 'Washroom 2']);
     const expectedActions = [
       { type: types.REQUEST_WASHROOMS },
@@ -27,7 +27,7 @@ describe('async actions', () => {
     });
   });
 
-  it('creates RECEIVE_WASHROOM event when a washroom is recieved', () => {
+  it.only('creates RECEIVE_WASHROOM event when a washroom is recieved', () => {
     fetchMock.getOnce('https://testapi.com/washrooms/0', ['Washroom 1']);
     const expectedActions = [
       { type: types.REQUEST_WASHROOM },
@@ -40,7 +40,7 @@ describe('async actions', () => {
     });
   });
 
-  it('create RECIEVE_FAVORITE event when washroom favorited', () => {
+  it.only('create RECIEVE_FAVORITE event when washroom favorited', () => {
     fetchMock.postOnce('https://testapi.com/users/favorites', 201, []);
 
     const expectedActions = [
@@ -54,7 +54,7 @@ describe('async actions', () => {
     });
   });
 
-  it('create RECIEVE_FAVORITE event when washroom is unfavorited', () => {
+  it.only('create RECIEVE_FAVORITE event when washroom is unfavorited', () => {
     fetchMock.deleteOnce('https://testapi.com/users/favorites', 204, []);
 
     const expectedActions = [
@@ -64,6 +64,20 @@ describe('async actions', () => {
 
     const store = mockStore({ status: 200, settingFavorite: false });
     return store.dispatch(actions.unfavoriteWashroom(0)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it('creates FAILURE event when request fails', () => {
+    fetchMock.getOnce('https://testapi.com/washrooms', 401, { Authorization: 'Failed' });
+
+    const expectedActions = [
+      { type: types.REQUEST_WASHROOMS },
+      { type: types.FAILURE, status: 401 },
+    ];
+
+    const store = mockStore({ washrooms: [] });
+    return store.dispatch(actions.getWashrooms()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
