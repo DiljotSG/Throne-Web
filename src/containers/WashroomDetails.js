@@ -34,6 +34,34 @@ const renderRating = (type, value, overall = false) => (
   </Row>
 );
 
+const renderRatings = (washroom) => (
+  <Card>
+    {renderRating('Overall', washroom.overall_rating, true)}
+    { Object.entries(washroom.average_ratings).map(([type, value]) => (
+      <React.Fragment key={type}>
+        {renderRating(type, value)}
+      </React.Fragment>
+    ))}
+  </Card>
+);
+
+const renderAmenities = (amenities) => (
+  <Card>
+    <List
+      header={<b>Amenities</b>}
+      size="small"
+      dataSource={amenities}
+      renderItem={(item) => (
+        <List.Item key={item}>
+          {amenityAsString(String(item))}
+          {' '}
+          {amenityAsEmoji(String(item))}
+        </List.Item>
+      )}
+    />
+  </Card>
+);
+
 const renderReviews = (reviews) => {
   if (isEmpty(reviews)) {
     return <Empty description="No reviews yet." />;
@@ -156,30 +184,22 @@ class WashroomDetails extends Component {
             <Divider />
           </Col>
         </Row>
-        {renderRating('Overall', washroom.overall_rating, true)}
-        { Object.entries(washroom.average_ratings).map(([type, value]) => (
-          <React.Fragment key={type}>
-            {renderRating(type, value)}
-          </React.Fragment>
-        ))}
-        <List
-          header={<b>Amenities</b>}
-          size="small"
-          dataSource={washroom.amenities}
-          renderItem={(item) => (
-            <List.Item key={item}>
-              {amenityAsString(String(item))}
-              {' '}
-              {amenityAsEmoji(String(item))}
-            </List.Item>
-          )}
-        />
-        <Card className="washroom-reviews">
-          <Title level={3}>
-            Reviews
-          </Title>
-          { reviewsFetching ? <Skeleton active title={false} /> : renderReviews(reviews) }
-        </Card>
+        <Row gutter={[16, 16]} align="middle">
+          <Col sm={24} md={14}>
+            {renderAmenities(washroom.amenities)}
+          </Col>
+          <Col sm={24} md={10}>
+            {renderRatings(washroom)}
+          </Col>
+          <Col span={24}>
+            <Card className="washroom-reviews">
+              <Title level={3}>
+                Reviews
+              </Title>
+              { reviewsFetching ? <Skeleton active title={false} /> : renderReviews(reviews) }
+            </Card>
+          </Col>
+        </Row>
       </>
     );
   }
