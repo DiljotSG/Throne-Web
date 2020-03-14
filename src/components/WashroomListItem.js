@@ -80,9 +80,7 @@ const WashroomListItem = ({ item }) => (
             className="list-item-distance-value"
             level={4}
           >
-            {item.distance.toFixed(2)}
-            {' '}
-            m
+            {item.distance > 1000 ? `${(item.distance / 1000).toFixed(2)} km` : `${(item.distance).toFixed(2)} m`}
           </Title>
         </div>
       </Col>

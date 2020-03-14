@@ -15,7 +15,10 @@ describe('async actions', () => {
   });
 
   it.only('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
-    fetchMock.getOnce('https://testapi.com/washrooms', ['Washroom 1', 'Washroom 2']);
+    fetchMock.getOnce(
+      'https://testapi.com/washrooms?latitude=undefined&longitude=undefined&max_results=undefined&radius=undefined&amenities=undefined',
+      ['Washroom 1', 'Washroom 2']
+    );
     const expectedActions = [
       { type: types.REQUEST_WASHROOMS },
       { type: types.RECEIVE_WASHROOMS, status: 200, washrooms: ['Washroom 1', 'Washroom 2'] },
