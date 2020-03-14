@@ -45,7 +45,7 @@ export function removeFavorite() {
 
 export const recieveFavorite = (isFavorite, status) => (
   {
-    type: actions.RECIEVE_FAVORITE,
+    type: actions.RECEIVE_FAVORITE,
     is_favorite: isFavorite,
     status,
   }
