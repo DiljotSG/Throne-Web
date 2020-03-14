@@ -6,7 +6,7 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/DisplayUtils';
+import { genderAsEmoji, displayDistance } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
@@ -82,7 +82,7 @@ const WashroomListItem = ({ item }) => (
               className="list-item-distance-value"
               level={4}
             >
-              {item.distance > 1000 ? `${(item.distance / 1000).toFixed(2)} km` : `${(item.distance).toFixed(2)} m`}
+              {displayDistance(item.distance)}
             </Title>
           </div>
           )}

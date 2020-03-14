@@ -37,7 +37,6 @@ class NearMe extends Component {
     const { getWashrooms } = this.props;
 
     if (navigator.geolocation) {
-      // Get the user location
       navigator.geolocation.getCurrentPosition((location) => {
         getWashrooms(
           location.coords.latitude,
@@ -48,7 +47,8 @@ class NearMe extends Component {
         );
       });
     } else {
-      // If we can't get their location, this is the tests
+      // `navigator.geolocation` is null in the test cases
+      // We call getWashrooms for the test cases without a location
       getWashrooms(null, null, maxResults, amenities, radius);
     }
   }
