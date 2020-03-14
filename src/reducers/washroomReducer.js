@@ -46,6 +46,7 @@ const washroomReducer = (state = initialState, action) => {
           ...state.washroom,
           is_favorite: action.is_favorite,
         },
+        status: action.status,
       };
     case actions.FAILURE: {
       return {
