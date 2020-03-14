@@ -38,7 +38,7 @@ const washroomReducer = (state = initialState, action) => {
         ...state,
         settingFavorite: true,
       };
-    case actions.RECIEVE_FAVORITE:
+    case actions.RECEIVE_FAVORITE:
       return {
         ...state,
         settingFavorite: false,
