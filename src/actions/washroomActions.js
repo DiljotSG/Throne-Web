@@ -124,7 +124,7 @@ export function getWashroomsForBuilding(id) {
       dispatch(failure());
       throw (error);
     });
-  }
+  };
 }
 
 export function favoriteWashroom(id) {
