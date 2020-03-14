@@ -25,3 +25,13 @@
     text-align: right;
   }
 }
+
+.favorite-button-selected {
+  background-color: #E50000 !important;
+  border-color: #E50000 !important;
+}
+
+.favorite-button-unselected:hover {
+  color: #E50000 !important;
+  border-color: #E50000 !important;
+}

@@ -11,8 +11,8 @@ import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
 
-const renderFavoriteIcon = (isFavourite) => {
-  if (isFavourite) {
+const renderFavoriteIcon = (isFavorite) => {
+  if (isFavorite) {
     return (
       <>
         <Divider type="vertical" />
@@ -24,6 +24,7 @@ const renderFavoriteIcon = (isFavourite) => {
           <Icon
             type="heart"
             theme="filled"
+            className="list-icon-heart"
           />
         </span>
       </>

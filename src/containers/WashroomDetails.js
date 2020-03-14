@@ -139,6 +139,7 @@ class WashroomDetails extends Component {
               type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
               loading={settingFavorite}
+              className={washroom.is_favorite ? 'favorite-button-selected' : 'favorite-button-unselected'}
               onClick={() => (this.toggleFavorite())}
             >
               {!settingFavorite
