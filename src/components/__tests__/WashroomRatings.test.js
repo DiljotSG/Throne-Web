@@ -37,11 +37,11 @@ describe('WashroomRatings', () => {
     expect(component.prop('readOnly')).toEqual(true);
     expect(component.find('Rate').first().prop('disabled')).toBe(true);
 
-    expect(component.find('Rate.rate-overall').first().prop('value')).toBe(0);
-    expect(component.find('Rate.rate-cleanliness').first().prop('value')).toBe(0);
-    expect(component.find('Rate.rate-privacy').first().prop('value')).toBe(0);
-    expect(component.find('Rate.rate-toilet-paper-quality').first().prop('value')).toBe(0);
-    expect(component.find('Rate.rate-smell').first().prop('value')).toBe(0);
+    expect(component.find('Rate.washroom-rate-overall').first().prop('value')).toBe(0);
+    expect(component.find('Rate.washroom-rate-cleanliness').first().prop('value')).toBe(0);
+    expect(component.find('Rate.washroom-rate-privacy').first().prop('value')).toBe(0);
+    expect(component.find('Rate.washroom-rate-toilet-paper-quality').first().prop('value')).toBe(0);
+    expect(component.find('Rate.washroom-rate-smell').first().prop('value')).toBe(0);
   });
 
   it('Renders the correct ratings for a washroom', () => {
@@ -56,10 +56,10 @@ describe('WashroomRatings', () => {
     expect(component.prop('readOnly')).toEqual(false);
     expect(component.find('Rate').first().prop('disabled')).toBe(false);
 
-    expect(component.find('Rate.rate-overall').length).toBe(0);
-    expect(component.find('Rate.rate-cleanliness').first().prop('value')).toBe(1);
-    expect(component.find('Rate.rate-privacy').first().prop('value')).toBe(2);
-    expect(component.find('Rate.rate-toilet-paper-quality').first().prop('value')).toBe(3);
-    expect(component.find('Rate.rate-smell').first().prop('value')).toBe(4);
+    expect(component.find('Rate.washroom-rate-overall').length).toBe(0);
+    expect(component.find('Rate.washroom-rate-cleanliness').first().prop('value')).toBe(1);
+    expect(component.find('Rate.washroom-rate-privacy').first().prop('value')).toBe(2);
+    expect(component.find('Rate.washroom-rate-toilet-paper-quality').first().prop('value')).toBe(3);
+    expect(component.find('Rate.washroom-rate-smell').first().prop('value')).toBe(4);
   });
 });
