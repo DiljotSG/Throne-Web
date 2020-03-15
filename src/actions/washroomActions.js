@@ -57,10 +57,11 @@ export function removeFavorite() {
   };
 }
 
-export const receiveFavorite = (isFavorite) => (
+export const receiveFavorite = (isFavorite, status) => (
   {
     type: actions.RECEIVE_FAVORITE,
     is_favorite: isFavorite,
+    status,
   }
 );
 
@@ -133,7 +134,7 @@ export function favoriteWashroom(id) {
 
     return throneApi.addFavorite(id).then((response) => {
       if (response.ok) {
-        dispatch(receiveFavorite(true));
+        dispatch(receiveFavorite(true, response.status));
       } else {
         dispatch(failure(response.status));
       }
@@ -150,7 +151,7 @@ export function unfavoriteWashroom(id) {
 
     return throneApi.removeFavorite(id).then((response) => {
       if (response.ok) {
-        dispatch(receiveFavorite(false));
+        dispatch(receiveFavorite(false, response.status));
       } else {
         dispatch(failure(response.status));
       }
