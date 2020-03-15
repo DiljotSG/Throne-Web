@@ -7,7 +7,7 @@ import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom, favoriteWashroom, unfavoriteWashroom } from '../actions/washroomActions';
 import { getReviewsForWashroom, createReview } from '../actions/reviewActions';
-import { ERROR_REVIEW_EMPTY_COMMENT, ERROR_REVIEW_EMPTY_RATINGS } from '../constants/Messages';
+import { ERROR_REVIEW_EMPTY_RATINGS } from '../constants/Messages';
 import {
   WashroomRatings, Reviews, ReviewForm, AmenityList,
 } from '../components';
@@ -93,10 +93,6 @@ class WashroomDetails extends Component {
   validate = () => {
     const { review } = this.state;
     const errors = [];
-
-    if (isEmpty(review.comment)) {
-      errors.push(ERROR_REVIEW_EMPTY_COMMENT);
-    }
 
     if (Object.values(review.ratings).includes(0)) {
       errors.push(ERROR_REVIEW_EMPTY_RATINGS);

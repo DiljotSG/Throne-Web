@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Row, Col, Comment, Form, Input, Button, Typography, Alert,
+  Row, Col, Comment, Input, Button, Typography, Alert,
 } from 'antd';
 import { isEmpty } from 'lodash';
 
@@ -10,27 +10,6 @@ import WashroomRatings from './WashroomRatings';
 const { TextArea } = Input;
 const { Title } = Typography;
 
-const Editor = ({
-  onChange, onSubmit, submitting, value, valid,
-}) => (
-  <>
-    <Form.Item>
-      <TextArea rows={4} value={value} onChange={onChange} />
-    </Form.Item>
-    <Form.Item>
-      <Button
-        htmlType="submit"
-        disabled={!valid}
-        loading={submitting}
-        onClick={onSubmit}
-        type="primary"
-      >
-        Add Comment
-      </Button>
-    </Form.Item>
-  </>
-);
-
 const ReviewForm = ({
   review, onSubmit, commentChange, ratingChange, submitting, errors, created, attemptedSubmit,
 }) => (
@@ -38,19 +17,6 @@ const ReviewForm = ({
     <Title level={4}>
       Leave a review
     </Title>
-    <Col md={12} lg={16}>
-      <Comment
-        content={(
-          <Editor
-            onSubmit={onSubmit}
-            submitting={submitting}
-            onChange={commentChange}
-            value={review.comment}
-            valid={isEmpty(errors) || !attemptedSubmit}
-          />
-        )}
-      />
-    </Col>
     <Col md={12} lg={8}>
       <WashroomRatings
         readOnly={false}
@@ -59,6 +25,25 @@ const ReviewForm = ({
         onChange={ratingChange}
       />
     </Col>
+    <Col md={12} lg={16}>
+      <Comment
+        content={(
+          <TextArea
+            rows={4}
+            value={review.comment}
+            onChange={commentChange}
+          />
+        )}
+      />
+    </Col>
+    <Button
+      disabled={!isEmpty(errors) && attemptedSubmit}
+      loading={submitting}
+      onClick={onSubmit}
+      type="primary"
+    >
+      New Review
+    </Button>
     <Col span={24}>
       {!isEmpty(errors) && attemptedSubmit && (
         <Alert
@@ -109,14 +94,6 @@ ReviewForm.defaultProps = {
   errors: [],
   created: false,
   attemptedSubmit: false,
-};
-
-Editor.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
-  submitting: PropTypes.bool.isRequired,
-  value: PropTypes.string.isRequired,
-  valid: PropTypes.bool.isRequired,
 };
 
 export default ReviewForm;
