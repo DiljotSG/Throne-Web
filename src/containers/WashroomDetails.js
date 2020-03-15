@@ -23,12 +23,16 @@ const { Title, Text } = Typography;
 const renderRating = (type, value, overall = false) => (
   <Row>
     <Col span={12}>{`${ratingAsEmoji(type)} ${startCase(type)}`}</Col>
-    <Col span={12} className="rate-value">
+    <Col span={12} className="washroom-rate-value">
       <Rate
         disabled
         value={roundToHalf(value)}
         allowHalf
-        className={`rate rate-${kebabCase(type)} rate-${overall ? 'overall' : 'average'}`}
+        className={
+          `washroom-rate
+          washroom-rate-${kebabCase(type)}
+          washroom-rate-${overall ? 'overall' : 'average'}`
+        }
       />
     </Col>
   </Row>
@@ -162,13 +166,13 @@ class WashroomDetails extends Component {
           </Col>
           <Col
             span={12}
-            className="favorite-button"
+            className="washroom-favorite-button"
           >
             <Button
               type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
               loading={settingFavorite}
-              className={washroom.is_favorite ? 'favorite-button-selected' : 'favorite-button-unselected'}
+              className={`washroom-favorite-button-${washroom.is_favorite ? 'selected' : 'unselected'}`}
               onClick={() => (this.toggleFavorite())}
             >
               {!settingFavorite
