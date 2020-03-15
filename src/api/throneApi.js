@@ -67,8 +67,10 @@ class ThroneApi {
 
   static async getBuildings(latitude, longitude, maxResults, amenities, radius) {
     const url = this.createEndpointURL('buildings');
-    url.searchParams.append('latitude', latitude);
-    url.searchParams.append('longitude', longitude);
+    if (latitude && longitude) {
+      url.searchParams.append('latitude', latitude);
+      url.searchParams.append('longitude', longitude);
+    }
     url.searchParams.append('max_results', maxResults);
     url.searchParams.append('radius', radius);
     url.searchParams.append('amenities', amenities);

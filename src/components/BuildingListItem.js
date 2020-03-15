@@ -6,6 +6,7 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
+import { displayDistance } from '../utils/DisplayUtils';
 import './BuildingListItem.css';
 
 const { Title, Text } = Typography;
@@ -35,15 +36,18 @@ const BuildingListItem = ({ item }) => (
         </div>
       </Col>
       <Col span={4}>
-        <div className="list-item-distance">
-          Distance
-          <Title
-            className="list-item-distance-value"
-            level={4}
-          >
-            19m
-          </Title>
-        </div>
+        {item.distance
+          && (
+          <div className="list-item-distance">
+            Distance
+            <Title
+              className="list-item-distance-value"
+              level={4}
+            >
+              {displayDistance(item.distance)}
+            </Title>
+          </div>
+          )}
       </Col>
     </Row>
   </NavLink>
@@ -67,6 +71,7 @@ BuildingListItem.propTypes = {
     overall_rating: PropTypes.number.isRequired,
     title: PropTypes.string.isRequired,
     washroom_count: PropTypes.number.isRequired,
+    distance: PropTypes.number,
   }),
 };
 
