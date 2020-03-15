@@ -17,21 +17,21 @@ import { WashroomListItem, BuildingListItem } from '../components';
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
-const maxResults = 1000;
-const amenities = null;
-const radius = 50000;
+const maxResultsParam = 1000;
+const amenitiesParam = null;
+const radiusParam = 50000;
 
 class NearMe extends Component {
   componentDidMount() {
     this.getWashrooms(
-      maxResults,
-      amenities,
-      radius,
+      maxResultsParam,
+      amenitiesParam,
+      radiusParam,
     );
     this.getBuildings(
-      maxResults,
-      amenities,
-      radius,
+      maxResultsParam,
+      amenitiesParam,
+      radiusParam,
     );
   }
 
@@ -167,7 +167,7 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius));
   },
   getBuildings: (latitude, longitude, maxResults, amenities, radius) => {
-    dispatch(getBuildings(latitude, longitude, maxResults, amenities, radius))
+    dispatch(getBuildings(latitude, longitude, maxResults, amenities, radius));
   },
 });
 
