@@ -9,5 +9,5 @@ export {
   Login,
   WashroomListItem,
   BuildingListItem,
-  WashroomRatings
+  WashroomRatings,
 };
