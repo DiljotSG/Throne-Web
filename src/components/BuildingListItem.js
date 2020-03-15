@@ -9,14 +9,14 @@ import { roundToHalf } from '../utils/NumUtils';
 import { displayDistance } from '../utils/DisplayUtils';
 import './BuildingListItem.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const BuildingListItem = ({ item }) => (
   <NavLink
     to={`/buildings/${item.id}`}
     className="building-list-item"
   >
-    <Row>
+    <Row type="flex" justify="space-around" align="middle">
       <Col span={20}>
         <Text
           strong
@@ -42,13 +42,12 @@ const BuildingListItem = ({ item }) => (
         {item.distance
           && (
           <div className="building-list-item-distance">
-            Distance
-            <Title
+            <Text
               className="building-list-item-distance-value"
-              level={4}
+              strong
             >
               {displayDistance(item.distance)}
-            </Title>
+            </Text>
           </div>
           )}
       </Col>
