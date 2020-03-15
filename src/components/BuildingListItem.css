@@ -16,13 +16,14 @@
 }
 
 .list-item-distance {
-  text-align: right;
+  text-align: right !important;
+  min-height: 6.5vh !important;
 }
 
 .list-item-distance-value { 
   line-height: 1 !important;
-  font-size: 16pt;
+  font-size: 1.9vh !important;
   margin-bottom: 8px !important;
-  line-height: 90%;
+  line-height: 90% !important;
   color: inherit !important;
 }

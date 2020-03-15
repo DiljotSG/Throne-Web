@@ -39,13 +39,12 @@ const BuildingListItem = ({ item }) => (
         {item.distance
           && (
           <div className="list-item-distance">
-            Distance
-            <Title
+            <Text
+              strong
               className="list-item-distance-value"
-              level={4}
             >
               {displayDistance(item.distance)}
-            </Title>
+            </Text>
           </div>
           )}
       </Col>

@@ -82,13 +82,12 @@ const WashroomListItem = ({ item }) => (
         {item.distance
           && (
           <div className="list-item-distance">
-            Distance
-            <Title
+            <Text
               className="list-item-distance-value"
-              level={4}
+              strong
             >
               {displayDistance(item.distance)}
-            </Title>
+            </Text>
           </div>
           )}
       </Col>
