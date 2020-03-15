@@ -43,8 +43,8 @@ export function getReviewsForUser(id) {
 
     return throneApi.getReviewsForUser(id).then((response) => {
       if (response.ok) {
-        response.json().then((review) => {
-          dispatch(receiveReviews(review, response.status));
+        response.json().then((reviews) => {
+          dispatch(receiveReviews(reviews, response.status));
         });
       } else {
         dispatch(failure(response.status));

@@ -27,6 +27,7 @@ const ReviewForm = ({
     </Col>
     <Col md={12} lg={16}>
       <Comment
+        className="review-form-comment"
         content={(
           <TextArea
             rows={4}
@@ -37,6 +38,7 @@ const ReviewForm = ({
       />
     </Col>
     <Button
+      className="review-form-submit"
       disabled={!isEmpty(errors) && attemptedSubmit}
       loading={submitting}
       onClick={onSubmit}
