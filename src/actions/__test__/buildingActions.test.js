@@ -8,7 +8,7 @@ import * as types from '../../constants/ActionTypes';
 const middlewares = [thunk];
 const mockStore = configureMockStore(middlewares);
 
-const buildingQueryParams = 'latitude=undefined&longitude=undefined&max_results=undefined&radius=undefined&amenities=undefined';
+const buildingQueryParams = 'max_results=undefined&radius=undefined&amenities=undefined';
 
 describe('async actions', () => {
   afterEach(() => {
