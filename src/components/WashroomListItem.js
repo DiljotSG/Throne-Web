@@ -24,7 +24,7 @@ const renderFavoriteIcon = (isFavorite) => {
           <Icon
             type="heart"
             theme="filled"
-            className="list-icon-heart"
+            className="washroom-list-icon-heart"
           />
         </span>
       </>
@@ -41,12 +41,12 @@ const WashroomListItem = ({ item }) => (
       pathname: `/washrooms/${item.id}`,
       state: { washroom: item },
     }}
-    className="list-item"
+    className="washroom-list-item"
   >
     <Row>
       <Col span={20}>
         <Text
-          className="list-item-building-title"
+          className="washroom-list-item-building-title"
           strong
         >
           {item.building_title}
@@ -64,7 +64,7 @@ const WashroomListItem = ({ item }) => (
             && <Divider type="vertical" />}
           {item.comment
             && (
-            <Text className="list-item-comment">
+            <Text className="washroom-list-item-comment">
               {item.comment}
             </Text>
             )}
@@ -74,17 +74,17 @@ const WashroomListItem = ({ item }) => (
             disabled
             value={roundToHalf(item.overall_rating)}
             allowHalf
-            className="list-item-rating"
+            className="washroom-list-item-rating"
           />
         </div>
       </Col>
       <Col span={4}>
         {item.distance
           && (
-          <div className="list-item-distance">
+          <div className="washroom-list-item-distance">
             Distance
             <Title
-              className="list-item-distance-value"
+              className="washroom-list-item-distance-value"
               level={4}
             >
               {displayDistance(item.distance)}
