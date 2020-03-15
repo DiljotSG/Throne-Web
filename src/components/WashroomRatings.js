@@ -20,7 +20,7 @@ const WashroomRatings = ({
         <Col span={12} className="washroom-rate-value">
           <Rate
             disabled
-            value={roundToHalf(washroom.overall_rating)}
+            value={roundToHalf(overallRating)}
             allowHalf={allowHalf}
             className="washroom-rate washroom-rate-overall"
           />
