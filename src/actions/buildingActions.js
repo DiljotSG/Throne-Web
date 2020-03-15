@@ -31,11 +31,17 @@ export const receiveBuilding = (response, status) => (
   }
 );
 
-export function getBuildings() {
+export function getBuildings(latitude, longitude, maxResults, amenities, radius) {
   return async function fetchBuildingsAsync(dispatch) {
     dispatch(requestBuildings());
 
-    return throneApi.getBuildings().then((response) => {
+    return throneApi.getBuildings(
+      latitude,
+      longitude,
+      maxResults,
+      amenities,
+      radius,
+    ).then((response) => {
       if (response.ok) {
         response.json().then((buildings) => {
           dispatch(receiveBuildings(buildings, response.status));

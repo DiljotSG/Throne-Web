@@ -17,6 +17,14 @@ export const receiveWashrooms = (response, status) => (
   }
 );
 
+export const receiveWashroomsForBuliding = (response, status) => (
+  {
+    type: actions.RECEIVE_WASHROOMS_FOR_BUILDING,
+    washrooms: response,
+    status,
+  }
+);
+
 export function requestWashroom() {
   return {
     type: actions.REQUEST_WASHROOM,
@@ -31,6 +39,12 @@ export const receiveWashroom = (response, status) => (
   }
 );
 
+export function requestWashroomsForBuilding() {
+  return {
+    type: actions.REQUEST_WASHROOMS_FOR_BUILDING,
+  };
+}
+
 export function addFavorite() {
   return {
     type: actions.ADD_FAVORITE,
@@ -43,10 +57,11 @@ export function removeFavorite() {
   };
 }
 
-export const receiveFavorite = (isFavorite) => (
+export const receiveFavorite = (isFavorite, status) => (
   {
     type: actions.RECEIVE_FAVORITE,
     is_favorite: isFavorite,
+    status,
   }
 );
 
@@ -94,13 +109,32 @@ export function getWashroom(id) {
   };
 }
 
+export function getWashroomsForBuilding(id) {
+  return async function fetchWashroomsForBuildingAsync(dispatch) {
+    dispatch(requestWashroomsForBuilding());
+
+    return throneApi.getWashroomsForBuilding(id).then((response) => {
+      if (response.ok) {
+        response.json().then((washrooms) => {
+          dispatch(receiveWashroomsForBuliding(washrooms, response.status));
+        });
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      throw (error);
+    });
+  };
+}
+
 export function favoriteWashroom(id) {
   return async function addFavoriteAsync(dispatch) {
     dispatch(addFavorite());
 
     return throneApi.addFavorite(id).then((response) => {
       if (response.ok) {
-        dispatch(receiveFavorite(true));
+        dispatch(receiveFavorite(true, response.status));
       } else {
         dispatch(failure(response.status));
       }
@@ -117,7 +151,7 @@ export function unfavoriteWashroom(id) {
 
     return throneApi.removeFavorite(id).then((response) => {
       if (response.ok) {
-        dispatch(receiveFavorite(false));
+        dispatch(receiveFavorite(false, response.status));
       } else {
         dispatch(failure(response.status));
       }

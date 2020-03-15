@@ -15,7 +15,7 @@ export default function setupStore(initialState) {
 
 const store = setupStore({});
 
-fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=1000&amenities=null', [
+fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=50000&amenities=null', [
   {
     id: 1,
     comment: 'Washroom 1',
@@ -49,7 +49,7 @@ fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=1000&amenit
   },
 ]);
 
-fetchMock.get('https://testapi.com/buildings?latitude=undefined&longitude=undefined&max_results=undefined&radius=undefined&amenities=undefined', [
+fetchMock.get('https://testapi.com/buildings?max_results=1000&radius=50000&amenities=null', [
   {
     best_ratings: {
       cleanliness: 5.0,

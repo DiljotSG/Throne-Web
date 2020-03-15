@@ -14,12 +14,24 @@ const washroomReducer = (state = initialState, action) => {
         ...state,
         isFetching: true,
       };
+    case actions.REQUEST_WASHROOMS_FOR_BUILDING:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case actions.RECEIVE_WASHROOMS:
       return {
         ...state,
         isFetching: false,
         status: action.status,
         washrooms: action.washrooms,
+      };
+    case actions.RECEIVE_WASHROOMS_FOR_BUILDING:
+      return {
+        ...state,
+        isFetching: false,
+        status: action.status,
+        buildingWashrooms: action.washrooms,
       };
     case actions.RECEIVE_WASHROOM:
       return {
@@ -46,6 +58,7 @@ const washroomReducer = (state = initialState, action) => {
           ...state.washroom,
           is_favorite: action.is_favorite,
         },
+        status: action.status,
       };
     case actions.FAILURE: {
       return {
