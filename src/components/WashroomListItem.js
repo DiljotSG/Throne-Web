@@ -9,7 +9,7 @@ import { roundToHalf } from '../utils/NumUtils';
 import { genderAsEmoji, displayDistance } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const renderFavoriteIcon = (isFavorite) => {
   if (isFavorite) {

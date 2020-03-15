@@ -9,7 +9,7 @@ import { roundToHalf } from '../utils/NumUtils';
 import { displayDistance } from '../utils/DisplayUtils';
 import './BuildingListItem.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const BuildingListItem = ({ item }) => (
   <NavLink
