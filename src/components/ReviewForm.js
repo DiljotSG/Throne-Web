@@ -44,7 +44,7 @@ const ReviewForm = ({
       onClick={onSubmit}
       type="primary"
     >
-      New Review
+      Post Review
     </Button>
     <Col span={24}>
       {!isEmpty(errors) && attemptedSubmit && (
