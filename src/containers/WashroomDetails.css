@@ -1,22 +1,22 @@
-.rate-value {
+.washroom-rate-value {
   text-align: right;
 }
 
-.rate {
+.washroom-rate {
   font-size: 16px !important;
   margin-right: 4px !important;
 }
 
-.rate-overall {
+.washroom-rate-overall {
   color: #5da3e7 !important;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.rate-average {
+.washroom-rate-average {
   color: #FBD78C !important;
 }
 
-.favorite-button {
+.washroom-favorite-button {
   text-align: right;
 }
 
@@ -26,12 +26,17 @@
   }
 }
 
-.favorite-button-selected {
+.washroom-favorite-button-selected {
   background-color: #E50000 !important;
   border-color: #E50000 !important;
 }
 
-.favorite-button-unselected:hover {
+.washroom-favorite-button-unselected {
+  color: grey !important;
+  border-color: lightgrey !important;
+}
+
+.washroom-favorite-button-unselected:hover {
   color: #E50000 !important;
   border-color: #E50000 !important;
 }
