@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton,
+  List, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton,
   Card, Empty, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
-import { startCase, kebabCase, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom, favoriteWashroom, unfavoriteWashroom } from '../actions/washroomActions';
 import { getReviewsForWashroom } from '../actions/reviewActions';
-import { roundToHalf } from '../utils/NumUtils';
+import { WashroomRatings } from '../components';
 import {
   genderAsEmoji,
   genderAsString,
@@ -19,35 +19,6 @@ import {
 import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
-
-const renderRating = (type, value, overall = false) => (
-  <Row>
-    <Col span={12}>{`${ratingAsEmoji(type)} ${startCase(type)}`}</Col>
-    <Col span={12} className="washroom-rate-value">
-      <Rate
-        disabled
-        value={roundToHalf(value)}
-        allowHalf
-        className={
-          `washroom-rate
-          washroom-rate-${kebabCase(type)}
-          washroom-rate-${overall ? 'overall' : 'average'}`
-        }
-      />
-    </Col>
-  </Row>
-);
-
-const renderRatings = (washroom) => (
-  <Card>
-    {renderRating('Overall', washroom.overall_rating, true)}
-    { Object.entries(washroom.average_ratings).map(([type, value]) => (
-      <React.Fragment key={type}>
-        {renderRating(type, value)}
-      </React.Fragment>
-    ))}
-  </Card>
-);
 
 const renderAmenities = (amenities) => (
   <Card>
@@ -195,7 +166,11 @@ class WashroomDetails extends Component {
             {renderAmenities(washroom.amenities)}
           </Col>
           <Col sm={24} md={10}>
-            {renderRatings(washroom)}
+            <Card>
+              <WashroomRatings
+                washroom={washroom}
+              />
+            </Card>
           </Col>
           <Col span={24}>
             <Card className="washroom-reviews">
