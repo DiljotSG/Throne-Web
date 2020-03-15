@@ -13,6 +13,7 @@ const reviewReducer = (state = initialState, action) => {
       return {
         ...state,
         creatingReview: false,
+        createStatus: action.status,
         reviews: [...state.reviews, action.review],
       };
     case actions.REQUEST_REVIEWS_FOR_USER:

@@ -8,7 +8,9 @@ import { roundToHalf } from '../utils/NumUtils';
 import { ratingAsEmoji } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
-const WashroomRatings = ({ washroom, readOnly, onChange }) => (
+const WashroomRatings = ({
+  overallRating, averageRatings, allowHalf, readOnly, onChange,
+}) => (
   <>
     { readOnly && (
       <Row>
@@ -18,14 +20,14 @@ const WashroomRatings = ({ washroom, readOnly, onChange }) => (
         <Col span={12} className="rate-value">
           <Rate
             disabled
-            value={roundToHalf(washroom.overall_rating)}
-            allowHalf
+            value={roundToHalf(overallRating)}
+            allowHalf={allowHalf}
             className="rate rate-overall"
           />
         </Col>
       </Row>
     )}
-    { Object.entries(washroom.average_ratings).map(([type, value]) => (
+    { Object.entries(averageRatings).map(([type, value]) => (
       <React.Fragment key={type}>
         <Row>
           <Col span={12}>
@@ -35,9 +37,9 @@ const WashroomRatings = ({ washroom, readOnly, onChange }) => (
             <Rate
               disabled={readOnly}
               value={roundToHalf(value)}
-              allowHalf
+              allowHalf={allowHalf}
               onChange={(setValue) => {
-                onChange(setValue, type);
+                onChange(type, setValue);
               }}
               className={`rate rate-average rate-${kebabCase(type)}`}
             />
@@ -49,30 +51,28 @@ const WashroomRatings = ({ washroom, readOnly, onChange }) => (
 );
 
 WashroomRatings.propTypes = {
-  washroom: PropTypes.shape({
-    overall_rating: PropTypes.number.isRequired,
-    average_ratings: PropTypes.shape({
-      smell: PropTypes.number,
-      privacy: PropTypes.number,
-      cleanliness: PropTypes.number,
-      toilet_paper_quality: PropTypes.number,
-    }),
+  overallRating: PropTypes.number,
+  averageRatings: PropTypes.shape({
+    smell: PropTypes.number,
+    privacy: PropTypes.number,
+    cleanliness: PropTypes.number,
+    toilet_paper_quality: PropTypes.number,
   }),
   readOnly: PropTypes.bool,
+  allowHalf: PropTypes.bool,
   onChange: PropTypes.func,
 };
 
 WashroomRatings.defaultProps = {
   readOnly: true,
+  allowHalf: true,
   onChange: () => {},
-  washroom: {
-    overall_rating: 0,
-    average_ratings: {
-      cleanliness: 0,
-      privacy: 0,
-      toilet_paper_quality: 0,
-      smell: 0,
-    },
+  overallRating: 0,
+  averageRatings: {
+    cleanliness: 0,
+    privacy: 0,
+    toilet_paper_quality: 0,
+    smell: 0,
   },
 };
 
