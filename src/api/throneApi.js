@@ -33,8 +33,15 @@ class ThroneApi {
     return new URL(relativeURL, `${process.env.REACT_APP_API_URL}`);
   }
 
-  static async getWashrooms() {
+  static async getWashrooms(latitude, longitude, maxResults, amenities, radius) {
     const url = this.createEndpointURL('washrooms');
+    if (latitude && longitude) {
+      url.searchParams.append('latitude', latitude);
+      url.searchParams.append('longitude', longitude);
+    }
+    url.searchParams.append('max_results', maxResults);
+    url.searchParams.append('radius', radius);
+    url.searchParams.append('amenities', amenities);
     return this.accessEndpoint(GET, url);
   }
 
@@ -58,10 +65,13 @@ class ThroneApi {
     return this.accessEndpoint(GET, url);
   }
 
-  static async getBuildings(location, maxResults, amenities, radius) {
+  static async getBuildings(latitude, longitude, maxResults, amenities, radius) {
     const url = this.createEndpointURL('buildings');
-    url.searchParams.append('location', location);
-    url.searchParams.append('maxResults', maxResults);
+    if (latitude && longitude) {
+      url.searchParams.append('latitude', latitude);
+      url.searchParams.append('longitude', longitude);
+    }
+    url.searchParams.append('max_results', maxResults);
     url.searchParams.append('radius', radius);
     url.searchParams.append('amenities', amenities);
     return this.accessEndpoint(GET, url);

@@ -6,7 +6,7 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/DisplayUtils';
+import { genderAsEmoji, displayDistance } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
 const { Title, Text } = Typography;
@@ -79,15 +79,18 @@ const WashroomListItem = ({ item }) => (
         </div>
       </Col>
       <Col span={4}>
-        <div className="list-item-distance">
-          Distance
-          <Title
-            className="list-item-distance-value"
-            level={4}
-          >
-            19m
-          </Title>
-        </div>
+        {item.distance
+          && (
+          <div className="list-item-distance">
+            Distance
+            <Title
+              className="list-item-distance-value"
+              level={4}
+            >
+              {displayDistance(item.distance)}
+            </Title>
+          </div>
+          )}
       </Col>
     </Row>
   </NavLink>
@@ -103,6 +106,7 @@ WashroomListItem.propTypes = {
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
     is_favorite: PropTypes.bool.isRequired,
+    distance: PropTypes.number,
   }),
 };
 

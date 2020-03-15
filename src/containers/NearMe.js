@@ -12,27 +12,67 @@ import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
 
-import { WashroomListItem } from '../components';
+import { WashroomListItem, BuildingListItem } from '../components';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
+const maxResultsParam = 1000;
+const amenitiesParam = null;
+const radiusParam = 50000;
+
 class NearMe extends Component {
   componentDidMount() {
-    this.getWashrooms();
-    this.getBuildings();
+    this.getWashrooms(
+      maxResultsParam,
+      amenitiesParam,
+      radiusParam,
+    );
+    this.getBuildings(
+      maxResultsParam,
+      amenitiesParam,
+      radiusParam,
+    );
   }
 
-  getBuildings = () => {
+  getBuildings = (maxResults, amenities, radius) => {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
 
-    getBuildings();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getBuildings(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getBuildings for the test cases without a location
+      getBuildings(null, null, maxResults, amenities, radius);
+    }
   }
 
-  getWashrooms = () => {
+  getWashrooms = (maxResults, amenities, radius) => {
     const { getWashrooms } = this.props;
 
-    getWashrooms();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getWashrooms(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getWashrooms for the test cases without a location
+      getWashrooms(null, null, maxResults, amenities, radius);
+    }
   }
 
   render() {
@@ -69,7 +109,7 @@ class NearMe extends Component {
                   className="near-me-list-item"
                   key={item.id}
                 >
-                  {item.title}
+                  <BuildingListItem item={item} />
                 </List.Item>
               )}
             />
@@ -123,8 +163,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getWashrooms: () => dispatch(getWashrooms()),
-  getBuildings: () => dispatch(getBuildings()),
+  getWashrooms: (latitude, longitude, maxResults, amenities, radius) => {
+    dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius));
+  },
+  getBuildings: (latitude, longitude, maxResults, amenities, radius) => {
+    dispatch(getBuildings(latitude, longitude, maxResults, amenities, radius));
+  },
 });
 
 NearMe.propTypes = {
