@@ -58,7 +58,7 @@ class BuildingDetails extends Component {
             { 'Building rating: ' }
           </Text>
           <Rate
-            className="rate-overall-color"
+            className="building-rate-overall"
             disabled
             value={roundToHalf(building.overall_rating)}
           />

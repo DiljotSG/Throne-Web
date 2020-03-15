@@ -14,11 +14,14 @@ const { Title, Text } = Typography;
 const BuildingListItem = ({ item }) => (
   <NavLink
     to={`/buildings/${item.id}`}
-    className="list-item"
+    className="building-list-item"
   >
     <Row>
       <Col span={20}>
-        <Text strong>
+        <Text
+          strong
+          className="building-list-item-building-title"
+        >
           {item.title}
         </Text>
         <div className="in-line">
@@ -31,17 +34,17 @@ const BuildingListItem = ({ item }) => (
             disabled
             value={roundToHalf(item.overall_rating)}
             allowHalf
-            className="list-item-rating"
+            className="building-list-item-rating"
           />
         </div>
       </Col>
       <Col span={4}>
         {item.distance
           && (
-          <div className="list-item-distance">
+          <div className="building-list-item-distance">
             Distance
             <Title
-              className="list-item-distance-value"
+              className="building-list-item-distance-value"
               level={4}
             >
               {displayDistance(item.distance)}

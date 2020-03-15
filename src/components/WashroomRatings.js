@@ -6,7 +6,7 @@ import {
 import { startCase, kebabCase } from 'lodash';
 import { roundToHalf } from '../utils/NumUtils';
 import { ratingAsEmoji } from '../utils/DisplayUtils';
-import './WashroomListItem.css';
+import '../containers/WashroomDetails.css';
 
 const WashroomRatings = ({ washroom, readOnly, onChange }) => (
   <>
@@ -15,12 +15,12 @@ const WashroomRatings = ({ washroom, readOnly, onChange }) => (
         <Col span={12}>
           Overall
         </Col>
-        <Col span={12} className="rate-value">
+        <Col span={12} className="washroom-rate-value">
           <Rate
             disabled
             value={roundToHalf(washroom.overall_rating)}
             allowHalf
-            className="rate rate-overall"
+            className="washroom-rate washroom-rate-overall"
           />
         </Col>
       </Row>
@@ -31,7 +31,7 @@ const WashroomRatings = ({ washroom, readOnly, onChange }) => (
           <Col span={12}>
             {`${ratingAsEmoji(type)} ${startCase(type)}`}
           </Col>
-          <Col span={12} className="rate-value">
+          <Col span={12} className="washroom-rate-value">
             <Rate
               disabled={readOnly}
               value={roundToHalf(value)}
@@ -39,7 +39,7 @@ const WashroomRatings = ({ washroom, readOnly, onChange }) => (
               onChange={(setValue) => {
                 onChange(setValue, type);
               }}
-              className={`rate rate-average rate-${kebabCase(type)}`}
+              className={`washroom-rate washroom-rate-average washroom-rate-${kebabCase(type)}`}
             />
           </Col>
         </Row>

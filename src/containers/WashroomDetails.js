@@ -137,13 +137,13 @@ class WashroomDetails extends Component {
           </Col>
           <Col
             span={12}
-            className="favorite-button"
+            className="washroom-favorite-button"
           >
             <Button
               type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
               loading={settingFavorite}
-              className={washroom.is_favorite ? 'favorite-button-selected' : 'favorite-button-unselected'}
+              className={`washroom-favorite-button-${washroom.is_favorite ? 'selected' : 'unselected'}`}
               onClick={() => (this.toggleFavorite())}
             >
               {!settingFavorite
