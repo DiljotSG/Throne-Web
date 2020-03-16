@@ -227,6 +227,14 @@ class WashroomDetails extends Component {
             </Card>
           </Col>
         </Row>
+        <Button
+          href="https://umanitoba.ca/campus/physical_plant/adminss/request/request.php"
+          rel="noopener noreferrer"
+          target="_blank"
+          icon="warning"
+        >
+          Report Maintenance Issue
+        </Button>
       </>
     );
   }
