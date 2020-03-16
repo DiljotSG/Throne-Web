@@ -37,41 +37,42 @@ class NearMe extends Component {
 
   getBuildings = (maxResults, amenities, radius) => {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
-    getBuildings(null, null, maxResults, amenities, radius);
-  //   if (navigator.geolocation) {
-  //     navigator.geolocation.getCurrentPosition((location) => {
-  //       getBuildings(
-  //         location.coords.latitude,
-  //         location.coords.longitude,
-  //         maxResults,
-  //         amenities,
-  //         radius,
-  //       );
-  //     });
-  //   } else {
-  //     // `navigator.geolocation` is null in the test cases
-  //     // We call getBuildings for the test cases without a location
-  //   }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getBuildings(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getBuildings for the test cases without a location
+      getBuildings(null, null, maxResults, amenities, radius);
+    }
   }
 
   getWashrooms = (maxResults, amenities, radius) => {
     const { getWashrooms } = this.props;
-    getWashrooms(null, null, maxResults, amenities, radius);
-    // if (navigator.geolocation) {
-    //   navigator.geolocation.getCurrentPosition((location) => {
-    //     getWashrooms(
-    //       location.coords.latitude,
-    //       location.coords.longitude,
-    //       maxResults,
-    //       amenities,
-    //       radius,
-    //     );
-    //   });
-    // } else {
-    //   // `navigator.geolocation` is null in the test cases
-    //   // We call getWashrooms for the test cases without a location
-    //   getWashrooms(null, null, maxResults, amenities, radius);
-    // }
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getWashrooms(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getWashrooms for the test cases without a location
+      getWashrooms(null, null, maxResults, amenities, radius);
+    }
   }
 
   render() {
