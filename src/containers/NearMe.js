@@ -17,28 +17,23 @@ import { WashroomListItem, BuildingListItem } from '../components';
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
-const maxResultsParam = 1000;
-const amenitiesParam = null;
-const radiusParam = 50000;
-
 class NearMe extends Component {
   componentDidMount() {
-    this.getWashrooms(
-      maxResultsParam,
-      amenitiesParam,
-      radiusParam,
-    );
-    this.getBuildings(
-      maxResultsParam,
-      amenitiesParam,
-      radiusParam,
-    );
+    this.getWashrooms();
+    this.getBuildings();
   }
 
-  getBuildings = (maxResults, amenities, radius) => {
-    const { getBuildings } = this.props; // eslint-disable-line no-shadow
+  getBuildings = () => {
+    const { 
+      getBuildings,
+      maxResults,
+      amenities,
+      radius,
+      latitude,
+      longitude
+    } = this.props; // eslint-disable-line no-shadow
 
-    if (navigator.geolocation) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
         getBuildings(
           location.coords.latitude,
@@ -46,6 +41,15 @@ class NearMe extends Component {
           maxResults,
           amenities,
           radius,
+        );
+      }, () => {
+        // Get buildings with default location at UofM
+        getBuildings(
+          latitude,
+          longitude,
+          maxResults,
+          amenities,
+          radius
         );
       });
     } else {
@@ -55,10 +59,17 @@ class NearMe extends Component {
     }
   }
 
-  getWashrooms = (maxResults, amenities, radius) => {
-    const { getWashrooms } = this.props;
+  getWashrooms = () => {
+    const {
+      getWashrooms,
+      maxResults,
+      amenities,
+      radius,
+      latitude,
+      longitude
+    } = this.props;
 
-    if (navigator.geolocation) {
+    if ("geolocation" in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
         getWashrooms(
           location.coords.latitude,
@@ -66,6 +77,15 @@ class NearMe extends Component {
           maxResults,
           amenities,
           radius,
+        );
+      }, () => {
+        // Get buildings with default location at UofM
+        getWashrooms(
+          latitude,
+          longitude,
+          maxResults,
+          amenities,
+          radius
         );
       });
     } else {
@@ -189,8 +209,13 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   washrooms: [],
   buildings: [],
-  washroomsFetching: true,
-  buildingsFetching: true,
+  washroomsFetching: false,
+  buildingsFetching: false,
+  maxResults: 1000,
+  amenities: null,
+  radius: 50000,
+  latitude: 49.8080954,
+  longitude: -97.1375209,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NearMe));
