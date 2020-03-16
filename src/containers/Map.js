@@ -61,7 +61,7 @@ class Map extends Component {
 
   renderMapMarkers = (buildings) => {
     const { viewport } = { ...this.state };
-    if (viewport.zoom > 14) {
+    if (viewport.zoom > 13) {
       return (
         buildings.map((building) => (
           <Marker
