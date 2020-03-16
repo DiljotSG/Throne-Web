@@ -68,7 +68,8 @@ const renderNoLocationWarning = () => {
     description: (
       <>
         <Text>Unable to access device location. Using default location: </Text>
-        <Text strong>University of Manitoba</Text>.
+        <Text strong>University of Manitoba</Text>
+        .
       </>
     ),
   });
