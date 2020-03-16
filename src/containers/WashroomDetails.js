@@ -231,6 +231,7 @@ class WashroomDetails extends Component {
           href="https://umanitoba.ca/campus/physical_plant/adminss/request/request.php"
           rel="noopener noreferrer"
           target="_blank"
+          icon="warning"
         >
           Request Maintenance Issue
         </Button>
