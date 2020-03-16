@@ -1,105 +1,39 @@
 import React, { Component } from 'react';
 import {
-  List, Rate, Spin, Row, Col, Divider, Typography, Comment, Avatar, Skeleton,
-  Card, Empty, Button, Icon,
+  Spin, Row, Col, Divider, Typography, Skeleton, Card, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
-import { startCase, kebabCase, isEmpty } from 'lodash';
+import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getWashroom, favoriteWashroom, unfavoriteWashroom } from '../actions/washroomActions';
-import { getReviewsForWashroom } from '../actions/reviewActions';
-import { roundToHalf } from '../utils/NumUtils';
+import { getReviewsForWashroom, createReview } from '../actions/reviewActions';
+import { ERROR_REVIEW_EMPTY_RATINGS } from '../constants/Messages';
 import {
-  genderAsEmoji,
-  genderAsString,
-  amenityAsEmoji,
-  amenityAsString,
-  ratingAsEmoji,
-} from '../utils/DisplayUtils';
+  WashroomRatings, Reviews, ReviewForm, AmenityList,
+} from '../components';
+
+import { genderAsEmoji, genderAsString } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
 
-const renderRating = (type, value, overall = false) => (
-  <Row>
-    <Col span={12}>{`${ratingAsEmoji(type)} ${startCase(type)}`}</Col>
-    <Col span={12} className="rate-value">
-      <Rate
-        disabled
-        value={roundToHalf(value)}
-        allowHalf
-        className={`rate rate-${kebabCase(type)} rate-${overall ? 'overall' : 'average'}`}
-      />
-    </Col>
-  </Row>
-);
-
-const renderRatings = (washroom) => (
-  <Card>
-    {renderRating('Overall', washroom.overall_rating, true)}
-    { Object.entries(washroom.average_ratings).map(([type, value]) => (
-      <React.Fragment key={type}>
-        {renderRating(type, value)}
-      </React.Fragment>
-    ))}
-  </Card>
-);
-
-const renderAmenities = (amenities) => (
-  <Card>
-    <List
-      header={<b>Amenities</b>}
-      size="small"
-      dataSource={amenities}
-      renderItem={(item) => (
-        <List.Item key={item}>
-          {amenityAsString(String(item))}
-          {' '}
-          {amenityAsEmoji(String(item))}
-        </List.Item>
-      )}
-    />
-  </Card>
-);
-
-const renderReviews = (reviews) => {
-  if (isEmpty(reviews)) {
-    return <Empty description="No reviews yet." />;
+class WashroomDetails extends Component {
+  constructor() {
+    super();
+    this.state = {
+      review: {
+        comment: '',
+        ratings: {
+          cleanliness: 0,
+          privacy: 0,
+          toilet_paper_quality: 0,
+          smell: 0,
+        },
+      },
+      attemptedSubmit: false,
+    };
   }
 
-  return (
-    reviews.map((item) => (
-      <Comment
-        className="washroom-review"
-        key={item.created_at}
-        author={item.user.username}
-        avatar={(
-          <Avatar>
-            {item.user.username.charAt(0).toUpperCase()}
-          </Avatar>
-          )}
-        datetime={item.created_at}
-        content={(
-          <Row>
-            <Col sm={14} md={16} className="washroom-review-comment">
-              {item.comment}
-            </Col>
-            <Col sm={10} md={8} className="washroom-review-rating">
-              { Object.entries(item.ratings).map(([type, value], i) => (
-                <React.Fragment key={type}>
-                  {i > 0 ? <Divider type="vertical" /> : ''}
-                  {ratingAsEmoji(type)}
-                  {value}
-                </React.Fragment>
-              ))}
-            </Col>
-          </Row>
-        )}
-      />
-    )));
-};
-
-class WashroomDetails extends Component {
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
@@ -116,6 +50,71 @@ class WashroomDetails extends Component {
   getReviewsForWashroom = (id) => {
     const { getReviewsForWashroom } = this.props; // eslint-disable-line no-shadow
     getReviewsForWashroom(id);
+  }
+
+  createReview = (id) => {
+    const { createReview } = this.props; // eslint-disable-line no-shadow
+    const { review } = this.state;
+
+    createReview(id, review);
+  }
+
+  handleCommentChange = (event) => {
+    const { review } = this.state;
+
+    this.setState(
+      {
+        review: {
+          ...review,
+          comment: event.target.value,
+        },
+      },
+      this.validate,
+    );
+  };
+
+  handleRatingChange = (type, value) => {
+    const { review } = this.state;
+
+    this.setState(
+      {
+        review: {
+          ...review,
+          ratings: {
+            ...review.ratings,
+            [type]: value,
+          },
+        },
+      },
+      this.validate,
+    );
+  }
+
+  validate = () => {
+    const { review } = this.state;
+    const errors = [];
+
+    if (Object.values(review.ratings).includes(0)) {
+      errors.push(ERROR_REVIEW_EMPTY_RATINGS);
+    }
+
+    this.setState({
+      errors,
+    });
+  }
+
+  handleSubmit = async () => {
+    await this.validate();
+
+    const { errors } = this.state;
+    const { washroom } = this.props;
+
+    this.setState({ attemptedSubmit: true });
+
+    if (isEmpty(errors)) {
+      this.createReview(washroom.id);
+      this.setState({ attemptedSubmit: false });
+    }
   }
 
   toggleFavorite = () => {
@@ -139,7 +138,11 @@ class WashroomDetails extends Component {
       settingFavorite,
       reviews,
       reviewsFetching,
+      creatingReview,
+      createStatus,
     } = this.props;
+
+    const { review, errors, attemptedSubmit } = this.state;
 
     if (washroomFetching || isEmpty(washroom)) {
       return (<Spin />);
@@ -162,13 +165,14 @@ class WashroomDetails extends Component {
           </Col>
           <Col
             span={12}
-            className="favorite-button"
+            className="washroom-favorite-button"
           >
             <Button
               type={washroom.is_favorite ? 'primary' : ''}
               shape="circle"
+              size="large"
               loading={settingFavorite}
-              className={washroom.is_favorite ? 'favorite-button-selected' : 'favorite-button-unselected'}
+              className={`washroom-favorite-button-${washroom.is_favorite ? 'selected' : 'unselected'}`}
               onClick={() => (this.toggleFavorite())}
             >
               {!settingFavorite
@@ -188,17 +192,38 @@ class WashroomDetails extends Component {
         </Row>
         <Row gutter={[16, 16]} align="middle">
           <Col sm={24} md={14}>
-            {renderAmenities(washroom.amenities)}
+            <AmenityList amenities={washroom.amenities} />
           </Col>
           <Col sm={24} md={10}>
-            {renderRatings(washroom)}
+            <Card>
+              <WashroomRatings
+                overallRating={washroom.overall_rating}
+                averageRatings={washroom.average_ratings}
+              />
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card>
+              <ReviewForm
+                review={review}
+                onSubmit={this.handleSubmit}
+                submitting={creatingReview}
+                commentChange={this.handleCommentChange}
+                errors={errors}
+                ratingChange={this.handleRatingChange}
+                created={createStatus === 201}
+                attemptedSubmit={attemptedSubmit}
+              />
+            </Card>
           </Col>
           <Col span={24}>
             <Card className="washroom-reviews">
               <Title level={3}>
                 Reviews
               </Title>
-              { reviewsFetching ? <Skeleton active title={false} /> : renderReviews(reviews) }
+              { reviewsFetching
+                ? <Skeleton active title={false} />
+                : <Reviews reviews={reviews} /> }
             </Card>
           </Col>
         </Row>
@@ -216,8 +241,10 @@ const mapStateToProps = (state) => {
   } = state.washroomReducer;
   const {
     reviews,
+    creatingReview,
     isFetching: reviewsFetching,
     status: reviewsStatus,
+    createStatus,
   } = state.reviewReducer;
   return {
     washroom,
@@ -225,8 +252,10 @@ const mapStateToProps = (state) => {
     settingFavorite,
     washroomStatus,
     reviews,
+    creatingReview,
     reviewsFetching,
     reviewsStatus,
+    createStatus,
   };
 };
 
@@ -235,6 +264,7 @@ const mapDispatchToProps = (dispatch) => ({
   getReviewsForWashroom: (id) => dispatch(getReviewsForWashroom(id)),
   favoriteWashroom: (id) => dispatch(favoriteWashroom(id)),
   unfavoriteWashroom: (id) => dispatch(unfavoriteWashroom(id)),
+  createReview: (id, review) => dispatch(createReview(id, review)),
 });
 
 WashroomDetails.propTypes = {
@@ -281,6 +311,9 @@ WashroomDetails.propTypes = {
     }),
   ).isRequired,
   reviewsFetching: PropTypes.bool,
+  createReview: PropTypes.func.isRequired,
+  creatingReview: PropTypes.bool,
+  createStatus: PropTypes.number,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -297,6 +330,8 @@ WashroomDetails.defaultProps = {
   washroomFetching: false,
   settingFavorite: false,
   reviewsFetching: false,
+  creatingReview: false,
+  createStatus: 0,
   location: PropTypes.shape({
     state: PropTypes.shape({
       washroom: {},

@@ -5,34 +5,118 @@ import {
   List,
   Icon,
   Tabs,
+  Empty,
+  Skeleton,
 } from 'antd';
-import { trim } from 'lodash';
+import { trim, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
 
-import { WashroomListItem } from '../components';
+import { WashroomListItem, BuildingListItem } from '../components';
 
 const { Title } = Typography;
 const { TabPane } = Tabs;
 
+const maxResultsParam = 1000;
+const amenitiesParam = null;
+const radiusParam = 50000;
+
+const renderWashrooms = ((washrooms) => {
+  if (isEmpty(washrooms)) {
+    return <Empty description="No washrooms near" />;
+  }
+  return (
+    <List
+      className="near-me-list"
+      bordered
+      dataSource={washrooms}
+      renderItem={(item) => (
+        <List.Item
+          className="near-me-list-item"
+          key={item.id}
+        >
+          <WashroomListItem item={item} />
+        </List.Item>
+      )}
+    />
+  );
+});
+
+const renderBuildings = ((buildings) => {
+  if (isEmpty(buildings)) {
+    return <Empty description="No buildings near" />;
+  }
+  return (
+    <List
+      className="near-me-list"
+      bordered
+      dataSource={buildings}
+      renderItem={(item) => (
+        <List.Item
+          className="near-me-list-item"
+          key={item.id}
+        >
+          <BuildingListItem item={item} />
+        </List.Item>
+      )}
+    />
+  );
+});
+
 class NearMe extends Component {
   componentDidMount() {
-    this.getWashrooms();
-    this.getBuildings();
+    this.getWashrooms(
+      maxResultsParam,
+      amenitiesParam,
+      radiusParam,
+    );
+    this.getBuildings(
+      maxResultsParam,
+      amenitiesParam,
+      radiusParam,
+    );
   }
 
-  getBuildings = () => {
+  getBuildings = (maxResults, amenities, radius) => {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
 
-    getBuildings();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getBuildings(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getBuildings for the test cases without a location
+      getBuildings(null, null, maxResults, amenities, radius);
+    }
   }
 
-  getWashrooms = () => {
+  getWashrooms = (maxResults, amenities, radius) => {
     const { getWashrooms } = this.props;
 
-    getWashrooms();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location) => {
+        getWashrooms(
+          location.coords.latitude,
+          location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      });
+    } else {
+      // `navigator.geolocation` is null in the test cases
+      // We call getWashrooms for the test cases without a location
+      getWashrooms(null, null, maxResults, amenities, radius);
+    }
   }
 
   render() {
@@ -59,39 +143,21 @@ class NearMe extends Component {
             tab="Buildings"
             key="buildings"
           >
-            <List
-              className="near-me-list"
-              loading={buildingsFetching}
-              bordered
-              dataSource={buildings}
-              renderItem={(item) => (
-                <List.Item
-                  className="near-me-list-item"
-                  key={item.id}
-                >
-                  {item.title}
-                </List.Item>
-              )}
-            />
+            {
+            buildingsFetching
+              ? <Skeleton active title={false} />
+              : renderBuildings(buildings)
+            }
           </TabPane>
           <TabPane
             tab="Washrooms"
             key="washrooms"
           >
-            <List
-              className="near-me-list"
-              loading={washroomsFetching}
-              bordered
-              dataSource={washrooms}
-              renderItem={(item) => (
-                <List.Item
-                  className="near-me-list-item"
-                  key={item.id}
-                >
-                  <WashroomListItem item={item} />
-                </List.Item>
-              )}
-            />
+            {
+            washroomsFetching
+              ? <Skeleton active title={false} />
+              : renderWashrooms(washrooms)
+            }
           </TabPane>
         </Tabs>
       </>
@@ -123,8 +189,12 @@ const mapStateToProps = (state) => {
 };
 
 const mapDispatchToProps = (dispatch) => ({
-  getWashrooms: () => dispatch(getWashrooms()),
-  getBuildings: () => dispatch(getBuildings()),
+  getWashrooms: (latitude, longitude, maxResults, amenities, radius) => {
+    dispatch(getWashrooms(latitude, longitude, maxResults, amenities, radius));
+  },
+  getBuildings: (latitude, longitude, maxResults, amenities, radius) => {
+    dispatch(getBuildings(latitude, longitude, maxResults, amenities, radius));
+  },
 });
 
 NearMe.propTypes = {
@@ -145,8 +215,8 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   washrooms: [],
   buildings: [],
-  washroomsFetching: false,
-  buildingsFetching: false,
+  washroomsFetching: true,
+  buildingsFetching: true,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NearMe));

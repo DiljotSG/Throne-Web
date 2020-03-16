@@ -6,10 +6,10 @@ import {
 
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { genderAsEmoji } from '../utils/DisplayUtils';
+import { genderAsEmoji, displayDistance } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const renderFavoriteIcon = (isFavorite) => {
   if (isFavorite) {
@@ -24,7 +24,7 @@ const renderFavoriteIcon = (isFavorite) => {
           <Icon
             type="heart"
             theme="filled"
-            className="list-icon-heart"
+            className="washroom-list-icon-heart"
           />
         </span>
       </>
@@ -37,16 +37,13 @@ const renderFavoriteIcon = (isFavorite) => {
 const WashroomListItem = ({ item }) => (
 
   <NavLink
-    to={{
-      pathname: `/washrooms/${item.id}`,
-      state: { washroom: item },
-    }}
-    className="list-item"
+    to={`/washrooms/${item.id}`}
+    className="washroom-list-item"
   >
-    <Row>
+    <Row type="flex" justify="space-around" align="middle">
       <Col span={20}>
         <Text
-          className="list-item-building-title"
+          className="washroom-list-item-building-title"
           strong
         >
           {item.building_title}
@@ -64,7 +61,7 @@ const WashroomListItem = ({ item }) => (
             && <Divider type="vertical" />}
           {item.comment
             && (
-            <Text className="list-item-comment">
+            <Text className="washroom-list-item-comment">
               {item.comment}
             </Text>
             )}
@@ -74,20 +71,22 @@ const WashroomListItem = ({ item }) => (
             disabled
             value={roundToHalf(item.overall_rating)}
             allowHalf
-            className="list-item-rating"
+            className="washroom-list-item-rating"
           />
         </div>
       </Col>
       <Col span={4}>
-        <div className="list-item-distance">
-          Distance
-          <Title
-            className="list-item-distance-value"
-            level={4}
-          >
-            19m
-          </Title>
-        </div>
+        {item.distance
+          && (
+          <div className="washroom-list-item-distance">
+            <Text
+              className="washroom-list-item-distance-value"
+              strong
+            >
+              {displayDistance(item.distance)}
+            </Text>
+          </div>
+          )}
       </Col>
     </Row>
   </NavLink>
@@ -103,6 +102,7 @@ WashroomListItem.propTypes = {
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
     is_favorite: PropTypes.bool.isRequired,
+    distance: PropTypes.number,
   }),
 };
 
