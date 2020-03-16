@@ -90,7 +90,8 @@ class BuildingDetails extends Component {
             Washrooms Inside
           </Title>
           {
-            washroomsFetching ? <Skeleton active title={false} />
+            washroomsFetching
+              ? <Skeleton active title={false} />
               : renderWashrooms(buildingWashrooms)
           }
         </Row>
