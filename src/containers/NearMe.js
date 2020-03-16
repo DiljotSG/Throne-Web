@@ -65,8 +65,12 @@ const renderBuildings = ((buildings) => {
 const showNoLocationWarning = () => {
   notification.warning({
     message: 'Location Permission Not Granted',
-    description:
-      'Unable to retrieve location from your browser. Will retrieve washrooms from the default location at the University of Manitoba.',
+    description: (
+      <>
+        <Text>Unable to access device location. Using default location: </Text>
+        <Text strong>University of Manitoba</Text>
+      </>
+    ),
   });
 };
 
