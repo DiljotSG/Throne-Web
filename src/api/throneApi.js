@@ -60,6 +60,11 @@ class ThroneApi {
     return this.accessEndpoint(GET, url);
   }
 
+  static async createReview(id, review) {
+    const url = this.createEndpointURL(`washrooms/${id}/reviews`);
+    return this.accessEndpoint(POST, url, review);
+  }
+
   static async getBuilding(id) {
     const url = this.createEndpointURL(`buildings/${id}`);
     return this.accessEndpoint(GET, url);
