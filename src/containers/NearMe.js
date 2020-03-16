@@ -24,16 +24,16 @@ class NearMe extends Component {
   }
 
   getBuildings = () => {
-    const { 
-      getBuildings,
+    const {
+      getBuildings, // eslint-disable-line no-shadow
       maxResults,
       amenities,
       radius,
       latitude,
-      longitude
-    } = this.props; // eslint-disable-line no-shadow
+      longitude,
+    } = this.props;
 
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
         getBuildings(
           location.coords.latitude,
@@ -49,7 +49,7 @@ class NearMe extends Component {
           longitude,
           maxResults,
           amenities,
-          radius
+          radius,
         );
       });
     } else {
@@ -61,15 +61,15 @@ class NearMe extends Component {
 
   getWashrooms = () => {
     const {
-      getWashrooms,
+      getWashrooms, // eslint-disable-line no-shadow
       maxResults,
       amenities,
       radius,
       latitude,
-      longitude
+      longitude,
     } = this.props;
 
-    if ("geolocation" in navigator) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
         getWashrooms(
           location.coords.latitude,
@@ -85,7 +85,7 @@ class NearMe extends Component {
           longitude,
           maxResults,
           amenities,
-          radius
+          radius,
         );
       });
     } else {
@@ -194,10 +194,15 @@ const mapDispatchToProps = (dispatch) => ({
 NearMe.propTypes = {
   washrooms: PropTypes.instanceOf(Array),
   buildings: PropTypes.instanceOf(Array),
+  amenities: PropTypes.instanceOf(Array),
   getWashrooms: PropTypes.func.isRequired,
   getBuildings: PropTypes.func.isRequired,
   washroomsFetching: PropTypes.bool,
   buildingsFetching: PropTypes.bool,
+  maxResults: PropTypes.number,
+  radius: PropTypes.number,
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
   history: PropTypes.shape({
     push: PropTypes.func,
     location: PropTypes.shape({
@@ -209,10 +214,10 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   washrooms: [],
   buildings: [],
+  amenities: [],
   washroomsFetching: false,
   buildingsFetching: false,
   maxResults: 1000,
-  amenities: null,
   radius: 50000,
   latitude: 49.8080954,
   longitude: -97.1375209,
