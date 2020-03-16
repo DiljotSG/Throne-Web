@@ -36,7 +36,6 @@ const renderWashrooms = ((washrooms) => {
   );
 });
 
-
 class BuildingDetails extends Component {
   componentDidMount() {
     const { match } = this.props;
@@ -95,7 +94,6 @@ class BuildingDetails extends Component {
               : renderWashrooms(buildingWashrooms)
           }
         </Row>
-
       </>
     );
   }
