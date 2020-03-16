@@ -5,6 +5,7 @@ import {
   List,
   Icon,
   Tabs,
+  notification,
   Empty,
   Skeleton,
 } from 'antd';
@@ -16,12 +17,8 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem } from '../components';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { TabPane } = Tabs;
-
-const maxResultsParam = 1000;
-const amenitiesParam = null;
-const radiusParam = 50000;
 
 const renderWashrooms = ((washrooms) => {
   if (isEmpty(washrooms)) {
@@ -65,28 +62,49 @@ const renderBuildings = ((buildings) => {
   );
 });
 
+const renderNoLocationWarning = () => {
+  notification.warning({
+    message: 'Location Permission Not Granted',
+    description: (
+      <>
+        <Text>Unable to access device location. Using default location: </Text>
+        <Text strong>University of Manitoba</Text>
+        .
+      </>
+    ),
+  });
+};
+
 class NearMe extends Component {
   componentDidMount() {
-    this.getWashrooms(
-      maxResultsParam,
-      amenitiesParam,
-      radiusParam,
-    );
-    this.getBuildings(
-      maxResultsParam,
-      amenitiesParam,
-      radiusParam,
-    );
+    this.getWashrooms();
+    this.getBuildings();
   }
 
-  getBuildings = (maxResults, amenities, radius) => {
-    const { getBuildings } = this.props; // eslint-disable-line no-shadow
+  getBuildings = () => {
+    const {
+      getBuildings, // eslint-disable-line no-shadow
+      maxResults,
+      amenities,
+      radius,
+      latitude,
+      longitude,
+    } = this.props;
 
-    if (navigator.geolocation) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
         getBuildings(
           location.coords.latitude,
           location.coords.longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+      }, () => {
+        // Get buildings with default location at UofM
+        getBuildings(
+          latitude,
+          longitude,
           maxResults,
           amenities,
           radius,
@@ -96,13 +114,21 @@ class NearMe extends Component {
       // `navigator.geolocation` is null in the test cases
       // We call getBuildings for the test cases without a location
       getBuildings(null, null, maxResults, amenities, radius);
+      renderNoLocationWarning();
     }
   }
 
-  getWashrooms = (maxResults, amenities, radius) => {
-    const { getWashrooms } = this.props;
+  getWashrooms = () => {
+    const {
+      getWashrooms, // eslint-disable-line no-shadow
+      maxResults,
+      amenities,
+      radius,
+      latitude,
+      longitude,
+    } = this.props;
 
-    if (navigator.geolocation) {
+    if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
         getWashrooms(
           location.coords.latitude,
@@ -111,6 +137,16 @@ class NearMe extends Component {
           amenities,
           radius,
         );
+      }, () => {
+        // Get buildings with default location at UofM
+        getWashrooms(
+          latitude,
+          longitude,
+          maxResults,
+          amenities,
+          radius,
+        );
+        renderNoLocationWarning();
       });
     } else {
       // `navigator.geolocation` is null in the test cases
@@ -200,10 +236,15 @@ const mapDispatchToProps = (dispatch) => ({
 NearMe.propTypes = {
   washrooms: PropTypes.instanceOf(Array),
   buildings: PropTypes.instanceOf(Array),
+  amenities: PropTypes.instanceOf(Array),
   getWashrooms: PropTypes.func.isRequired,
   getBuildings: PropTypes.func.isRequired,
   washroomsFetching: PropTypes.bool,
   buildingsFetching: PropTypes.bool,
+  maxResults: PropTypes.number,
+  radius: PropTypes.number,
+  latitude: PropTypes.number,
+  longitude: PropTypes.number,
   history: PropTypes.shape({
     push: PropTypes.func,
     location: PropTypes.shape({
@@ -215,8 +256,13 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   washrooms: [],
   buildings: [],
-  washroomsFetching: true,
-  buildingsFetching: true,
+  amenities: [],
+  washroomsFetching: false,
+  buildingsFetching: false,
+  maxResults: 1000,
+  radius: 50000,
+  latitude: 49.8080954,
+  longitude: -97.1375209,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NearMe));
