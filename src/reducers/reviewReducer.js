@@ -14,7 +14,7 @@ const reviewReducer = (state = initialState, action) => {
         ...state,
         creatingReview: false,
         createStatus: action.status,
-        reviews: [...state.reviews, action.review],
+        reviews: [action.review, ...state.reviews],
       };
     case actions.REQUEST_REVIEWS_FOR_USER:
       return {
@@ -31,7 +31,7 @@ const reviewReducer = (state = initialState, action) => {
         ...state,
         isFetching: false,
         status: action.status,
-        reviews: action.reviews,
+        reviews: action.reviews.reverse(),
       };
     case actions.FAILURE: {
       return {
