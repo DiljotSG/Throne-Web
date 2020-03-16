@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
 import {
-  List, Typography, Spin, Rate, Row,
+  List, Typography, Spin, Rate, Row, Empty, Skeleton
 } from 'antd';
 
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { isEmpty } from 'lodash';
 import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
@@ -13,6 +14,28 @@ import './BuildingDetails.css';
 import { WashroomListItem } from '../components';
 
 const { Title, Text } = Typography;
+
+const renderWashrooms = (washrooms => {
+  if (isEmpty(washrooms)) {
+    return <Empty description="No washrooms yet" />;
+  }
+  return (
+    <List
+      className="near-me-list"
+      bordered
+      dataSource={washrooms}
+      renderItem={(item) => (
+        <List.Item
+          className="near-me-list-item"
+          key={item.id}
+        >
+          <WashroomListItem item={item} />
+        </List.Item>
+      )}
+    />
+    );
+})
+
 
 class BuildingDetails extends Component {
   componentDidMount() {
@@ -67,21 +90,9 @@ class BuildingDetails extends Component {
           <Title level={4}>
             Washrooms Inside
           </Title>
+          { washroomsFetching ? <Skeleton active title={false} /> : renderWashrooms(buildingWashrooms) }
         </Row>
-        <List
-          className="near-me-list"
-          loading={washroomsFetching}
-          bordered
-          dataSource={buildingWashrooms}
-          renderItem={(item) => (
-            <List.Item
-              className="near-me-list-item"
-              key={item.id}
-            >
-              <WashroomListItem item={item} />
-            </List.Item>
-          )}
-        />
+
       </>
     );
   }
