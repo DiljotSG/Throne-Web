@@ -151,7 +151,7 @@ class WashroomDetails extends Component {
     return (
       <>
         <Row>
-          <Col span={12}>
+          <Col span={20}>
             <Title className="details-title" level={2}>
               {washroom.building_title}
             </Title>
@@ -164,7 +164,7 @@ class WashroomDetails extends Component {
             </Text>
           </Col>
           <Col
-            span={12}
+            span={4}
             className="washroom-favorite-button"
           >
             <Button
