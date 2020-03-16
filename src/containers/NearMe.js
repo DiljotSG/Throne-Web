@@ -62,6 +62,14 @@ const renderBuildings = ((buildings) => {
   );
 });
 
+const showNoLocationWarning = () => {
+  notification.warning({
+    message: 'Location Permission Not Granted',
+    description:
+      'Unable to retrieve location from your browser. Will retrieve washrooms from the default location at the University of Manitoba.',
+  });
+};
+
 class NearMe extends Component {
   componentDidMount() {
     this.getWashrooms();
@@ -219,14 +227,6 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getBuildings(latitude, longitude, maxResults, amenities, radius));
   },
 });
-
-const showNoLocationWarning = () => {
-  notification["warning"]({
-    message: 'Location Permission Not Granted',
-    description:
-      'Unable to retrieve location from your browser. Will retrieve washrooms from the default location at the University of Manitoba.',
-  });
-};
 
 NearMe.propTypes = {
   washrooms: PropTypes.instanceOf(Array),
