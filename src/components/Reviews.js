@@ -4,6 +4,7 @@ import {
   Row, Col, Comment, Avatar, Divider, Empty,
 } from 'antd';
 import { isEmpty } from 'lodash';
+import moment from 'moment';
 import { ratingAsEmoji } from '../utils/DisplayUtils';
 
 const Reviews = ({ reviews }) => {
@@ -22,7 +23,7 @@ const Reviews = ({ reviews }) => {
             {item.user.username.charAt(0).toUpperCase()}
           </Avatar>
           )}
-        datetime={item.created_at}
+        datetime={moment(item.created_at).fromNow()}
         content={(
           <Row>
             <Col sm={14} md={16} className="washroom-review-comment">

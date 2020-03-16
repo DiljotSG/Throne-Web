@@ -95,6 +95,8 @@ fetchMock.get('https://testapi.com/washrooms/1/reviews', reviews);
 
 fetchMock.post('https://testapi.com/washrooms/1/reviews', addedReview);
 
+Date.now = jest.fn(() => new Date(Date.UTC(2020, 2, 9)).valueOf());
+
 describe('WashroomDetails', () => {
   it('Fetches washroom details', async () => {
     let component;
@@ -147,12 +149,11 @@ describe('WashroomDetails', () => {
     const review1 = component.find('Comment.washroom-review').first();
     expect(review1.find('.washroom-review-comment').first().text()).toBe('Actually, kinda bad!');
     expect(review1.prop('author')).toBe('twophase');
-    expect(review1.prop('datetime')).toBe('2020-03-05T22:18:07+00:00');
-
+    expect(review1.prop('datetime')).toBe('3 days ago');
     const review2 = component.find('Comment.washroom-review').at(1);
     expect(review2.find('.washroom-review-comment').first().text()).toBe('Not bad!');
     expect(review2.prop('author')).toBe('polima');
-    expect(review2.prop('datetime')).toBe('2020-03-05T19:19:40+00:00');
+    expect(review2.prop('datetime')).toBe('3 days ago');
   });
 
   it('Creates a new review', async () => {
@@ -201,6 +202,6 @@ describe('WashroomDetails', () => {
     const newReview = component.find('Comment.washroom-review').at(0);
     expect(newReview.find('.washroom-review-comment').first().text()).toBe('I hate this place');
     expect(newReview.prop('author')).toBe('diljot');
-    expect(newReview.prop('datetime')).toBe('2020-03-08T19:19:40+00:00');
+    expect(newReview.prop('datetime')).toBe('5 hours ago');
   });
 });
