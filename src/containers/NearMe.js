@@ -17,7 +17,7 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem } from '../components';
 
-const { Title } = Typography;
+const { Title, Text } = Typography;
 const { TabPane } = Tabs;
 
 const renderWashrooms = ((washrooms) => {
@@ -62,13 +62,13 @@ const renderBuildings = ((buildings) => {
   );
 });
 
-const showNoLocationWarning = () => {
+const renderNoLocationWarning = () => {
   notification.warning({
     message: 'Location Permission Not Granted',
     description: (
       <>
         <Text>Unable to access device location. Using default location: </Text>
-        <Text strong>University of Manitoba</Text>
+        <Text strong>University of Manitoba</Text>.
       </>
     ),
   });
@@ -113,7 +113,7 @@ class NearMe extends Component {
       // `navigator.geolocation` is null in the test cases
       // We call getBuildings for the test cases without a location
       getBuildings(null, null, maxResults, amenities, radius);
-      showNoLocationWarning();
+      renderNoLocationWarning();
     }
   }
 
@@ -145,7 +145,7 @@ class NearMe extends Component {
           amenities,
           radius,
         );
-        showNoLocationWarning();
+        renderNoLocationWarning();
       });
     } else {
       // `navigator.geolocation` is null in the test cases
