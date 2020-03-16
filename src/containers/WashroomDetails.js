@@ -203,16 +203,6 @@ class WashroomDetails extends Component {
             </Card>
           </Col>
           <Col span={24}>
-            <Card className="washroom-reviews">
-              <Title level={3}>
-                Reviews
-              </Title>
-              { reviewsFetching
-                ? <Skeleton active title={false} />
-                : <Reviews reviews={reviews} /> }
-            </Card>
-          </Col>
-          <Col span={24}>
             <Card>
               <ReviewForm
                 review={review}
@@ -224,6 +214,16 @@ class WashroomDetails extends Component {
                 created={createStatus === 201}
                 attemptedSubmit={attemptedSubmit}
               />
+            </Card>
+          </Col>
+          <Col span={24}>
+            <Card className="washroom-reviews">
+              <Title level={3}>
+                Reviews
+              </Title>
+              { reviewsFetching
+                ? <Skeleton active title={false} />
+                : <Reviews reviews={reviews} /> }
             </Card>
           </Col>
         </Row>
