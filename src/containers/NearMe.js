@@ -5,6 +5,7 @@ import {
   List,
   Icon,
   Tabs,
+  notification,
 } from 'antd';
 import { trim } from 'lodash';
 import { connect } from 'react-redux';
@@ -56,6 +57,7 @@ class NearMe extends Component {
       // `navigator.geolocation` is null in the test cases
       // We call getBuildings for the test cases without a location
       getBuildings(null, null, maxResults, amenities, radius);
+      showNoLocationWarning();
     }
   }
 
@@ -87,6 +89,7 @@ class NearMe extends Component {
           amenities,
           radius,
         );
+        showNoLocationWarning();
       });
     } else {
       // `navigator.geolocation` is null in the test cases
@@ -190,6 +193,14 @@ const mapDispatchToProps = (dispatch) => ({
     dispatch(getBuildings(latitude, longitude, maxResults, amenities, radius));
   },
 });
+
+const showNoLocationWarning = () => {
+  notification["warning"]({
+    message: 'Location Permission Not Granted',
+    description:
+      'Unable to retrieve location from your browser. Will retrieve washrooms from the default location at the University of Manitoba.',
+  });
+};
 
 NearMe.propTypes = {
   washrooms: PropTypes.instanceOf(Array),
