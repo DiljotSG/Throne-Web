@@ -144,12 +144,12 @@ describe('WashroomDetails', () => {
 
     expect(component.find('Comment.washroom-review').length).toBe(2);
 
-    const review1 = component.find('Comment').first();
+    const review1 = component.find('Comment.washroom-review').first();
     expect(review1.find('.washroom-review-comment').first().text()).toBe('Not bad!');
     expect(review1.prop('author')).toBe('polima');
     expect(review1.prop('datetime')).toBe('2020-03-05T19:19:40+00:00');
 
-    const review2 = component.find('Comment').at(1);
+    const review2 = component.find('Comment.washroom-review').at(1);
     expect(review2.find('.washroom-review-comment').first().text()).toBe('Actually, kinda bad!');
     expect(review2.prop('author')).toBe('twophase');
     expect(review2.prop('datetime')).toBe('2020-03-05T22:18:07+00:00');
