@@ -9,7 +9,7 @@ import { roundToHalf } from '../utils/NumUtils';
 import { genderAsEmoji, displayDistance } from '../utils/DisplayUtils';
 import './WashroomListItem.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 
 const renderFavoriteIcon = (isFavorite) => {
   if (isFavorite) {
@@ -37,13 +37,10 @@ const renderFavoriteIcon = (isFavorite) => {
 const WashroomListItem = ({ item }) => (
 
   <NavLink
-    to={{
-      pathname: `/washrooms/${item.id}`,
-      state: { washroom: item },
-    }}
+    to={`/washrooms/${item.id}`}
     className="washroom-list-item"
   >
-    <Row>
+    <Row type="flex" justify="space-around" align="middle">
       <Col span={20}>
         <Text
           className="washroom-list-item-building-title"
@@ -82,13 +79,12 @@ const WashroomListItem = ({ item }) => (
         {item.distance
           && (
           <div className="washroom-list-item-distance">
-            Distance
-            <Title
+            <Text
               className="washroom-list-item-distance-value"
-              level={4}
+              strong
             >
               {displayDistance(item.distance)}
-            </Title>
+            </Text>
           </div>
           )}
       </Col>
