@@ -189,8 +189,8 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   washrooms: [],
   buildings: [],
-  washroomsFetching: false,
-  buildingsFetching: false,
+  washroomsFetching: true,
+  buildingsFetching: true,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NearMe));
