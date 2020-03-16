@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  List, Typography, Spin, Rate, Row, Empty, Skeleton
+  List, Typography, Spin, Rate, Row, Empty, Skeleton,
 } from 'antd';
 
 import PropTypes from 'prop-types';
@@ -15,7 +15,7 @@ import { WashroomListItem } from '../components';
 
 const { Title, Text } = Typography;
 
-const renderWashrooms = (washrooms => {
+const renderWashrooms = ((washrooms) => {
   if (isEmpty(washrooms)) {
     return <Empty description="No washrooms yet" />;
   }
@@ -33,8 +33,8 @@ const renderWashrooms = (washrooms => {
         </List.Item>
       )}
     />
-    );
-})
+  );
+});
 
 
 class BuildingDetails extends Component {
@@ -90,7 +90,10 @@ class BuildingDetails extends Component {
           <Title level={4}>
             Washrooms Inside
           </Title>
-          { washroomsFetching ? <Skeleton active title={false} /> : renderWashrooms(buildingWashrooms) }
+          {
+            washroomsFetching ? <Skeleton active title={false} />
+              : renderWashrooms(buildingWashrooms)
+          }
         </Row>
 
       </>
