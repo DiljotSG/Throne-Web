@@ -233,7 +233,7 @@ class WashroomDetails extends Component {
           target="_blank"
           icon="warning"
         >
-          Request Maintenance Issue
+          Report Maintenance Issue
         </Button>
       </>
     );
