@@ -14,6 +14,7 @@ import {
 } from 'antd';
 import { getBuildings } from '../actions/buildingActions';
 import { roundToHalf } from '../utils/NumUtils';
+import { buildingPinEmoji } from '../utils/DisplayUtils';
 import './Map.css';
 
 const { Title } = Typography;
@@ -32,7 +33,6 @@ class Map extends Component {
         latitude: 49.8080954,
         longitude: -97.1375209,
         zoom: 14,
-        selected: {},
       },
     };
   }
@@ -59,7 +59,7 @@ class Map extends Component {
     this.setState({ viewport });
   }
 
-  displayMarkers = (buildings) => {
+  renderMapMarkers = (buildings) => {
     const { viewport } = { ...this.state };
     if (viewport.zoom > 14) {
       return (
@@ -76,7 +76,13 @@ class Map extends Component {
               size="small"
               onClick={() => this.setState({ selected: building })}
             >
-              {this.displayIcon(building)}
+              <span
+                style={this.markerState()}
+                role="img"
+                aria-label={building.title}
+              >
+                {buildingPinEmoji(building.overall_rating)}
+              </span>
             </Button>
           </Marker>
         ))
@@ -85,34 +91,55 @@ class Map extends Component {
     return null;
   }
 
+  renderMapPopups = (selected) => {
+    if (!selected) {
+      return null;
+    }
+    return (
+      <Popup
+        key={selected.id}
+        latitude={selected.location.latitude}
+        longitude={selected.location.longitude}
+        onClose={() => this.setState({ selected: null })}
+        closeOnClick={false}
+      >
+        <Title
+          className="pop-up-title"
+        >
+          {selected.title}
+        </Title>
+        <Row className="pop-up">
+          <Col span={8}>
+            <Rate
+              disabled
+              value={roundToHalf(selected.overall_rating)}
+              allowHalf
+              className="pop-up-rating"
+            />
+          </Col>
+          <Col offset={8} span={8} className="pop-up-info-icon-container">
+            <NavLink
+              to={{
+                pathname: '',
+              }}
+            >
+              <Icon
+                className="pop-up-info-icon"
+                type="info-circle"
+              />
+            </NavLink>
+          </Col>
+        </Row>
+      </Popup>
+    );
+  };
+
 
   markerState = () => {
     const { viewport } = { ...this.state };
     return {
-      'font-size': `${(viewport.zoom - 13) * 8}px`,
+      'font-size': `${(viewport.zoom - 12) * 10}px`,
     };
-  }
-
-  displayIcon = (building) => {
-    let icon = '👑';
-    if (building.overall_rating <= 0) {
-      icon = '🏢';
-    } else if (building.overall_rating <= 1.5) {
-      icon = '💀';
-    } else if (building.overall_rating <= 2.5) {
-      icon = '💩';
-    } else if (building.overall_rating <= 4.0) {
-      icon = '🧻';
-    }
-    return (
-      <span
-        style={this.markerState()}
-        role="img"
-        aria-label={building.title}
-      >
-        {icon}
-      </span>
-    );
   }
 
   render() {
@@ -130,42 +157,8 @@ class Map extends Component {
           mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
           mapStyle="mapbox://styles/mapbox/streets-v11"
         >
-          {this.displayMarkers(buildings)}
-          {selected ? (
-            <Popup
-              key={selected.id}
-              latitude={selected.location.latitude}
-              longitude={selected.location.longitude}
-              onClose={() => this.setState({ selected: null })}
-              closeOnClick={false}
-            >
-              <h4>
-                {selected.title}
-              </h4>
-              <Row className="pop-up">
-                <Col span={8}>
-                  <Rate
-                    disabled
-                    value={roundToHalf(selected.overall_rating)}
-                    allowHalf
-                    className="pop-up-rating"
-                  />
-                </Col>
-                <Col offset={8} span={8} className="show-more">
-                  <NavLink
-                    to={{
-                      pathname: '',
-                    }}
-                  >
-                    <Icon
-                      className="info-icon"
-                      type="info-circle"
-                    />
-                  </NavLink>
-                </Col>
-              </Row>
-            </Popup>
-          ) : null}
+          {this.renderMapMarkers(buildings)}
+          {this.renderMapPopups(selected)}
           <GeolocateControl
             className="geolocate-control"
             positionOptions={{ enableHighAccuracy: true }}
@@ -178,8 +171,8 @@ class Map extends Component {
 }
 const mapStateToProps = (state) => {
   const {
-    buildings, isFetching:
-    buildingsFetching,
+    buildings,
+    isFetching: buildingsFetching,
     status: buildingsStatus,
   } = state.buildingReducer;
 
