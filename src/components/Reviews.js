@@ -5,6 +5,7 @@ import {
 } from 'antd';
 import { isEmpty } from 'lodash';
 import moment from 'moment';
+import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
 import { ratingAsEmoji } from '../utils/DisplayUtils';
 
 const Reviews = ({ reviews }) => {
@@ -13,28 +14,28 @@ const Reviews = ({ reviews }) => {
   }
 
   return (
-    reviews.map((item) => (
+    reviews.map((review) => (
       <Comment
         className="washroom-review"
-        key={item.created_at}
-        author={item.user.username}
+        key={review.created_at}
+        author={review.user.username}
         avatar={(
           <Avatar>
-            {item.user.username.charAt(0).toUpperCase()}
+            {review.user.username.charAt(0).toUpperCase()}
           </Avatar>
           )}
-        datetime={moment(item.created_at).fromNow()}
+        datetime={moment(review.created_at).fromNow()}
         content={(
           <Row>
             <Col sm={14} md={16} className="washroom-review-comment">
-              {item.comment}
+              {review.comment}
             </Col>
             <Col sm={10} md={8} className="washroom-review-rating">
-              { Object.entries(item.ratings).map(([type, value], i) => (
+              { WASHROOM_RATING_CATEGORIES.map((type, i) => (
                 <React.Fragment key={type}>
                   {i > 0 ? <Divider type="vertical" /> : ''}
                   {ratingAsEmoji(type)}
-                  {value}
+                  {review.ratings[type]}
                 </React.Fragment>
               ))}
             </Col>
