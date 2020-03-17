@@ -118,10 +118,7 @@ class Map extends Component {
           </Col>
           <Col offset={8} span={8} className="pop-up-info-icon-container">
             <NavLink
-              to={{
-                pathname: '',
-                pathname: `buildings/${selected.id}`,
-              }}
+              to={`buildings/${selected.id}`}
             >
               <Icon
                 className="pop-up-info-icon"
