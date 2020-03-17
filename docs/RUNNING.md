@@ -41,20 +41,19 @@ The built files can't be run without serving them up with a server.
 
 The easiest way to do this is with a package called `serve`.
 
-
-To install `serve` 
+To install `serve`
 
 ```shell
 yarn global add serve
 ```
 
-
 To start the server
+
 ```shell
 serve -s build
 ```
-Where `build` is the directory to serve.
 
+Where `build` is the directory to serve.
 
 **Note:**
 
