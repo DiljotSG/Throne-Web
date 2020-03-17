@@ -27,3 +27,7 @@
   width: 40px;
   font-size: large;
 }
+.marker-button{
+  padding: 0px !important;
+  height: fit-content !important;
+}

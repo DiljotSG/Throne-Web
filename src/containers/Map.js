@@ -68,12 +68,11 @@ class Map extends Component {
             key={building.id}
             latitude={building.location.latitude}
             longitude={building.location.longitude}
-            offsetLeft={-12}
+            offsetLeft={(viewport.zoom - 12) * -5}
           >
             <Button
               type="link"
-              shape="circle"
-              size="small"
+              className="marker-button"
               onClick={() => this.setState({ selected: building })}
             >
               <span
@@ -121,6 +120,7 @@ class Map extends Component {
             <NavLink
               to={{
                 pathname: '',
+                pathname: `buildings/${selected.id}`,
               }}
             >
               <Icon
@@ -137,8 +137,10 @@ class Map extends Component {
 
   markerState = () => {
     const { viewport } = { ...this.state };
+    const markerHeight = `${(viewport.zoom - 12) * 10}px`;
     return {
-      'font-size': `${(viewport.zoom - 12) * 10}px`,
+      'font-size': markerHeight,
+      'line-height': markerHeight,
     };
   }
 
