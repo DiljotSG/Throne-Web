@@ -89,6 +89,10 @@ fetchMock.get('https://testapi.com/washrooms/1',
     },
     amenities: ['air_dryer'],
     is_favorite: true,
+    location: {
+      latitude: 49.8080954,
+      longitude: -97.1375209,
+    },
   });
 
 fetchMock.get('https://testapi.com/washrooms/1/reviews', reviews);
@@ -125,6 +129,8 @@ describe('WashroomDetails', () => {
     expect(component.find('Rate').find('.washroom-rate-smell').first().prop('value')).toBe(1);
     expect(component.find('li.ant-list-item').length).toBe(1);
     expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
+    expect(component.find('InteractiveMap').first().prop('latitude')).toBe(49.8080954);
+    expect(component.find('InteractiveMap').first().prop('longitude')).toBe(-97.1375209);
   });
 
   it('Lists the reviews for a washroom', async () => {
