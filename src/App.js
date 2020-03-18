@@ -8,7 +8,7 @@ import {
   Layout,
   Spin,
   Button,
-  notification
+  notification,
 } from 'antd';
 
 import Auth from './services/Auth';
@@ -37,8 +37,13 @@ const renderCovid19Warning = () => {
     description: (
       <>
         <>
-        <Text>Get the latest information on COVID-19 from the Public Health Agency of Canada. </Text>
-        <Text strong>Please remember to wash your hands to help prevent the spread of COVID-19.</Text>
+          <Text>
+            Get the latest information on COVID-19 from the Public Health Agency of Canada.
+            {' '}
+          </Text>
+          <Text strong>
+            Please remember to wash your hands to help prevent the spread of COVID-19.
+          </Text>
         </>
         <Button
           href="https://www.canada.ca/en/public-health/services/diseases/coronavirus-disease-covid-19.html"
