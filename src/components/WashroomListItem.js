@@ -34,15 +34,24 @@ const renderFavoriteIcon = (isFavorite) => {
   return null;
 };
 
-const renderViewItem = (item, buildingView) => {
-  if (buildingView) {
-    return (
+
+const WashroomListItem = ({ item, buildingView }) => (
+
+  <NavLink
+    to={`/washrooms/${item.id}`}
+    className="washroom-list-item"
+  >
+    <Row type="flex" justify="space-around" align="middle">
       <Col span={20}>
         <Text
           className="washroom-list-item-building-title"
           strong
         >
-          {item.comment}
+          {
+            buildingView
+              ? item.comment
+              : item.building_title
+          }
           {renderFavoriteIcon(item.is_favorite)}
         </Text>
         <div className="in-line">
@@ -53,6 +62,16 @@ const renderViewItem = (item, buildingView) => {
           <Text className="list-item-floor">
             {`Floor ${item.floor}`}
           </Text>
+          {!buildingView
+            && item.comment
+            && <Divider type="vertical" />}
+          {!buildingView
+            && item.comment
+            && (
+            <Text className="washroom-list-item-comment">
+              {item.comment}
+            </Text>
+            )}
         </div>
         <div className="in-line">
           <Rate
@@ -63,55 +82,6 @@ const renderViewItem = (item, buildingView) => {
           />
         </div>
       </Col>
-    );
-  }
-  return (
-    <Col span={20}>
-      <Text
-        className="washroom-list-item-building-title"
-        strong
-      >
-        {item.building_title}
-        {renderFavoriteIcon(item.is_favorite)}
-      </Text>
-      <div className="in-line">
-        <Text className="list-item-gender">
-          {genderAsEmoji(item.gender)}
-        </Text>
-        <Divider type="vertical" />
-        <Text className="list-item-floor">
-          {`Floor ${item.floor}`}
-        </Text>
-        {item.comment
-          && <Divider type="vertical" />}
-        {item.comment
-          && (
-          <Text className="washroom-list-item-comment">
-            {item.comment}
-          </Text>
-          )}
-      </div>
-      <div className="in-line">
-        <Rate
-          disabled
-          value={roundToHalf(item.overall_rating)}
-          allowHalf
-          className="washroom-list-item-rating"
-        />
-      </div>
-    </Col>
-  );
-};
-
-
-const WashroomListItem = ({ item, buildingView }) => (
-
-  <NavLink
-    to={`/washrooms/${item.id}`}
-    className="washroom-list-item"
-  >
-    <Row type="flex" justify="space-around" align="middle">
-      {renderViewItem(item, buildingView)}
       <Col span={4}>
         {item.distance
           && (
