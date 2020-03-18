@@ -42,7 +42,7 @@ const renderCovid19Warning = () => {
             {' '}
           </Text>
           <Text strong>
-            Please remember to wash your hands to help prevent the spread of COVID-19.
+            Please remember to wash your hands when visiting a washroom.
           </Text>
         </>
         <Button
