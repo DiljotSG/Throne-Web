@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import ReactMapGL, { GeolocateControl } from 'react-map-gl';
+import ReactMapGL, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import {
   Spin, Row, Col, Divider, Typography, Skeleton, Card, Button, Icon,
 } from 'antd';
@@ -161,8 +161,10 @@ class WashroomDetails extends Component {
       createStatus,
     } = this.props;
 
-    const { review, errors, attemptedSubmit, viewport } = this.state;
-    console.log(viewport);
+    const {
+      review, errors, attemptedSubmit, viewport,
+    } = this.state;
+
     if (washroomFetching || isEmpty(washroom)) {
       return (<Spin />);
     }
@@ -210,25 +212,53 @@ class WashroomDetails extends Component {
           </Col>
         </Row>
         <Row gutter={[16, 16]} align="middle">
-          <Col sm={24} md={14}>
-            <AmenityList amenities={washroom.amenities} />
-          </Col>
-          <Col sm={24} md={10}>
+          <Col sm={24} md={16}>
             <Card>
               <WashroomRatings
                 overallRating={washroom.overall_rating}
                 averageRatings={washroom.average_ratings}
               />
             </Card>
-          </Col>
-          <Col sm={24} md={10}>
-            <Card>
+            <Card
+              className="map-container"
+            >
               <ReactMapGL
                 {...viewport} // eslint-disable-line react/jsx-props-no-spreading
                 onViewportChange={(newView) => this.setState({ viewport: newView })}
+                onLoad={() => this.setState({
+                  viewport: {
+                    ...mapDimensions,
+                    latitude: washroom.location.latitude,
+                    longitude: washroom.location.longitude,
+                    zoom: 18,
+                  },
+                })}
                 mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
                 mapStyle="mapbox://styles/mapbox/streets-v11"
               >
+                <Marker
+                  latitude={washroom.location.latitude}
+                  longitude={washroom.location.longitude}
+                  offsetLeft={-16}
+                  offsetTop={-30}
+                >
+                  <span
+                    className="washroom-marker"
+                    aria-label="Washroom location"
+                    role="img"
+                  >
+                    📍
+                  </span>
+                </Marker>
+                <Popup
+                  latitude={washroom.location.latitude}
+                  longitude={washroom.location.longitude}
+                  closeButton={false}
+                  offsetTop={-32}
+                >
+                  {`Floor ${washroom.floor}`}
+                  {washroom.comment ? ` | ${washroom.comment}` : ''}
+                </Popup>
                 <GeolocateControl
                   className="geolocate-control"
                   positionOptions={{ enableHighAccuracy: true }}
@@ -236,6 +266,9 @@ class WashroomDetails extends Component {
                 />
               </ReactMapGL>
             </Card>
+          </Col>
+          <Col sm={24} md={8}>
+            <AmenityList amenities={washroom.amenities} />
           </Col>
           <Col span={24}>
             <Card>
@@ -329,6 +362,10 @@ WashroomDetails.propTypes = {
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
     building_title: PropTypes.string,
+    location: PropTypes.shape({
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
+    }),
   }).isRequired,
   washroomFetching: PropTypes.bool,
   settingFavorite: PropTypes.bool,

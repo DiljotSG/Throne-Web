@@ -14,6 +14,11 @@ const AmenityList = ({ amenities }) => (
       header={<b>Amenities</b>}
       size="small"
       dataSource={amenities}
+      pagination={{
+        pageSize: 10,
+        style: { textAlign: 'center' },
+        hideOnSinglePage: true,
+      }}
       renderItem={(item) => (
         <List.Item
           key={item}

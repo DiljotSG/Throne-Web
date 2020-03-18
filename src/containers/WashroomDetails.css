@@ -40,3 +40,13 @@
   color: #E50000 !important;
   border-color: #E50000 !important;
 }
+
+.map-container {
+  margin-top: 10px !important;
+}
+
+.washroom-marker {
+  color: black;
+  font-size: 32px;
+  line-height: 32px;
+}
