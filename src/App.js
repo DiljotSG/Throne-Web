@@ -46,7 +46,7 @@ const renderCovid19Warning = () => {
           </Text>
         </>
         <Button
-          className="covid-info-button"
+          className="notification-action-button"
           href="https://www.canada.ca/en/public-health/services/diseases/coronavirus-disease-covid-19.html"
           rel="noopener noreferrer"
           target="_blank"
