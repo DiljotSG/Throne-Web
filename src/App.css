@@ -32,3 +32,7 @@
   padding: 30px 15px;
   min-height: 280px;
 }
+
+.notification-action-button {
+  margin-top: 15px;
+}
