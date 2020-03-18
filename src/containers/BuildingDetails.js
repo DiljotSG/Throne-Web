@@ -29,7 +29,7 @@ const renderWashrooms = ((washrooms) => {
           className="near-me-list-item"
           key={item.id}
         >
-          <WashroomListItem item={item} buildingView />
+          <WashroomListItem item={item} BuildingTitle />
         </List.Item>
       )}
     />
