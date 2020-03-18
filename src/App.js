@@ -3,7 +3,13 @@ import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import { Layout, Spin } from 'antd';
+import {
+  Typography,
+  Layout,
+  Spin,
+  Button,
+  notification
+} from 'antd';
 
 import Auth from './services/Auth';
 
@@ -14,6 +20,7 @@ import { Nav, Login } from './components';
 
 import './App.css';
 
+const { Text } = Typography;
 const { Content } = Layout;
 
 function requireAuth() {
@@ -23,6 +30,29 @@ function requireAuth() {
     });
   }
 }
+
+const renderCovid19Warning = () => {
+  notification.info({
+    message: 'Prevent the Spread of COVID-19',
+    description: (
+      <>
+        <>
+        <Text>Get the latest information on COVID-19 from the Public Health Agency of Canada. </Text>
+        <Text strong>Please remember to wash your hands to help prevent the spread of COVID-19.</Text>
+        </>
+        <Button
+          href="https://www.canada.ca/en/public-health/services/diseases/coronavirus-disease-covid-19.html"
+          rel="noopener noreferrer"
+          target="_blank"
+          type="primary"
+        >
+          Go to Canada.ca
+        </Button>
+      </>
+    ),
+    duration: null,
+  });
+};
 
 class App extends Component {
   constructor(props) {
@@ -73,6 +103,8 @@ class App extends Component {
         />
       );
     }
+
+    renderCovid19Warning();
 
     return (
       <Provider store={store}>
