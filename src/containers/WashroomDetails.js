@@ -20,7 +20,7 @@ const { Title, Text } = Typography;
 
 const mapDimensions = {
   width: '100%',
-  height: '300px',
+  height: '370px',
 };
 
 class WashroomDetails extends Component {
