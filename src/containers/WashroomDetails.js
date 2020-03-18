@@ -257,7 +257,7 @@ class WashroomDetails extends Component {
                   offsetTop={-32}
                 >
                   {`Floor ${washroom.floor}`}
-                  {washroom.comment ? ` | ${washroom.comment}` : ''}
+                  {washroom.comment && ` | ${washroom.comment}`}
                 </Popup>
                 <GeolocateControl
                   className="geolocate-control"
