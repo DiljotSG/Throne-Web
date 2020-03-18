@@ -54,7 +54,7 @@ fetchMock.get('https://testapi.com/buildings?location=undefined&maxResults=undef
 ]);
 
 describe('Map', () => {
-  it.only('Renders the "Map" page', async () => {
+  it('Renders the "Map" page', async () => {
     await act(async () => {
       const component = mount(
         <Router>
