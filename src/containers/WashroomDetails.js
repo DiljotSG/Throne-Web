@@ -212,7 +212,7 @@ class WashroomDetails extends Component {
           </Col>
         </Row>
         <Row gutter={[16, 16]} align="middle">
-          <Col sm={24} md={16}>
+          <Col sm={24} md={14}>
             <Card>
               <WashroomRatings
                 overallRating={washroom.overall_rating}
@@ -267,7 +267,7 @@ class WashroomDetails extends Component {
               </ReactMapGL>
             </Card>
           </Col>
-          <Col sm={24} md={8}>
+          <Col sm={24} md={10}>
             <AmenityList amenities={washroom.amenities} />
           </Col>
           <Col span={24}>

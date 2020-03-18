@@ -15,7 +15,7 @@ const AmenityList = ({ amenities }) => (
       size="small"
       dataSource={amenities}
       pagination={{
-        pageSize: 10,
+        pageSize: 12,
         style: { textAlign: 'center' },
         hideOnSinglePage: true,
       }}
