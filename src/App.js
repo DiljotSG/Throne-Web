@@ -45,7 +45,8 @@ const renderCovid19Warning = () => {
             Please remember to wash your hands when visiting a washroom.
           </Text>
         </>
-        <Button className="covid-info-button"
+        <Button
+          className="covid-info-button"
           href="https://www.canada.ca/en/public-health/services/diseases/coronavirus-disease-covid-19.html"
           rel="noopener noreferrer"
           target="_blank"
