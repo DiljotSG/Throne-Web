@@ -175,6 +175,20 @@ export const ratingAsEmoji = (value) => {
   }
 };
 
+export const buildingPinEmoji = (rating) => {
+  let icon = '👑';
+  if (rating <= 0) {
+    icon = '🏢';
+  } else if (rating <= 1.5) {
+    icon = '💀';
+  } else if (rating <= 2.5) {
+    icon = '💩';
+  } else if (rating <= 4.0) {
+    icon = '🧻';
+  }
+  return icon;
+};
+
 export const displayDistance = (distance) => (
   distance > 1000 ? `${(distance / 1000).toFixed(1)} km` : `${(distance).toFixed(0)} m`
 );
