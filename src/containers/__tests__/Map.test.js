@@ -86,6 +86,10 @@ describe('Map', () => {
     const map = component.find('InteractiveMap').first();
     const markerList = map.prop('children')[0];
     expect(markerList.length).toBe(2);
+    expect(markerList[0].props.latitude).toBe(buildings[0].location.latitude);
+    expect(markerList[0].props.longitude).toBe(buildings[0].location.longitude);
+    expect(markerList[1].props.latitude).toBe(buildings[1].location.latitude);
+    expect(markerList[1].props.longitude).toBe(buildings[1].location.longitude);
     expect(map.prop('latitude')).toEqual(49.8080954);
     expect(map.prop('longitude')).toEqual(-97.1375209);
     expect(map.prop('zoom')).toEqual(14);
