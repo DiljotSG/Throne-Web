@@ -72,7 +72,7 @@ describe('async actions', () => {
       urinalCount,
       stallCount,
       buildingId,
-      washroommAmenities
+      washroommAmenities,
     )).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
