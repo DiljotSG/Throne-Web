@@ -3,23 +3,7 @@ import { mount } from 'enzyme';
 import { BrowserRouter as Router } from 'react-router-dom';
 import WashroomListItem from '../WashroomListItem';
 
-const washroom = {
-  id: 1,
-  building_title: 'Science Library',
-  comment: 'Washroom 1',
-  gender: 'women',
-  floor: 2,
-  average_rating: {
-    smell: 1,
-    privacy: 2,
-    cleanliness: 3,
-    toilet_paper_quality: 4,
-  },
-  overall_rating: 5,
-  amenities: ['air_dryer'],
-  is_favorite: true,
-  distance: 19,
-};
+import washroom from './data/washroom.json';
 
 describe('WashroomListItem', () => {
   it('Renders List Item', () => {
