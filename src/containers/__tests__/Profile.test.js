@@ -9,23 +9,15 @@ import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
 import Profile from '../Profile';
 
+import user from './data/user.json';
+
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
 }
 
 const store = setupStore({});
 
-fetchMock.get('https://testapi.com/users',
-  {
-    id: 1,
-    preferences: {
-      gender: 'undefined',
-      main_floor_access: 0,
-      wheelchair_accessible: 0,
-    },
-    profile_picture: 'default',
-    username: 'twophase',
-  });
+fetchMock.get('https://testapi.com/users', user);
 
 describe('Profile', () => {
   it('Renders the Profile page', async () => {

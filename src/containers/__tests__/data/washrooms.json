@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "building_title": "Science Library",
+    "comment": "Washroom 1",
+    "gender": "women",
+    "floor": 2,
+    "overall_rating": 5,
+    "average_ratings": {
+      "smell": 1,
+      "privacy": 2,
+      "cleanliness": 3,
+      "toilet_paper_quality": 4
+    },
+    "amenities": [
+      "air_dryer"
+    ],
+    "is_favorite": true,
+    "location": {
+      "latitude": 49.8080954,
+      "longitude": -97.1375209
+    }
+  },
+  {
+    "id": 2,
+    "comment": "Washroom 2",
+    "gender": "women",
+    "floor": 1,
+    "average_rating": {
+      "smell": 1,
+      "privacy": 2,
+      "cleanliness": 3,
+      "toilet_paper_quality": 4
+    },
+    "overall_rating": 5,
+    "amenities": [
+      "air_dryer"
+    ],
+    "is_favorite": false,
+    "distance": 19
+  }
+]
