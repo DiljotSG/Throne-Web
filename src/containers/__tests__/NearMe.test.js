@@ -50,10 +50,12 @@ describe('NearMe', () => {
       const listItem1 = component.find('Item.near-me-list-item').first();
       expect(listItem1.find('.building-list-item-building-title').first().text()).toEqual('Wallace Building');
       expect(listItem1.find('.building-list-item-washroom-count').first().text()).toEqual('Washrooms: 1');
+      expect(listItem1.find('Rate.building-list-item-rating').first().prop('value')).toEqual(3);
 
       const listItem2 = component.find('Item.near-me-list-item').at(1);
       expect(listItem2.find('.building-list-item-building-title').first().text()).toEqual('University Centre');
       expect(listItem2.find('.building-list-item-washroom-count').first().text()).toEqual('Washrooms: 0');
+      expect(listItem2.find('Rate.building-list-item-rating').first().prop('value')).toEqual(2.5);
     });
   });
 });
