@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {
-  List, Typography, Spin, Rate, Row, Empty, Skeleton,
+  List, Typography, Spin, Rate, Row, Empty, Skeleton, Button,
 } from 'antd';
-
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
@@ -61,6 +60,7 @@ class BuildingDetails extends Component {
       buildingFetching,
       buildingWashrooms,
       washroomsFetching,
+      history,
     } = this.props;
 
     if (buildingFetching) {
@@ -69,6 +69,13 @@ class BuildingDetails extends Component {
 
     return (
       <>
+        <Button
+          shape="round"
+          onClick={history.goBack}
+          icon="arrow-left"
+          size="large"
+          className="back-button"
+        />
         <Title
           className="details-title"
           level={2}
@@ -151,12 +158,18 @@ BuildingDetails.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  history: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 };
 
 BuildingDetails.defaultProps = {
   buildingWashrooms: [],
   washroomsFetching: false,
   buildingFetching: false,
+  history: {
+    goBack: () => {},
+  },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingDetails);
