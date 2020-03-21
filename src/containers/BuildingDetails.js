@@ -86,7 +86,10 @@ class BuildingDetails extends Component {
           />
         </Row>
         <Row>
-          <Title level={4}>
+          <Title
+            level={4}
+            className="washroom-list-header"
+          >
             Washrooms Inside
           </Title>
           {
