@@ -2,10 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import AmenityList from '../AmenityList';
 
-const amenities = [
-  'bidet',
-  'garbage_can',
-];
+import amenities from './data/amenities.json';
 
 describe('Amenities', () => {
   it('Renders empty when no amenities are passed', () => {

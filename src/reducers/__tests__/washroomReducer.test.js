@@ -50,7 +50,21 @@ describe('action reducer', () => {
       {
         washroom: { washroom: 'Washroom 1' },
         isFetching: false,
+        creatingWashroom: false,
         status: 200,
+      },
+    );
+  });
+
+  it('should handle CREATE_WASHROOM', () => {
+    expect(
+      washroomReducer([], {
+        type: actions.CREATE_WASHROOM,
+      }),
+    ).toEqual(
+      {
+        isFetching: true,
+        creatingWashroom: true,
       },
     );
   });

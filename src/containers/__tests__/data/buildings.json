@@ -1,0 +1,38 @@
+[
+  {
+    "best_ratings": {
+      "cleanliness": 5,
+      "privacy": 4,
+      "smell": 1,
+      "toilet_paper_quality": 3
+    },
+    "created_at": "2020-03-05T13:02:49+00:00",
+    "id": 1,
+    "location": {
+      "latitude": 49.81175231933594,
+      "longitude": -97.13582611083984
+    },
+    "maps_service_id": 54724739,
+    "overall_rating": 3.25,
+    "title": "Wallace Building",
+    "washroom_count": 1
+  },
+  {
+    "best_ratings": {
+      "cleanliness": 2.7142856121063232,
+      "privacy": 2.5714285373687744,
+      "smell": 2.5714285373687744,
+      "toilet_paper_quality": 2.7142856121063232
+    },
+    "created_at": "2020-03-05T13:02:50+00:00",
+    "id": 2,
+    "location": {
+      "latitude": 49.809364318847656,
+      "longitude": -97.1344985961914
+    },
+    "maps_service_id": 54724743,
+    "overall_rating": 2.642857074737549,
+    "title": "University Centre",
+    "washroom_count": 0
+  }
+]
