@@ -44,7 +44,7 @@ describe('async actions', () => {
     });
   });
 
-  it.only('create RECEIVE_WASHROOM event when a washroom is created', () => {
+  it.only('creates RECEIVE_WASHROOM event when a washroom is created', () => {
     const comment = 'looks great';
     const longitude = 12;
     const latitude = 13;
