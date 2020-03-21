@@ -15,26 +15,12 @@ describe('async actions', () => {
     fetchMock.restore();
   });
 
-  it.only('creates RECEIVE_BUILDINGS event when buildings are received', () => {
+  it('creates RECEIVE_BUILDINGS event when buildings are received', () => {
     fetchMock.getOnce(`https://testapi.com/buildings?${buildingQueryParams}`, ['Building 1', 'Building 2']);
 
     const expectedActions = [
       { type: types.REQUEST_BUILDINGS },
       { type: types.RECEIVE_BUILDINGS, status: 200, buildings: ['Building 1', 'Building 2'] },
-    ];
-
-    const store = mockStore({ buildings: [] });
-    return store.dispatch(actions.getBuildings()).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-
-  it('creates FAILURE event when request fails', () => {
-    fetchMock.getOnce('https://testapi.com/buildings', 401, { Authorization: 'Failed' });
-
-    const expectedActions = [
-      { type: types.REQUEST_BUILDINGS },
-      { type: types.FAILURE, status: 401 },
     ];
 
     const store = mockStore({ buildings: [] });
