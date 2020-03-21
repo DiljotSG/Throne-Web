@@ -4,6 +4,7 @@ import fetchMock from 'fetch-mock';
 
 import * as actions from '../washroomActions';
 import * as types from '../../constants/ActionTypes';
+import * as amenities from '../../constants/WashroomAmenityTypes';
 
 
 const middlewares = [thunk];
@@ -39,6 +40,40 @@ describe('async actions', () => {
 
     const store = mockStore({ washrooms: [] });
     return store.dispatch(actions.getWashroom(0)).then(() => {
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
+
+  it.only('creates RECEIVE_WASHROOM event when a washroom is created', () => {
+    const comment = 'looks great';
+    const longitude = 12;
+    const latitude = 13;
+    const gender = 'men';
+    const floor = 3;
+    const urinalCount = 1;
+    const stallCount = 1;
+    const buildingId = 0;
+    const washroomAmenities = [amenities.AIR_DRYER, amenities.CALL_BUTTON];
+
+    fetchMock.postOnce('https://testapi.com/washrooms', { comment: 'Washroom 1' });
+
+    const expectedActions = [
+      { type: types.CREATE_WASHROOM },
+      { type: types.RECEIVE_WASHROOM, status: 200, washroom: { comment: 'Washroom 1' } },
+    ];
+
+    const store = mockStore({ washroom: {} });
+    return store.dispatch(actions.createWashroom(
+      comment,
+      longitude,
+      latitude,
+      gender,
+      floor,
+      urinalCount,
+      stallCount,
+      buildingId,
+      washroomAmenities,
+    )).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
