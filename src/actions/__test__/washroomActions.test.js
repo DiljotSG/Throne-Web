@@ -15,7 +15,7 @@ describe('async actions', () => {
     fetchMock.restore();
   });
 
-  it.only('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
+  it('creates RECEIVE_WASHROOMS event when washrooms are received', () => {
     fetchMock.getOnce(
       'https://testapi.com/washrooms?max_results=undefined&radius=undefined&amenities=undefined',
       ['Washroom 1', 'Washroom 2'],
@@ -31,7 +31,7 @@ describe('async actions', () => {
     });
   });
 
-  it.only('creates RECEIVE_WASHROOM event when a washroom is received', () => {
+  it('creates RECEIVE_WASHROOM event when a washroom is received', () => {
     fetchMock.getOnce('https://testapi.com/washrooms/0', ['Washroom 1']);
     const expectedActions = [
       { type: types.REQUEST_WASHROOM },
@@ -44,7 +44,7 @@ describe('async actions', () => {
     });
   });
 
-  it.only('creates RECEIVE_WASHROOM event when a washroom is created', () => {
+  it('creates RECEIVE_WASHROOM event when a washroom is created', () => {
     const comment = 'looks great';
     const longitude = 12;
     const latitude = 13;
@@ -78,7 +78,7 @@ describe('async actions', () => {
     });
   });
 
-  it.only('create RECEIVE_FAVORITE event when washroom favorited', () => {
+  it('creates RECEIVE_FAVORITE event when washroom favorited', () => {
     fetchMock.postOnce('https://testapi.com/users/favorites', 201, []);
 
     const expectedActions = [
@@ -92,7 +92,7 @@ describe('async actions', () => {
     });
   });
 
-  it.only('create RECEIVE_FAVORITE event when washroom is unfavorited', () => {
+  it('creates RECEIVE_FAVORITE event when washroom is unfavorited', () => {
     fetchMock.deleteOnce('https://testapi.com/users/favorites', 204, []);
 
     const expectedActions = [
@@ -102,20 +102,6 @@ describe('async actions', () => {
 
     const store = mockStore({ status: 200, settingFavorite: false });
     return store.dispatch(actions.unfavoriteWashroom(0)).then(() => {
-      expect(store.getActions()).toEqual(expectedActions);
-    });
-  });
-
-  it('creates FAILURE event when request fails', () => {
-    fetchMock.getOnce('https://testapi.com/washrooms', 401, { Authorization: 'Failed' });
-
-    const expectedActions = [
-      { type: types.REQUEST_WASHROOMS },
-      { type: types.FAILURE, status: 401 },
-    ];
-
-    const store = mockStore({ washrooms: [] });
-    return store.dispatch(actions.getWashrooms()).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
   });
