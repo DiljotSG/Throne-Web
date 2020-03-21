@@ -1,0 +1,38 @@
+[
+  {
+    "comment": "Not bad!",
+    "created_at": "2020-03-05T19:19:40+00:00",
+    "id": 1,
+    "ratings": {
+      "cleanliness": 3,
+      "privacy": 2,
+      "smell": 2,
+      "toilet_paper_quality": 2
+    },
+    "upvote_count": 0,
+    "user": {
+      "id": 2,
+      "profile_picture": "default",
+      "username": "twophase"
+    },
+    "washroom_id": 1
+  },
+  {
+    "comment": "Actually, kinda bad!",
+    "created_at": "2020-03-05T22:18:07+00:00",
+    "id": 2,
+    "ratings": {
+      "cleanliness": 5,
+      "privacy": 3,
+      "smell": 4,
+      "toilet_paper_quality": 2
+    },
+    "upvote_count": 0,
+    "user": {
+      "id": 2,
+      "profile_picture": "default",
+      "username": "twophase"
+    },
+    "washroom_id": 2
+  }
+]
