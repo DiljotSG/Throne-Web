@@ -11,7 +11,7 @@ import { getWashroomsForBuilding } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
 import './BuildingDetails.css';
 
-import { WashroomListItem } from '../components';
+import { WashroomListItem, WashroomForm } from '../components';
 
 const { Title, Text } = Typography;
 
@@ -73,11 +73,11 @@ class BuildingDetails extends Component {
           className="details-title"
           level={2}
         >
-          { building.title }
+          {building.title}
         </Title>
         <Row>
           <Text>
-            { 'Building rating: ' }
+            {'Building rating: '}
           </Text>
           <Rate
             className="building-rate-overall"
@@ -94,6 +94,7 @@ class BuildingDetails extends Component {
               ? <Skeleton active title={false} />
               : renderWashrooms(buildingWashrooms)
           }
+          <WashroomForm />
         </Row>
       </>
     );
