@@ -53,7 +53,7 @@ describe('async actions', () => {
     const urinalCount = 1;
     const stallCount = 1;
     const buildingId = 0;
-    const washroommAmenities = [amenities.AIR_DRYER_AMENITY, amenities.CALL_BUTTON_AMENITY];
+    const washroomAmenities = [amenities.AIR_DRYER_AMENITY, amenities.CALL_BUTTON_AMENITY];
 
     fetchMock.postOnce('https://testapi.com/washrooms', ['Washroom 1']);
 
