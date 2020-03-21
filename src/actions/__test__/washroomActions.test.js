@@ -55,14 +55,14 @@ describe('async actions', () => {
     const buildingId = 0;
     const washroomAmenities = [amenities.AIR_DRYER, amenities.CALL_BUTTON];
 
-    fetchMock.postOnce('https://testapi.com/washrooms', ['Washroom 1']);
+    fetchMock.postOnce('https://testapi.com/washrooms', { comment: 'Washroom 1' });
 
     const expectedActions = [
       { type: types.CREATE_WASHROOM },
-      { type: types.RECEIVE_WASHROOM, status: 200, washroom: ['Washroom 1'] },
+      { type: types.RECEIVE_WASHROOM, status: 200, washroom: { comment: 'Washroom 1' } },
     ];
 
-    const store = mockStore({ washroom: [] });
+    const store = mockStore({ washroom: {} });
     return store.dispatch(actions.createWashroom(
       comment,
       longitude,
