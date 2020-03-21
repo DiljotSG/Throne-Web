@@ -65,6 +65,12 @@ export const receiveFavorite = (isFavorite, status) => (
   }
 );
 
+export function createWashroomAction() {
+  return {
+    type: actions.CREATE_WASHROOM,
+  };
+}
+
 export function getWashrooms(latitude, longitude, maxResults, amenities, radius) {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
@@ -98,6 +104,45 @@ export function getWashroom(id) {
       if (response.ok) {
         response.json().then((washroom) => {
           dispatch(receiveWashroom(washroom, response.status));
+        });
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      throw (error);
+    });
+  };
+}
+
+export function createWashroom(
+  comment,
+  longitude,
+  latitude,
+  gender,
+  floor,
+  urinalCount,
+  stallCount,
+  buildingId,
+  amenities,
+) {
+  return async function createWashroomAsync(dispatch) {
+    dispatch(createWashroomAction());
+
+    return throneApi.createWashroom(
+      comment,
+      longitude,
+      latitude,
+      gender,
+      floor,
+      urinalCount,
+      stallCount,
+      buildingId,
+      amenities,
+    ).then((response) => {
+      if (response.ok) {
+        response.json().then((createdWashroom) => {
+          dispatch(receiveWashroom(createdWashroom, response.status));
         });
       } else {
         dispatch(failure(response.status));

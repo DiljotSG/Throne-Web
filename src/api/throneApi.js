@@ -120,7 +120,7 @@ class ThroneApi {
     floor,
     urinalCount,
     stallCount,
-    buildintId,
+    buildingId,
     amenities,
   ) {
     const url = this.createEndpointURL('washrooms');
@@ -134,7 +134,7 @@ class ThroneApi {
       floor,
       urinal_count: urinalCount,
       stall_count: stallCount,
-      building_id: buildintId,
+      building_id: buildingId,
       amenities,
     });
   }
