@@ -159,6 +159,7 @@ class WashroomDetails extends Component {
       reviewsFetching,
       creatingReview,
       createStatus,
+      history,
     } = this.props;
 
     const {
@@ -171,6 +172,13 @@ class WashroomDetails extends Component {
 
     return (
       <>
+        <Button
+          shape="round"
+          onClick={history.goBack}
+          icon="arrow-left"
+          size="large"
+          className="back-button"
+        />
         <Row>
           <Col span={20}>
             <Title className="details-title" level={2}>
@@ -404,6 +412,9 @@ WashroomDetails.propTypes = {
       washroom: PropTypes.object,
     }),
   }),
+  history: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 };
 
 WashroomDetails.defaultProps = {
@@ -417,6 +428,9 @@ WashroomDetails.defaultProps = {
       washroom: {},
     }),
   }),
+  history: {
+    goBack: () => {},
+  },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WashroomDetails);
