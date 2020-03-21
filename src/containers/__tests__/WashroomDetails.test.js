@@ -10,6 +10,9 @@ import rootReducer from '../../reducers';
 
 import WashroomDetails from '../WashroomDetails';
 
+import reviews from './data/reviews.json';
+import washrooms from './data/washrooms.json';
+
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
 }
@@ -35,64 +38,8 @@ const addedReview = {
   washroom_id: 1,
 };
 
-const reviews = [
-  {
-    comment: 'Not bad!',
-    created_at: '2020-03-05T19:19:40+00:00',
-    id: 1,
-    ratings: {
-      cleanliness: 3.0,
-      privacy: 2.0,
-      smell: 2.0,
-      toilet_paper_quality: 2.0,
-    },
-    upvote_count: 0,
-    user: {
-      id: 2,
-      profile_picture: 'default',
-      username: 'polima',
-    },
-    washroom_id: 1,
-  }, {
-    comment: 'Actually, kinda bad!',
-    created_at: '2020-03-05T22:18:07+00:00',
-    id: 2,
-    ratings: {
-      cleanliness: 5.0,
-      privacy: 3.0,
-      smell: 4.0,
-      toilet_paper_quality: 2.0,
-    },
-    upvote_count: 0,
-    user: {
-      id: 2,
-      profile_picture: 'default',
-      username: 'twophase',
-    },
-    washroom_id: 1,
-  },
-];
-
-fetchMock.get('https://testapi.com/washrooms/1',
-  {
-    id: 1,
-    building_title: 'Science Library',
-    comment: 'Washroom 1',
-    gender: 'women',
-    floor: 2,
-    overall_rating: 5,
-    average_ratings: {
-      smell: 1,
-      privacy: 2,
-      cleanliness: 3,
-      toilet_paper_quality: 4,
-    },
-    amenities: ['air_dryer'],
-    is_favorite: true,
-  });
-
+fetchMock.get('https://testapi.com/washrooms/1', washrooms[0]);
 fetchMock.get('https://testapi.com/washrooms/1/reviews', reviews);
-
 fetchMock.post('https://testapi.com/washrooms/1/reviews', addedReview);
 
 Date.now = jest.fn(() => new Date(Date.UTC(2020, 2, 9)).valueOf());
@@ -125,6 +72,8 @@ describe('WashroomDetails', () => {
     expect(component.find('Rate').find('.washroom-rate-smell').first().prop('value')).toBe(1);
     expect(component.find('li.ant-list-item').length).toBe(1);
     expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
+    expect(component.find('InteractiveMap').first().prop('latitude')).toBe(49.8080954);
+    expect(component.find('InteractiveMap').first().prop('longitude')).toBe(-97.1375209);
   });
 
   it('Lists the reviews for a washroom', async () => {

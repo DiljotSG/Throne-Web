@@ -6,6 +6,7 @@ import {
 import { startCase, kebabCase } from 'lodash';
 import { roundToHalf } from '../utils/NumUtils';
 import { ratingAsEmoji } from '../utils/DisplayUtils';
+import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
 import '../containers/WashroomDetails.css';
 
 const WashroomRatings = ({
@@ -27,7 +28,7 @@ const WashroomRatings = ({
         </Col>
       </Row>
     )}
-    { Object.entries(averageRatings).map(([type, value]) => (
+    { WASHROOM_RATING_CATEGORIES.map((type) => (
       <React.Fragment key={type}>
         <Row>
           <Col span={12}>
@@ -36,7 +37,7 @@ const WashroomRatings = ({
           <Col span={12} className="washroom-rate-value">
             <Rate
               disabled={readOnly}
-              value={roundToHalf(value)}
+              value={roundToHalf(averageRatings[type])}
               allowHalf={allowHalf}
               onChange={(setValue) => {
                 onChange(type, setValue);

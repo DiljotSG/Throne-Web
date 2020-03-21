@@ -111,6 +111,33 @@ class ThroneApi {
     const url = this.createEndpointURL('users/favorites');
     return this.accessEndpoint(DELETE, url, { washroom_id: id });
   }
+
+  static async createWashroom(
+    comment,
+    longitude,
+    latitude,
+    gender,
+    floor,
+    urinalCount,
+    stallCount,
+    buildingId,
+    amenities,
+  ) {
+    const url = this.createEndpointURL('washrooms');
+    return this.accessEndpoint(POST, url, {
+      comment,
+      location: {
+        longitude,
+        latitude,
+      },
+      gender,
+      floor,
+      urinal_count: urinalCount,
+      stall_count: stallCount,
+      building_id: buildingId,
+      amenities,
+    });
+  }
 }
 
 export default ThroneApi;

@@ -2,24 +2,7 @@ import React from 'react';
 import { mount } from 'enzyme';
 import ReviewForm from '../ReviewForm';
 
-const review = {
-  comment: 'I hate this place',
-  created_at: '2020-03-08T19:19:40+00:00',
-  id: 1,
-  ratings: {
-    cleanliness: 1.0,
-    privacy: 1.0,
-    smell: 1.0,
-    toilet_paper_quality: 1.0,
-  },
-  upvote_count: 0,
-  user: {
-    id: 2,
-    profile_picture: 'default',
-    username: 'diljot',
-  },
-  washroom_id: 1,
-};
+import review from './data/review.json';
 
 describe('ReviewForm', () => {
   it('Sets the correct default props', () => {

@@ -1,4 +1,5 @@
 import { startCase } from 'lodash';
+import * as amenities from '../constants/WashroomAmenityTypes';
 
 export const genderAsString = (value) => {
   switch (value) {
@@ -28,75 +29,75 @@ export const genderAsEmoji = (value) => {
 
 export const amenityAsString = (value) => {
   switch (value) {
-    case 'air_dryer':
+    case amenities.AIR_DRYER:
       return 'Air Dryer';
-    case 'air_freshener':
+    case amenities.AIR_FRESHENER:
       return 'Air Freshener';
-    case 'auto_dryer':
+    case amenities.AUTO_DRYER:
       return 'Automatic Dryer';
-    case 'auto_paper_towel':
+    case amenities.AUTO_PAPER_TOWEL:
       return 'Automatic Paper Towel';
-    case 'auto_sink':
+    case amenities.AUTO_SINK:
       return 'Automatic Sink';
-    case 'auto_toilet':
+    case amenities.AUTO_TOILET:
       return 'Automatic Toilet';
-    case 'baby_change_station':
+    case amenities.BABY_CHANGE_STATION:
       return 'Baby Change Station';
-    case 'baby_powder':
+    case amenities.BABY_POWDER:
       return 'Baby Powder';
-    case 'bathroom_attendant':
+    case amenities.BATHROOM_ATTENDANT:
       return 'Bathroom Attendant';
-    case 'bidet':
+    case amenities.BIDET:
       return 'Bidet';
-    case 'body_towel':
+    case amenities.BODY_TOWEL:
       return 'Body Towel';
-    case 'bodywash':
+    case amenities.BODYWASH:
       return 'Body Wash';
-    case 'braille_labeling':
+    case amenities.BRAILLE_LABELING:
       return 'Braille Labeling';
-    case 'call_button':
+    case amenities.CALL_BUTTON:
       return 'Call Button';
-    case 'coat_hook':
+    case amenities.COAT_HOOK:
       return 'Coat Hook';
-    case 'contraception':
+    case amenities.CONTRACEPTION:
       return 'Contraception';
-    case 'diapers':
+    case amenities.DIAPERS:
       return 'Diapers';
-    case 'hygiene_products':
+    case amenities.HYGIENE_PRODUCTS:
       return 'Hygiene Products';
-    case 'first_aid':
+    case amenities.FIRST_AID:
       return 'First Aid';
-    case 'full_body_mirror':
+    case amenities.FULL_BODY_MIRROR:
       return 'Full Body Mirror';
-    case 'garbage_can':
+    case amenities.GARBAGE_CAN:
       return 'Garbage Can';
-    case 'heated_seat':
+    case amenities.HEATED_SEAT:
       return 'Heated Seat';
-    case 'lotion':
+    case amenities.LOTION:
       return 'Lotion';
-    case 'moist_towelette':
+    case amenities.MOIST_TOWELETTE:
       return 'Moist Towelette';
-    case 'music':
+    case amenities.MUSIC:
       return 'Music';
-    case 'needle_disposal':
+    case amenities.NEEDLE_DISPOSAL:
       return 'Needle Disposal';
-    case 'paper_seat_covers':
+    case amenities.PAPER_SEAT_COVERS:
       return 'Paper Seat Covers';
-    case 'paper_towel':
+    case amenities.PAPER_TOWEL:
       return 'Paper Towel';
-    case 'perfume_cologne':
+    case amenities.PERFUME_COLOGNE:
       return 'Perfume Cologne';
-    case 'safety_rail':
+    case amenities.SAFETY_RAIL:
       return 'Safety Rail';
-    case 'sauna':
+    case amenities.SAUNA:
       return 'Sauna';
-    case 'shampoo':
+    case amenities.SHAMPOO:
       return 'Shampoo';
-    case 'shower':
+    case amenities.SHOWER:
       return 'Shower';
-    case 'tissues':
+    case amenities.TISSUES:
       return 'Tissues';
-    case 'wheel_chair_access':
+    case amenities.WHEEL_CHAIR_ACCESS:
       return 'Wheel Chair Access';
     default:
       return '';
@@ -105,55 +106,55 @@ export const amenityAsString = (value) => {
 
 export const amenityAsEmoji = (value) => {
   switch (value) {
-    case 'auto_dryer':
+    case amenities.AUTO_DRYER:
       return '⚡️💨';
-    case 'auto_sink':
+    case amenities.AUTO_SINK:
       return '⚡️🚰';
-    case 'auto_toilet':
+    case amenities.AUTO_TOILET:
       return '⚡️🚽';
-    case 'air_dryer':
+    case amenities.AIR_DRYER:
       return '💨';
-    case 'air_freshener':
+    case amenities.AIR_FRESHENER:
       return '🌻';
-    case 'baby_change_station':
+    case amenities.BABY_CHANGE_STATION:
       return '👶';
-    case 'bathroom_attendant':
+    case amenities.BATHROOM_ATTENDANT:
       return '🛎';
-    case 'bidet':
+    case amenities.BIDET:
       return '💦';
-    case 'body_towel':
+    case amenities.BODY_TOWEL:
       return '🧺';
-    case 'call_button':
+    case amenities.CALL_BUTTON:
       return '📢';
-    case 'contraception':
+    case amenities.CONTRACEPTION:
       return '🚫👶';
-    case 'diapers':
+    case amenities.DIAPERS:
       return '🧷';
-    case 'hygiene_products':
+    case amenities.HYGIENE_PRODUCTS:
       return '♀';
-    case 'first_aid':
+    case amenities.FIRST_AID:
       return '🩹';
-    case 'garbage_can':
+    case amenities.GARBAGE_CAN:
       return '🗑';
-    case 'heated_seat':
+    case amenities.HEATED_SEAT:
       return '🔥🚽';
-    case 'lotion':
+    case amenities.LOTION:
       return '🧴';
-    case 'music':
+    case amenities.MUSIC:
       return '🎶';
-    case 'needle_disposal':
+    case amenities.NEEDLE_DISPOSAL:
       return '💉';
-    case 'perfume_cologne':
+    case amenities.PERFUME_COLOGNE:
       return '🌹';
-    case 'sauna':
+    case amenities.SAUNA:
       return '🧖🏽‍♂️';
-    case 'shampoo':
+    case amenities.SHAMPOO:
       return '🧴💆‍♀️';
-    case 'shower':
+    case amenities.SHOWER:
       return '🚿';
     case 'tissues':
       return '🤧';
-    case 'wheel_chair_access':
+    case amenities.WHEEL_CHAIR_ACCESS:
       return '♿️';
     default:
       return '';
@@ -173,6 +174,20 @@ export const ratingAsEmoji = (value) => {
     default:
       return '';
   }
+};
+
+export const buildingPinEmoji = (rating) => {
+  let icon = '👑';
+  if (rating <= 0) {
+    icon = '🏢';
+  } else if (rating <= 1.5) {
+    icon = '💀';
+  } else if (rating <= 2.5) {
+    icon = '💩';
+  } else if (rating <= 4.0) {
+    icon = '🧻';
+  }
+  return icon;
 };
 
 export const displayDistance = (distance) => (

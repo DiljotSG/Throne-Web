@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactMapGL, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import {
   Spin, Row, Col, Divider, Typography, Skeleton, Card, Button, Icon,
 } from 'antd';
@@ -17,10 +18,21 @@ import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
 
+const mapDimensions = {
+  width: '100%',
+  height: '370px',
+};
+
 class WashroomDetails extends Component {
   constructor() {
     super();
     this.state = {
+      viewport: {
+        ...mapDimensions,
+        latitude: 49.8080954,
+        longitude: -97.1375209,
+        zoom: 14,
+      },
       review: {
         comment: '',
         ratings: {
@@ -35,9 +47,9 @@ class WashroomDetails extends Component {
   }
 
   componentDidMount() {
+    window.addEventListener('resize', this.handleResize);
     const { match } = this.props;
     const { id } = match.params;
-
     this.getWashroom(id);
     this.getReviewsForWashroom(id);
   }
@@ -131,6 +143,13 @@ class WashroomDetails extends Component {
     }
   }
 
+  handleResize = () => {
+    let { viewport } = { ...this.state };
+    viewport = { ...viewport, ...mapDimensions };
+
+    this.setState({ viewport });
+  }
+
   render() {
     const {
       washroom,
@@ -142,7 +161,9 @@ class WashroomDetails extends Component {
       createStatus,
     } = this.props;
 
-    const { review, errors, attemptedSubmit } = this.state;
+    const {
+      review, errors, attemptedSubmit, viewport,
+    } = this.state;
 
     if (washroomFetching || isEmpty(washroom)) {
       return (<Spin />);
@@ -192,15 +213,62 @@ class WashroomDetails extends Component {
         </Row>
         <Row gutter={[16, 16]} align="middle">
           <Col sm={24} md={14}>
-            <AmenityList amenities={washroom.amenities} />
-          </Col>
-          <Col sm={24} md={10}>
             <Card>
               <WashroomRatings
                 overallRating={washroom.overall_rating}
                 averageRatings={washroom.average_ratings}
               />
             </Card>
+            <Card
+              className="map-container"
+            >
+              <ReactMapGL
+                {...viewport} // eslint-disable-line react/jsx-props-no-spreading
+                onViewportChange={(newView) => this.setState({ viewport: newView })}
+                onLoad={() => this.setState({
+                  viewport: {
+                    ...mapDimensions,
+                    latitude: washroom.location.latitude,
+                    longitude: washroom.location.longitude,
+                    zoom: 18,
+                  },
+                })}
+                mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
+                mapStyle="mapbox://styles/mapbox/streets-v11"
+              >
+                <Marker
+                  latitude={washroom.location.latitude}
+                  longitude={washroom.location.longitude}
+                  offsetLeft={-16}
+                  offsetTop={-30}
+                >
+                  <span
+                    className="washroom-marker"
+                    aria-label="Washroom location"
+                    role="img"
+                  >
+                    📍
+                  </span>
+                </Marker>
+                <Popup
+                  latitude={washroom.location.latitude}
+                  longitude={washroom.location.longitude}
+                  closeButton={false}
+                  offsetTop={-32}
+                >
+                  {`Floor ${washroom.floor}`}
+                  {washroom.comment && ` | ${washroom.comment}`}
+                </Popup>
+                <GeolocateControl
+                  className="geolocate-control"
+                  positionOptions={{ enableHighAccuracy: true }}
+                  trackUserLocation
+                />
+              </ReactMapGL>
+            </Card>
+          </Col>
+          <Col sm={24} md={10}>
+            <AmenityList amenities={washroom.amenities} />
           </Col>
           <Col span={24}>
             <Card>
@@ -221,9 +289,9 @@ class WashroomDetails extends Component {
               <Title level={3}>
                 Reviews
               </Title>
-              { reviewsFetching
+              {reviewsFetching
                 ? <Skeleton active title={false} />
-                : <Reviews reviews={reviews} /> }
+                : <Reviews reviews={reviews} />}
             </Card>
           </Col>
         </Row>
@@ -294,6 +362,10 @@ WashroomDetails.propTypes = {
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
     building_title: PropTypes.string,
+    location: PropTypes.shape({
+      latitude: PropTypes.number,
+      longitude: PropTypes.number,
+    }),
   }).isRequired,
   washroomFetching: PropTypes.bool,
   settingFavorite: PropTypes.bool,

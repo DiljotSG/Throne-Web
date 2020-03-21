@@ -25,7 +25,7 @@ const BuildingListItem = ({ item }) => (
           {item.title}
         </Text>
         <div className="in-line">
-          <Text>
+          <Text className="building-list-item-washroom-count">
             {`Washrooms: ${item.washroom_count}`}
           </Text>
         </div>

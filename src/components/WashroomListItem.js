@@ -34,7 +34,8 @@ const renderFavoriteIcon = (isFavorite) => {
   return null;
 };
 
-const WashroomListItem = ({ item }) => (
+
+const WashroomListItem = ({ item, BuildingTitle }) => (
 
   <NavLink
     to={`/washrooms/${item.id}`}
@@ -46,7 +47,11 @@ const WashroomListItem = ({ item }) => (
           className="washroom-list-item-building-title"
           strong
         >
-          {item.building_title}
+          {
+            BuildingTitle
+              ? item.comment
+              : item.building_title
+          }
           {renderFavoriteIcon(item.is_favorite)}
         </Text>
         <div className="in-line">
@@ -57,9 +62,11 @@ const WashroomListItem = ({ item }) => (
           <Text className="list-item-floor">
             {`Floor ${item.floor}`}
           </Text>
-          {item.comment
+          {!BuildingTitle
+            && item.comment
             && <Divider type="vertical" />}
-          {item.comment
+          {!BuildingTitle
+            && item.comment
             && (
             <Text className="washroom-list-item-comment">
               {item.comment}
@@ -104,10 +111,12 @@ WashroomListItem.propTypes = {
     is_favorite: PropTypes.bool.isRequired,
     distance: PropTypes.number,
   }),
+  BuildingTitle: PropTypes.bool,
 };
 
 WashroomListItem.defaultProps = {
   item: {},
+  BuildingTitle: false,
 };
 
 export default WashroomListItem;

@@ -9,87 +9,20 @@ import thunk from 'redux-thunk';
 import rootReducer from '../../reducers';
 import NearMe from '../NearMe';
 
+import washrooms from './data/washrooms.json';
+import buildings from './data/buildings.json';
+
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
 }
 
 const store = setupStore({});
 
-fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=50000&amenities=null', [
-  {
-    id: 1,
-    comment: 'Washroom 1',
-    gender: 'men',
-    floor: 2,
-    average_rating: {
-      smell: 1,
-      privacy: 2,
-      cleanliness: 3,
-      toilet_paper_quality: 4,
-    },
-    overall_rating: 5,
-    amenities: ['air_dryer'],
-    is_favorite: true,
-    distance: 19,
-  }, {
-    id: 2,
-    comment: 'Washroom 2',
-    gender: 'women',
-    floor: 1,
-    average_rating: {
-      smell: 1,
-      privacy: 2,
-      cleanliness: 3,
-      toilet_paper_quality: 4,
-    },
-    overall_rating: 5,
-    amenities: ['air_dryer'],
-    is_favorite: false,
-    distance: 19,
-  },
-]);
-
-fetchMock.get('https://testapi.com/buildings?max_results=1000&radius=50000&amenities=null', [
-  {
-    best_ratings: {
-      cleanliness: 5.0,
-      privacy: 4.0,
-      smell: 1.0,
-      toilet_paper_quality: 3.0,
-    },
-    created_at: '2020-03-05T13:02:49+00:00',
-    id: 1,
-    location: {
-      latitude: 49.81175231933594,
-      longitude: -97.13582611083984,
-    },
-    maps_service_id: 54724739,
-    overall_rating: 3.25,
-    title: 'Wallace Building',
-    washroom_count: 1,
-  },
-  {
-    best_ratings: {
-      cleanliness: 2.7142856121063232,
-      privacy: 2.5714285373687744,
-      smell: 2.5714285373687744,
-      toilet_paper_quality: 2.7142856121063232,
-    },
-    created_at: '2020-03-05T13:02:50+00:00',
-    id: 2,
-    location: {
-      latitude: 49.809364318847656,
-      longitude: -97.1344985961914,
-    },
-    maps_service_id: 54724743,
-    overall_rating: 2.642857074737549,
-    title: 'University Centre',
-    washroom_count: 0,
-  },
-]);
+fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=50000&amenities=', washrooms);
+fetchMock.get('https://testapi.com/buildings?max_results=1000&radius=50000&amenities=', buildings);
 
 describe('NearMe', () => {
-  it.only('Renders the "Near me" page with tabs', async () => {
+  it('Renders the "Near me" page with tabs', async () => {
     await act(async () => {
       const component = mount(
         <Router>
@@ -112,44 +45,17 @@ describe('NearMe', () => {
         </Router>,
       );
 
-      // TODO: replace selector with BuildingListItem once new PR goes in
       expect(component.find('Item.near-me-list-item')).toHaveLength(2);
-      const listItem1 = component.find('Item.near-me-list-item').first();
 
-      // TODO: don't check text representation, check the PROPS of the BuildingListItem
-      expect(listItem1.text()).toEqual('Wallace Building');
+      const listItem1 = component.find('Item.near-me-list-item').first();
+      expect(listItem1.find('.building-list-item-building-title').first().text()).toEqual('Wallace Building');
+      expect(listItem1.find('.building-list-item-washroom-count').first().text()).toEqual('Washrooms: 1');
+      expect(listItem1.find('Rate.building-list-item-rating').first().prop('value')).toEqual(3);
 
       const listItem2 = component.find('Item.near-me-list-item').at(1);
-      expect(listItem2.text()).toEqual('University Centre');
-    });
-  });
-
-
-  // Spent hours trying to navigate to next tab to test
-  // Was unsuccessful but we can't be blocked on this
-  it('Displays a list of washrooms', async () => {
-    await act(async () => {
-      const component = mount(
-        <Router>
-          <NearMe store={store} />
-        </Router>,
-      );
-
-      expect(component.find('WashroomListItem')).toHaveLength(2);
-
-      const listItem1 = component.find('WashroomListItem').first();
-
-      expect(listItem1.prop('item').comment).toEqual('Washroom 1');
-      expect(listItem1.find('.list-item-comment').first().text()).toEqual('Washroom 1');
-      expect(listItem1.find('.list-item-floor').first().text()).toEqual('Floor 2');
-      expect(listItem1.find('.list-item-gender').first().text()).toEqual('Men');
-
-      const listItem2 = component.find('WashroomListItem').at(1);
-
-      expect(listItem2.prop('item').comment).toEqual('Washroom 2');
-      expect(listItem2.find('.list-item-comment').first().text()).toEqual('Washroom 2');
-      expect(listItem2.find('.list-item-floor').first().text()).toEqual('Floor 1');
-      expect(listItem2.find('.list-item-gender').first().text()).toEqual('Women');
+      expect(listItem2.find('.building-list-item-building-title').first().text()).toEqual('University Centre');
+      expect(listItem2.find('.building-list-item-washroom-count').first().text()).toEqual('Washrooms: 0');
+      expect(listItem2.find('Rate.building-list-item-rating').first().prop('value')).toEqual(2.5);
     });
   });
 });

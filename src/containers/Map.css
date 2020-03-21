@@ -3,3 +3,31 @@
   margin: 30px;
   padding: 10px;
 }
+
+.pop-up {
+  white-space: nowrap;
+}
+
+.pop-up-rating {
+  color: #5da3e7 !important;
+  font-size: 12px !important;
+}
+.pop-up-title{
+  font-size: 14px !important;
+  padding-right: 12px;
+}
+
+.pop-up-info-icon-container {
+  text-align: right;
+  white-space: nowrap;
+  padding-top: 3px;
+}
+
+.pop-up-info-icon {
+  width: 40px;
+  font-size: large;
+}
+.marker-button{
+  padding: 0px !important;
+  height: fit-content !important;
+}
