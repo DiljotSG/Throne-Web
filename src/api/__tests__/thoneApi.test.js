@@ -31,7 +31,6 @@ fetchMock.deleteOnce('https://testapi.com/users/favorites', favorites);
 fetchMock.getOnce('https://testapi.com/users/1', user);
 fetchMock.getOnce('https://testapi.com/users/1/reviews', userReviews);
 
-
 describe('createEndpointURL', () => {
   it('creates the proper URL', async () => {
     const relativeURL = 'washrooms';
