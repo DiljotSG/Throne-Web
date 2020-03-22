@@ -31,7 +31,7 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-const RADIUS_SLIDER_OPTIMIZATION = 100;
+const METERS_PER_KM = 1000;
 
 const renderBuildings = ((buildings) => {
   if (isEmpty(buildings)) {
@@ -76,7 +76,7 @@ class NearMe extends Component {
       filter: {
         amenities: [],
         maxResults: 1000,
-        radius: 5000,
+        radius: 5,
         latitude: 49.8080954,
         longitude: -97.1375209,
       },
@@ -166,7 +166,7 @@ class NearMe extends Component {
       filterChanged: true,
       filter: {
         ...filter,
-        radius: radius * RADIUS_SLIDER_OPTIMIZATION,
+        radius: radius,
       },
     });
   };
@@ -195,12 +195,13 @@ class NearMe extends Component {
           <Col span={18}>
             <Slider
               disabled={!locationEnabled}
-              min={1}
-              max={300}
+              min={0}
+              max={30}
+              step={0.5}
               onChange={this.handleRadiusChange}
-              value={typeof filter.radius === 'number' ? filter.radius / RADIUS_SLIDER_OPTIMIZATION : 0}
+              value={typeof filter.radius === 'number' ? filter.radius : 0}
               tipFormatter={(value) => (
-                locationEnabled ? displayDistance(value * 100) : 'You must enable location to use this feature.'
+                locationEnabled ? displayDistance(value * METERS_PER_KM) : 'You must enable location to use this feature.'
               )}
             />
           </Col>
@@ -209,7 +210,7 @@ class NearMe extends Component {
             className="filter-radius-text"
           >
             <Text strong>
-              {displayDistance(filter.radius)}
+              {displayDistance(filter.radius * METERS_PER_KM)}
             </Text>
           </Col>
         </Row>
