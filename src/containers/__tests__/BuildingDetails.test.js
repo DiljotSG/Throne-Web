@@ -43,12 +43,16 @@ describe('BuildingDetails', () => {
 
     component.update();
 
-    const washroomsFromBuilding = component.find('.near-me-list').first().prop('dataSource');
-    console.log(washroomsFromBuilding);
-    // expect(component.find('.near-me-list').first().prop('dataSource').find('list-item-gender')).toBe('women');
-
+    // Test Building details
     expect(component.find('.details-title').first().text()).toBe('Wallace Building');
     expect(component.find('.building-rate-overall').first().prop('value')).toBe(3);
     expect(component.find('.washroom-list-header').first().text()).toBe('Washrooms Inside');
+
+    // Test building's washrooms list
+    expect(component.find('.washroom-list-item-building-title').first().text()).toBe('Washroom 1');
+    expect(component.find('.list-item-gender').first().text()).toBe('🚺');
+    expect(component.find('.list-item-floor').first().text()).toBe('Floor 2');
+    expect(component.find('.washroom-list-item-rating').first().prop('value')).toBe(5);
+    expect(component.find('.washroom-list-item-distance-value').first().text()).toBe('19 m');
   });
 });
