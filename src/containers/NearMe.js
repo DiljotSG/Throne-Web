@@ -4,6 +4,9 @@ import {
   Typography,
   List,
   Icon,
+  Button,
+  Popover,
+  Checkbox,
   Tabs,
   notification,
   Empty,
@@ -17,6 +20,8 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem } from '../components';
 
+import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
+
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
 
@@ -24,20 +29,47 @@ const renderWashrooms = ((washrooms) => {
   if (isEmpty(washrooms)) {
     return <Empty description="No washrooms near" />;
   }
+  console.log(ALL_AMENITIES);
   return (
-    <List
-      className="near-me-list"
-      bordered
-      dataSource={washrooms}
-      renderItem={(item) => (
-        <List.Item
-          className="near-me-list-item"
-          key={item.id}
-        >
-          <WashroomListItem item={item} />
-        </List.Item>
-      )}
-    />
+    <>
+      <Popover
+        content={
+          <>
+            <Checkbox
+              indeterminate={true}
+              // indeterminate={this.state.indeterminate}
+              // onChange={this.onCheckAllChange}
+              // checked={this.state.checkAll}
+            >
+              Check all
+            </Checkbox>
+            <Checkbox.Group
+              options={ALL_AMENITIES}
+              // defaultValue={['Apple']}
+              // onChange={onChange}
+            />
+          </>
+        }
+        trigger="click"
+      >
+        <Button icon="funnel-plot">
+          Filter
+        </Button>
+      </Popover>
+      <List
+        className="near-me-list"
+        bordered
+        dataSource={washrooms}
+        renderItem={(item) => (
+          <List.Item
+            className="near-me-list-item"
+            key={item.id}
+          >
+            <WashroomListItem item={item} />
+          </List.Item>
+        )}
+      />
+    </>
   );
 });
 
