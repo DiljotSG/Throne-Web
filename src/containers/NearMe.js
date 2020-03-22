@@ -24,7 +24,7 @@ import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
 
-import { amenityAsEmoji, amenityAsString } from '../utils/DisplayUtils';
+import { amenityAsEmoji, amenityAsString, displayDistance } from '../utils/DisplayUtils';
 
 import { WashroomListItem, BuildingListItem } from '../components';
 
@@ -230,7 +230,7 @@ class NearMe extends Component {
 
     return (
       <>
-        <Row>
+        <Row justify="space-around" align="middle">
           <Col sm={12}>
             <Icon type="environment" className="icon-title" />
             <Title>Near Me</Title>
@@ -249,23 +249,20 @@ class NearMe extends Component {
             </Select>
 
             <Text strong>Radius</Text>
-            <Row>
+            <Row align="middle">
               <Col span={12}>
                 <Slider
                   min={1}
-                  max={100000}
+                  max={5000}
                   onChange={this.onRadiusChange}
                   value={typeof filter.radius === 'number' ? filter.radius : 0}
+                  tipFormatter={(value) => displayDistance(value)}
                 />
               </Col>
               <Col span={4}>
-                <InputNumber
-                  min={1}
-                  max={100000}
-                  style={{ marginLeft: 16 }}
-                  value={filter.radius}
-                  onChange={this.onRadiusChange}
-                />
+                <Text strong>
+                  {displayDistance(filter.radius)}
+                </Text>
               </Col>
             </Row>
             <Button key="submit" type="primary" loading={washroomsFetching} onClick={this.getWashrooms}>
