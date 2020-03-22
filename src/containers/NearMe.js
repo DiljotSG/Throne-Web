@@ -166,7 +166,7 @@ class NearMe extends Component {
       filterChanged: true,
       filter: {
         ...filter,
-        radius: radius,
+        radius,
       },
     });
   };
