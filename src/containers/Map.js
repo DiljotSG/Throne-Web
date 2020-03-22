@@ -19,17 +19,17 @@ import './Map.css';
 
 const { Title } = Typography;
 
-const mapDimensions = {
+const mapDimensions = () => ({
   width: '100%',
   height: `${window.innerHeight - 200}px`,
-};
+});
 
 class Map extends Component {
   constructor(props) {
     super(props);
     this.state = {
       viewport: {
-        ...mapDimensions,
+        ...mapDimensions(),
         latitude: 49.8080954,
         longitude: -97.1375209,
         zoom: 14,
@@ -54,7 +54,7 @@ class Map extends Component {
 
   handleResize = () => {
     let { viewport } = { ...this.state };
-    viewport = { ...viewport, ...mapDimensions };
+    viewport = { ...viewport, ...mapDimensions() };
 
     this.setState({ viewport });
   }
@@ -136,8 +136,8 @@ class Map extends Component {
     const { viewport } = { ...this.state };
     const markerHeight = `${(viewport.zoom - 12) * 10}px`;
     return {
-      'font-size': markerHeight,
-      'line-height': markerHeight,
+      fontSize: markerHeight,
+      lineHeight: markerHeight,
     };
   }
 
