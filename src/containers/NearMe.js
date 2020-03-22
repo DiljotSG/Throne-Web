@@ -194,7 +194,7 @@ class NearMe extends Component {
             <Slider
               disabled={!locationEnabled}
               min={1}
-              max={5000}
+              max={30000}
               onChange={this.handleRadiusChange}
               value={typeof filter.radius === 'number' ? filter.radius : 0}
               tipFormatter={(value) => (
