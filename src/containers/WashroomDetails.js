@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import {
-  Spin, Row, Col, Divider, Typography, Skeleton, Card, Button, Icon,
+  Spin, Row, Col, Divider, Typography, Card, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
@@ -294,12 +294,10 @@ class WashroomDetails extends Component {
           </Col>
           <Col span={24}>
             <Card className="washroom-reviews">
-              <Title level={3}>
-                Reviews
-              </Title>
-              {reviewsFetching
-                ? <Skeleton active title={false} />
-                : <Reviews reviews={reviews} />}
+              <Reviews
+                reviews={reviews}
+                fetching={reviewsFetching}
+              />
             </Card>
           </Col>
         </Row>
