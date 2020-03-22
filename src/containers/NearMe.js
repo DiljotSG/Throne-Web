@@ -6,9 +6,6 @@ import {
   Icon,
   Button,
   Slider,
-  InputNumber,
-  Modal,
-  Checkbox,
   Tabs,
   notification,
   Empty,
@@ -18,7 +15,7 @@ import {
   Col,
   Card,
 } from 'antd';
-import { trim, isEmpty, startCase } from 'lodash';
+import { trim, isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
@@ -71,19 +68,13 @@ const renderNoLocationWarning = () => {
 class NearMe extends Component {
   constructor() {
     super();
-    const washroomAmenityFilterOptions = ALL_AMENITIES.map((amenity) => (
-      { label: `${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`, value: amenity }
-    ));
 
     this.state = {
-      modalVisible: false,
-      washroomAmenityFilterOptions,
-      indeterminate: false,
-      checkAll: false,
+      filterChanged: false,
       filter: {
         amenities: [],
         maxResults: 1000,
-        radius: 50000,
+        radius: 5000,
         latitude: 49.8080954,
         longitude: -97.1375209,
       },
@@ -95,14 +86,6 @@ class NearMe extends Component {
     this.getBuildings();
   }
 
-  openModal = () => {
-    this.setState({ modalVisible: true });
-  }
-
-  filterCancel = () => {
-    this.setState({ modalVisible: false });
-  }
-
   getBuildings = () => {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
     const { filter } = this.state;
@@ -112,26 +95,19 @@ class NearMe extends Component {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
-        getBuildings(
-          location.coords.latitude,
-          location.coords.longitude,
-          maxResults,
-          amenities,
-          radius,
-        );
+        const { currLatitude, currLongitude } = location;
+
+        this.setState({ locationEnabled: true });
+        getBuildings(currLatitude, currLongitude, maxResults, amenities, radius);
       }, () => {
         // Get buildings with default location at UofM
-        getBuildings(
-          latitude,
-          longitude,
-          maxResults,
-          amenities,
-          radius,
-        );
+        this.setState({ locationEnabled: false });
+        getBuildings(latitude, longitude, maxResults, amenities, radius);
       });
     } else {
       // `navigator.geolocation` is null in the test cases
       // We call getBuildings for the test cases without a location
+      this.setState({ locationEnabled: false });
       getBuildings(null, null, maxResults, amenities, radius);
       renderNoLocationWarning();
     }
@@ -174,6 +150,7 @@ class NearMe extends Component {
   handleSelectChange = (selected) => {
     const { filter } = this.state;
     this.setState({
+      filterChanged: true,
       filter: {
         ...filter,
         amenities: selected,
@@ -181,9 +158,10 @@ class NearMe extends Component {
     });
   };
 
-  onRadiusChange = (radius) => {
+  handleRadiusChange = (radius) => {
     const { filter } = this.state;
     this.setState({
+      filterChanged: true,
       filter: {
         ...filter,
         radius,
@@ -191,29 +169,98 @@ class NearMe extends Component {
     });
   };
 
-  renderWashrooms = () => {
-    const { washrooms } = this.props;
+  renderFilters = () => {
+    const { washroomsFetching } = this.props;
+    const { filter, filterChanged, locationEnabled } = this.state;
 
-    if (isEmpty(washrooms)) {
+    return (
+      <>
+        <Title level={3}>Filter Washrooms</Title>
+        <Text strong>Amenities</Text>
+        <Select
+          className="filter-amenity-select"
+          mode="multiple"
+          allowClear
+          onChange={this.handleSelectChange}
+        >
+          {ALL_AMENITIES.map((amenity) => (
+            <Option key={amenity}>{`${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`}</Option>
+          ))}
+        </Select>
+
+        <Text strong>Radius</Text>
+        <Row type="flex" justify="space-around" align="middle">
+          <Col span={18}>
+            <Slider
+              disabled={!locationEnabled}
+              min={1}
+              max={5000}
+              onChange={this.handleRadiusChange}
+              value={typeof filter.radius === 'number' ? filter.radius : 0}
+              tipFormatter={(value) => (
+                locationEnabled ? displayDistance(value) : 'You must enable location to use this feature.'
+              )}
+            />
+          </Col>
+          <Col
+            span={6}
+            className="filter-radius-text"
+          >
+            <Text strong>
+              {displayDistance(filter.radius)}
+            </Text>
+          </Col>
+        </Row>
+        <Button
+          key="submit"
+          disabled={!filterChanged}
+          type="primary"
+          loading={filterChanged && washroomsFetching}
+          onClick={() => {
+            this.getWashrooms();
+            this.setState({ filterChanged: false });
+          }}
+        >
+          {filterChanged ? 'Apply Filters' : 'No changes to apply'}
+        </Button>
+      </>
+    );
+  };
+
+  renderWashrooms = () => {
+    const { washrooms, washroomsFetching } = this.props;
+
+    if (isEmpty(washrooms) && !washroomsFetching) {
       return <Empty description="No washrooms near" />;
     }
 
     return (
-      <>
-        <List
-          className="near-me-list"
-          bordered
-          dataSource={washrooms}
-          renderItem={(item) => (
-            <List.Item
-              className="near-me-list-item"
-              key={item.id}
-            >
-              <WashroomListItem item={item} />
-            </List.Item>
-          )}
-        />
-      </>
+      <Row gutter={[16, 16]} align="middle">
+        <Col lg={{ push: 16, span: 8 }}>
+          <Card disabled={washroomsFetching}>
+            {this.renderFilters()}
+          </Card>
+        </Col>
+        <Col lg={{ pull: 8, span: 16 }}>
+          { washroomsFetching
+            ? <Skeleton active title={false} />
+            : (
+              <List
+                className="near-me-list"
+                bordered
+                dataSource={washrooms}
+                renderItem={(item) => (
+                  <List.Item
+                    className="near-me-list-item"
+                    key={item.id}
+                  >
+                    <WashroomListItem item={item} />
+                  </List.Item>
+                )}
+              />
+            )}
+        </Col>
+      </Row>
     );
   };
 
@@ -222,54 +269,13 @@ class NearMe extends Component {
       history,
       washrooms,
       buildings,
-      washroomsFetching,
       buildingsFetching,
     } = this.props;
 
-    const { filter } = this.state;
-
     return (
       <>
-        <Row justify="space-around" align="middle">
-          <Col sm={12}>
-            <Icon type="environment" className="icon-title" />
-            <Title>Near Me</Title>
-          </Col>
-          <Col sm={12}>
-            <Title level={3}>Filter Washrooms</Title>
-            <Text strong>Amenities</Text>
-            <Select
-              className="filter-amenity-select"
-              mode="multiple"
-              onChange={this.handleSelectChange}
-            >
-              {ALL_AMENITIES.map((amenity) => (
-                <Option key={amenity}>{`${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`}</Option>
-              ))}
-            </Select>
-
-            <Text strong>Radius</Text>
-            <Row align="middle">
-              <Col span={12}>
-                <Slider
-                  min={1}
-                  max={5000}
-                  onChange={this.onRadiusChange}
-                  value={typeof filter.radius === 'number' ? filter.radius : 0}
-                  tipFormatter={(value) => displayDistance(value)}
-                />
-              </Col>
-              <Col span={4}>
-                <Text strong>
-                  {displayDistance(filter.radius)}
-                </Text>
-              </Col>
-            </Row>
-            <Button key="submit" type="primary" loading={washroomsFetching} onClick={this.getWashrooms}>
-              Apply Filters
-            </Button>
-          </Col>
-        </Row>
+        <Icon type="environment" className="icon-title" />
+        <Title>Near Me</Title>
 
         <Tabs
           defaultActiveKey={trim(history.location.pathname, '/')}
@@ -291,11 +297,7 @@ class NearMe extends Component {
             tab="Washrooms"
             key="washrooms"
           >
-            {
-            washroomsFetching
-              ? <Skeleton active title={false} />
-              : this.renderWashrooms(washrooms)
-            }
+            { this.renderWashrooms(washrooms) }
           </TabPane>
         </Tabs>
       </>
