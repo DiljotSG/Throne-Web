@@ -67,20 +67,11 @@ class WashroomDetails extends Component {
     getReviewsForWashroom(id);
   }
 
-  createReview = (id) => {
+  createReview = async (id) => {
     const { createReview } = this.props; // eslint-disable-line no-shadow
     const { review } = this.state;
 
-    createReview(id, review).then(() => {
-      const { createStatus } = this.props;
-
-      if (createStatus === 201) {
-        this.setState({
-          review: emptyReview,
-          created: true,
-        });
-      }
-    });
+    await createReview(id, review);
   }
 
   handleCommentChange = (event) => {
@@ -136,8 +127,13 @@ class WashroomDetails extends Component {
     this.setState({ attemptedSubmit: true });
 
     if (isEmpty(errors)) {
-      this.createReview(washroom.id);
-      this.setState({ attemptedSubmit: false });
+      this.createReview(washroom.id).then(() => {
+        this.setState({
+          attemptedSubmit: false,
+          review: emptyReview,
+          created: true,
+        });
+      });
     }
   }
 
