@@ -5,73 +5,34 @@ import {
   List,
   Icon,
   Button,
-  Popover,
+  Slider,
+  InputNumber,
+  Modal,
   Checkbox,
   Tabs,
   notification,
   Empty,
   Skeleton,
+  Row,
+  Select,
+  Col,
+  Card,
 } from 'antd';
-import { trim, isEmpty } from 'lodash';
+import { trim, isEmpty, startCase } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
+
+import { amenityAsEmoji, amenityAsString } from '../utils/DisplayUtils';
 
 import { WashroomListItem, BuildingListItem } from '../components';
 
 import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
 
 const { Title, Text } = Typography;
+const { Option } = Select;
 const { TabPane } = Tabs;
-
-const renderWashrooms = ((washrooms) => {
-  if (isEmpty(washrooms)) {
-    return <Empty description="No washrooms near" />;
-  }
-  console.log(ALL_AMENITIES);
-  return (
-    <>
-      <Popover
-        content={
-          <>
-            <Checkbox
-              indeterminate={true}
-              // indeterminate={this.state.indeterminate}
-              // onChange={this.onCheckAllChange}
-              // checked={this.state.checkAll}
-            >
-              Check all
-            </Checkbox>
-            <Checkbox.Group
-              options={ALL_AMENITIES}
-              // defaultValue={['Apple']}
-              // onChange={onChange}
-            />
-          </>
-        }
-        trigger="click"
-      >
-        <Button icon="funnel-plot">
-          Filter
-        </Button>
-      </Popover>
-      <List
-        className="near-me-list"
-        bordered
-        dataSource={washrooms}
-        renderItem={(item) => (
-          <List.Item
-            className="near-me-list-item"
-            key={item.id}
-          >
-            <WashroomListItem item={item} />
-          </List.Item>
-        )}
-      />
-    </>
-  );
-});
 
 const renderBuildings = ((buildings) => {
   if (isEmpty(buildings)) {
@@ -108,20 +69,46 @@ const renderNoLocationWarning = () => {
 };
 
 class NearMe extends Component {
+  constructor() {
+    super();
+    const washroomAmenityFilterOptions = ALL_AMENITIES.map((amenity) => (
+      { label: `${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`, value: amenity }
+    ));
+
+    this.state = {
+      modalVisible: false,
+      washroomAmenityFilterOptions,
+      indeterminate: false,
+      checkAll: false,
+      filter: {
+        amenities: [],
+        maxResults: 1000,
+        radius: 50000,
+        latitude: 49.8080954,
+        longitude: -97.1375209,
+      },
+    };
+  }
+
   componentDidMount() {
     this.getWashrooms();
     this.getBuildings();
   }
 
+  openModal = () => {
+    this.setState({ modalVisible: true });
+  }
+
+  filterCancel = () => {
+    this.setState({ modalVisible: false });
+  }
+
   getBuildings = () => {
+    const { getBuildings } = this.props; // eslint-disable-line no-shadow
+    const { filter } = this.state;
     const {
-      getBuildings, // eslint-disable-line no-shadow
-      maxResults,
-      amenities,
-      radius,
-      latitude,
-      longitude,
-    } = this.props;
+      amenities, maxResults, radius, latitude, longitude,
+    } = filter;
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
@@ -151,14 +138,11 @@ class NearMe extends Component {
   }
 
   getWashrooms = () => {
+    const { getWashrooms } = this.props; // eslint-disable-line no-shadow
+    const { filter } = this.state;
     const {
-      getWashrooms, // eslint-disable-line no-shadow
-      maxResults,
-      amenities,
-      radius,
-      latitude,
-      longitude,
-    } = this.props;
+      amenities, maxResults, radius, latitude, longitude,
+    } = filter;
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
@@ -187,6 +171,52 @@ class NearMe extends Component {
     }
   }
 
+  handleSelectChange = (selected) => {
+    const { filter } = this.state;
+    this.setState({
+      filter: {
+        ...filter,
+        amenities: selected,
+      },
+    });
+  };
+
+  onRadiusChange = (radius) => {
+    const { filter } = this.state;
+    this.setState({
+      filter: {
+        ...filter,
+        radius,
+      },
+    });
+  };
+
+  renderWashrooms = () => {
+    const { washrooms } = this.props;
+
+    if (isEmpty(washrooms)) {
+      return <Empty description="No washrooms near" />;
+    }
+
+    return (
+      <>
+        <List
+          className="near-me-list"
+          bordered
+          dataSource={washrooms}
+          renderItem={(item) => (
+            <List.Item
+              className="near-me-list-item"
+              key={item.id}
+            >
+              <WashroomListItem item={item} />
+            </List.Item>
+          )}
+        />
+      </>
+    );
+  };
+
   render() {
     const {
       history,
@@ -196,10 +226,53 @@ class NearMe extends Component {
       buildingsFetching,
     } = this.props;
 
+    const { filter } = this.state;
+
     return (
       <>
-        <Icon type="environment" className="icon-title" />
-        <Title>Near Me</Title>
+        <Row>
+          <Col sm={12}>
+            <Icon type="environment" className="icon-title" />
+            <Title>Near Me</Title>
+          </Col>
+          <Col sm={12}>
+            <Title level={3}>Filter Washrooms</Title>
+            <Text strong>Amenities</Text>
+            <Select
+              className="filter-amenity-select"
+              mode="multiple"
+              onChange={this.handleSelectChange}
+            >
+              {ALL_AMENITIES.map((amenity) => (
+                <Option key={amenity}>{`${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`}</Option>
+              ))}
+            </Select>
+
+            <Text strong>Radius</Text>
+            <Row>
+              <Col span={12}>
+                <Slider
+                  min={1}
+                  max={100000}
+                  onChange={this.onRadiusChange}
+                  value={typeof filter.radius === 'number' ? filter.radius : 0}
+                />
+              </Col>
+              <Col span={4}>
+                <InputNumber
+                  min={1}
+                  max={100000}
+                  style={{ marginLeft: 16 }}
+                  value={filter.radius}
+                  onChange={this.onRadiusChange}
+                />
+              </Col>
+            </Row>
+            <Button key="submit" type="primary" loading={washroomsFetching} onClick={this.getWashrooms}>
+              Apply Filters
+            </Button>
+          </Col>
+        </Row>
 
         <Tabs
           defaultActiveKey={trim(history.location.pathname, '/')}
@@ -224,7 +297,7 @@ class NearMe extends Component {
             {
             washroomsFetching
               ? <Skeleton active title={false} />
-              : renderWashrooms(washrooms)
+              : this.renderWashrooms(washrooms)
             }
           </TabPane>
         </Tabs>
@@ -268,15 +341,10 @@ const mapDispatchToProps = (dispatch) => ({
 NearMe.propTypes = {
   washrooms: PropTypes.instanceOf(Array),
   buildings: PropTypes.instanceOf(Array),
-  amenities: PropTypes.instanceOf(Array),
   getWashrooms: PropTypes.func.isRequired,
   getBuildings: PropTypes.func.isRequired,
   washroomsFetching: PropTypes.bool,
   buildingsFetching: PropTypes.bool,
-  maxResults: PropTypes.number,
-  radius: PropTypes.number,
-  latitude: PropTypes.number,
-  longitude: PropTypes.number,
   history: PropTypes.shape({
     push: PropTypes.func,
     location: PropTypes.shape({
@@ -288,13 +356,8 @@ NearMe.propTypes = {
 NearMe.defaultProps = {
   washrooms: [],
   buildings: [],
-  amenities: [],
   washroomsFetching: false,
   buildingsFetching: false,
-  maxResults: 1000,
-  radius: 50000,
-  latitude: 49.8080954,
-  longitude: -97.1375209,
 };
 
 export default withRouter(connect(mapStateToProps, mapDispatchToProps)(NearMe));
