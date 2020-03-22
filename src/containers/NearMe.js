@@ -234,33 +234,24 @@ class NearMe extends Component {
       return <Empty description="No washrooms near" />;
     }
 
+    if (washroomsFetching) {
+      return <Skeleton active title={false} />
+    }
+
     return (
-      <Row gutter={[16, 16]} align="middle">
-        <Col lg={{ push: 16, span: 8 }}>
-          <Card disabled={washroomsFetching}>
-            {this.renderFilters()}
-          </Card>
-        </Col>
-        <Col lg={{ pull: 8, span: 16 }}>
-          { washroomsFetching
-            ? <Skeleton active title={false} />
-            : (
-              <List
-                className="near-me-list"
-                bordered
-                dataSource={washrooms}
-                renderItem={(item) => (
-                  <List.Item
-                    className="near-me-list-item"
-                    key={item.id}
-                  >
-                    <WashroomListItem item={item} />
-                  </List.Item>
-                )}
-              />
-            )}
-        </Col>
-      </Row>
+      <List
+        className="near-me-list"
+        bordered
+        dataSource={washrooms}
+        renderItem={(item) => (
+          <List.Item
+            className="near-me-list-item"
+            key={item.id}
+          >
+            <WashroomListItem item={item} />
+          </List.Item>
+        )}
+      />
     );
   };
 
@@ -268,6 +259,7 @@ class NearMe extends Component {
     const {
       history,
       washrooms,
+      washroomsFetching,
       buildings,
       buildingsFetching,
     } = this.props;
@@ -297,7 +289,16 @@ class NearMe extends Component {
             tab="Washrooms"
             key="washrooms"
           >
-            { this.renderWashrooms(washrooms) }
+            <Row gutter={[16, 16]} align="middle">
+              <Col lg={{ push: 16, span: 8 }}>
+                <Card disabled={washroomsFetching}>
+                  {this.renderFilters()}
+                </Card>
+              </Col>
+              <Col lg={{ pull: 8, span: 16 }}>
+                { this.renderWashrooms(washrooms) }
+              </Col>
+            </Row>
           </TabPane>
         </Tabs>
       </>
