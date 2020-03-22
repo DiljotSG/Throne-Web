@@ -115,30 +115,20 @@ export function getWashroom(id) {
   };
 }
 
-export function createWashroom(
-  comment,
-  longitude,
-  latitude,
-  gender,
-  floor,
-  urinalCount,
-  stallCount,
-  buildingId,
-  amenities,
-) {
+export function createWashroom(building, washroom) {
   return async function createWashroomAsync(dispatch) {
     dispatch(createWashroomAction());
 
     return throneApi.createWashroom(
-      comment,
-      longitude,
-      latitude,
-      gender,
-      floor,
-      urinalCount,
-      stallCount,
-      buildingId,
-      amenities,
+      washroom.comment,
+      building.location.longitude,
+      building.location.latitude,
+      washroom.gender,
+      washroom.floor,
+      washroom.urinal_count,
+      washroom.stall_count,
+      building.id,
+      washroom.amenities,
     ).then((response) => {
       if (response.ok) {
         response.json().then((createdWashroom) => {

@@ -7,10 +7,10 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
 import { getBuilding } from '../actions/buildingActions';
-import { getWashroomsForBuilding } from '../actions/washroomActions';
+import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
 import './BuildingDetails.css';
-
+import { ERROR_WASHROOM_EMPTY_COMMENT } from '../constants/Messages';
 import { WashroomListItem, WashroomForm } from '../components';
 
 const { Title, Text } = Typography;
@@ -37,6 +37,22 @@ const renderWashrooms = ((washrooms) => {
 });
 
 class BuildingDetails extends Component {
+  constructor() {
+    super();
+    this.state = {
+      washroom: {
+        comment: '',
+        gender: 'all',
+        floor: 1,
+        stall_count: 1,
+        urinal_count: 0,
+        building_id: 0,
+        amenities: [],
+      },
+      attemptedSubmit: false,
+    };
+  }
+
   componentDidMount() {
     const { match } = this.props;
     const { id } = match.params;
@@ -55,13 +71,132 @@ class BuildingDetails extends Component {
     getWashroomsForBuilding(id);
   }
 
+  createWashroom = (building) => {
+    const { createWashroom } = this.props; // eslint-disable-line no-shadow
+    const { washroom } = this.state;
+
+    createWashroom(building, washroom);
+  }
+
+  handleSubmit = async () => {
+    await this.validate();
+
+    const { errors } = this.state;
+    const { building } = this.props;
+
+    this.setState({ attemptedSubmit: true });
+    if (isEmpty(errors)) {
+      this.createWashroom(building);
+      this.setState({ attemptedSubmit: false });
+    }
+  }
+
+  handleGenderChange = (event) => {
+    const { washroom } = this.state;
+    this.setState(
+      {
+        washroom: {
+          ...washroom,
+          gender: event.target.value,
+        },
+      },
+      this.validate,
+    );
+  };
+
+  handleFloorChange = (value) => {
+    const { washroom } = this.state;
+    this.setState(
+      {
+        washroom: {
+          ...washroom,
+          floor: value,
+        },
+      },
+      this.validate,
+    );
+  }
+
+  handleStallChange = (value) => {
+    const { washroom } = this.state;
+    this.setState(
+      {
+        washroom: {
+          ...washroom,
+          stall_count: value,
+        },
+      },
+      this.validate,
+    );
+  }
+
+  handleUrinalChange = (value) => {
+    const { washroom } = this.state;
+    this.setState(
+      {
+        washroom: {
+          ...washroom,
+          urinal_count: value,
+        },
+      },
+      this.validate,
+    );
+  }
+
+  handleCommentChange = (event) => {
+    const { washroom } = this.state;
+    this.setState(
+      {
+        washroom: {
+          ...washroom,
+          comment: event.target.value,
+        },
+      },
+      this.validate,
+    );
+  }
+
+  handleAmenityChange = (value) => {
+    const { washroom } = this.state;
+    this.setState(
+      {
+        washroom: {
+          ...washroom,
+          amenities: value,
+        },
+      },
+      this.validate,
+    );
+  }
+
+  validate = () => {
+    const { washroom } = this.state;
+    const errors = [];
+
+    if (washroom.comment.length === 0) {
+      errors.push(ERROR_WASHROOM_EMPTY_COMMENT);
+    }
+
+    if (washroom.gender === 'women') {
+      washroom.urinal_count = 0;
+    }
+
+    this.setState({
+      errors,
+    });
+  }
+
   render() {
     const {
       building,
       buildingFetching,
       buildingWashrooms,
       washroomsFetching,
+      creatingWashroom,
+      washroomStatus,
     } = this.props;
+
+    const { washroom, errors, attemptedSubmit } = this.state;
 
     if (buildingFetching) {
       return (<Spin />);
@@ -94,7 +229,20 @@ class BuildingDetails extends Component {
               ? <Skeleton active title={false} />
               : renderWashrooms(buildingWashrooms)
           }
-          <WashroomForm />
+          <WashroomForm
+            washroom={washroom}
+            onSubmit={this.handleSubmit}
+            onGenderChange={this.handleGenderChange}
+            onFloorChange={this.handleFloorChange}
+            onStallChange={this.handleStallChange}
+            onUrinalChange={this.handleUrinalChange}
+            onCommentChange={this.handleCommentChange}
+            onAmenityChange={this.handleAmenityChange}
+            submitting={creatingWashroom}
+            errors={errors}
+            created={washroomStatus === 201}
+            attemptedSubmit={attemptedSubmit}
+          />
         </Row>
       </>
     );
@@ -109,22 +257,28 @@ const mapStateToProps = (state) => {
   } = state.buildingReducer;
   const {
     buildingWashrooms,
+    creatingWashroom,
     isFetching: washroomsFetching,
-    status: washroomsStatus,
+    washroom: createdWashroom,
+    status: washroomStatus,
   } = state.washroomReducer;
+
   return {
     building,
     buildingFetching,
     buildingStatus,
     buildingWashrooms,
     washroomsFetching,
-    washroomsStatus,
+    washroomStatus,
+    creatingWashroom,
+    createdWashroom,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getBuilding: (id) => dispatch(getBuilding(id)),
   getWashroomsForBuilding: (id) => dispatch(getWashroomsForBuilding(id)),
+  createWashroom: (building, washroom) => dispatch(createWashroom(building, washroom)),
 });
 
 BuildingDetails.propTypes = {
@@ -147,6 +301,9 @@ BuildingDetails.propTypes = {
     title: PropTypes.string.isRequired,
     washroom_count: PropTypes.number.isRequired,
   }).isRequired,
+  createWashroom: PropTypes.func.isRequired,
+  creatingWashroom: PropTypes.bool,
+  washroomStatus: PropTypes.number,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string.isRequired,
@@ -158,6 +315,8 @@ BuildingDetails.defaultProps = {
   buildingWashrooms: [],
   washroomsFetching: false,
   buildingFetching: false,
+  creatingWashroom: false,
+  washroomStatus: 0,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingDetails);

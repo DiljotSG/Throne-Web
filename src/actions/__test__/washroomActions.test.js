@@ -45,16 +45,21 @@ describe('async actions', () => {
   });
 
   it('creates RECEIVE_WASHROOM event when a washroom is created', () => {
-    const comment = 'looks great';
-    const longitude = 12;
-    const latitude = 13;
-    const gender = 'men';
-    const floor = 3;
-    const urinalCount = 1;
-    const stallCount = 1;
-    const buildingId = 0;
-    const washroomAmenities = [amenities.AIR_DRYER, amenities.CALL_BUTTON];
-
+    const washroom = {
+      comment: 'looks great',
+      gender: 'men',
+      floor: 3,
+      urinalCount: 1,
+      stallCount: 1,
+      washroomAmenities: [amenities.AIR_DRYER, amenities.CALL_BUTTON],
+    };
+    const building = {
+      id: 0,
+      location: {
+        latitude: 12,
+        longitude: 13,
+      },
+    };
     fetchMock.postOnce('https://testapi.com/washrooms', { comment: 'Washroom 1' });
 
     const expectedActions = [
@@ -64,15 +69,8 @@ describe('async actions', () => {
 
     const store = mockStore({ washroom: {} });
     return store.dispatch(actions.createWashroom(
-      comment,
-      longitude,
-      latitude,
-      gender,
-      floor,
-      urinalCount,
-      stallCount,
-      buildingId,
-      washroomAmenities,
+      building,
+      washroom,
     )).then(() => {
       expect(store.getActions()).toEqual(expectedActions);
     });
