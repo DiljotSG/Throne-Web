@@ -42,6 +42,7 @@ class WashroomDetails extends Component {
           smell: 0,
         },
       },
+      created: false,
       attemptedSubmit: false,
     };
   }
@@ -68,7 +69,16 @@ class WashroomDetails extends Component {
     const { createReview } = this.props; // eslint-disable-line no-shadow
     const { review } = this.state;
 
-    createReview(id, review);
+    createReview(id, review).then(() => {
+      const { createStatus } = this.props;
+
+      if (createStatus === 201) {
+        this.setState({
+          review: {},
+          created: true,
+        });
+      }
+    });
   }
 
   handleCommentChange = (event) => {
@@ -158,12 +168,11 @@ class WashroomDetails extends Component {
       reviews,
       reviewsFetching,
       creatingReview,
-      createStatus,
       history,
     } = this.props;
 
     const {
-      review, errors, attemptedSubmit, viewport,
+      review, errors, attemptedSubmit, viewport, created,
     } = this.state;
 
     if (washroomFetching || isEmpty(washroom)) {
@@ -287,7 +296,7 @@ class WashroomDetails extends Component {
                 commentChange={this.handleCommentChange}
                 errors={errors}
                 ratingChange={this.handleRatingChange}
-                created={createStatus === 201}
+                created={created}
                 attemptedSubmit={attemptedSubmit}
               />
             </Card>
