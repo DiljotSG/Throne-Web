@@ -37,7 +37,7 @@ export const receiveReviews = (response, status) => (
   }
 );
 
-export function getReviewsForUser(id) {
+export function getReviewsForUser(id = null) {
   return async function fetchReviewsAsync(dispatch) {
     dispatch(requestReviewsForUser());
 
