@@ -31,6 +31,8 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
+const RADIUS_SLIDER_OPTIMIZATION = 100;
+
 const renderBuildings = ((buildings) => {
   if (isEmpty(buildings)) {
     return <Empty description="No buildings near" />;
@@ -164,7 +166,7 @@ class NearMe extends Component {
       filterChanged: true,
       filter: {
         ...filter,
-        radius,
+        radius: radius * RADIUS_SLIDER_OPTIMIZATION,
       },
     });
   };
@@ -194,11 +196,11 @@ class NearMe extends Component {
             <Slider
               disabled={!locationEnabled}
               min={1}
-              max={30000}
+              max={300}
               onChange={this.handleRadiusChange}
-              value={typeof filter.radius === 'number' ? filter.radius : 0}
+              value={typeof filter.radius === 'number' ? filter.radius / RADIUS_SLIDER_OPTIMIZATION : 0}
               tipFormatter={(value) => (
-                locationEnabled ? displayDistance(value) : 'You must enable location to use this feature.'
+                locationEnabled ? displayDistance(value * 100) : 'You must enable location to use this feature.'
               )}
             />
           </Col>
@@ -235,7 +237,7 @@ class NearMe extends Component {
     }
 
     if (washroomsFetching) {
-      return <Skeleton active title={false} />
+      return <Skeleton active title={false} />;
     }
 
     return (
