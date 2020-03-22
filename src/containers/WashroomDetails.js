@@ -23,6 +23,16 @@ const mapDimensions = {
   height: '370px',
 };
 
+const emptyReview = {
+  comment: '',
+  ratings: {
+    cleanliness: 0,
+    privacy: 0,
+    toilet_paper_quality: 0,
+    smell: 0,
+  },
+};
+
 class WashroomDetails extends Component {
   constructor() {
     super();
@@ -33,15 +43,7 @@ class WashroomDetails extends Component {
         longitude: -97.1375209,
         zoom: 14,
       },
-      review: {
-        comment: '',
-        ratings: {
-          cleanliness: 0,
-          privacy: 0,
-          toilet_paper_quality: 0,
-          smell: 0,
-        },
-      },
+      review: emptyReview,
       created: false,
       attemptedSubmit: false,
     };
@@ -74,7 +76,7 @@ class WashroomDetails extends Component {
 
       if (createStatus === 201) {
         this.setState({
-          review: {},
+          review: emptyReview,
           created: true,
         });
       }
