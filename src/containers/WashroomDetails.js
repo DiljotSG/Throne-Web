@@ -23,6 +23,16 @@ const mapDimensions = {
   height: '370px',
 };
 
+const emptyReview = {
+  comment: '',
+  ratings: {
+    cleanliness: 0,
+    privacy: 0,
+    toilet_paper_quality: 0,
+    smell: 0,
+  },
+};
+
 class WashroomDetails extends Component {
   constructor() {
     super();
@@ -33,15 +43,8 @@ class WashroomDetails extends Component {
         longitude: -97.1375209,
         zoom: 14,
       },
-      review: {
-        comment: '',
-        ratings: {
-          cleanliness: 0,
-          privacy: 0,
-          toilet_paper_quality: 0,
-          smell: 0,
-        },
-      },
+      review: emptyReview,
+      created: false,
       attemptedSubmit: false,
     };
   }
@@ -64,11 +67,11 @@ class WashroomDetails extends Component {
     getReviewsForWashroom(id);
   }
 
-  createReview = (id) => {
+  createReview = async (id) => {
     const { createReview } = this.props; // eslint-disable-line no-shadow
     const { review } = this.state;
 
-    createReview(id, review);
+    await createReview(id, review);
   }
 
   handleCommentChange = (event) => {
@@ -124,8 +127,13 @@ class WashroomDetails extends Component {
     this.setState({ attemptedSubmit: true });
 
     if (isEmpty(errors)) {
-      this.createReview(washroom.id);
-      this.setState({ attemptedSubmit: false });
+      this.createReview(washroom.id).then(() => {
+        this.setState({
+          attemptedSubmit: false,
+          review: emptyReview,
+          created: true,
+        });
+      });
     }
   }
 
@@ -158,12 +166,11 @@ class WashroomDetails extends Component {
       reviews,
       reviewsFetching,
       creatingReview,
-      createStatus,
       history,
     } = this.props;
 
     const {
-      review, errors, attemptedSubmit, viewport,
+      review, errors, attemptedSubmit, viewport, created,
     } = this.state;
 
     if (washroomFetching || isEmpty(washroom)) {
@@ -287,7 +294,7 @@ class WashroomDetails extends Component {
                 commentChange={this.handleCommentChange}
                 errors={errors}
                 ratingChange={this.handleRatingChange}
-                created={createStatus === 201}
+                created={created}
                 attemptedSubmit={attemptedSubmit}
               />
             </Card>
