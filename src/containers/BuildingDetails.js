@@ -63,7 +63,7 @@ class BuildingDetails extends Component {
       history,
     } = this.props;
 
-    if (buildingFetching) {
+    if (buildingFetching || isEmpty(building)) {
       return (<Spin />);
     }
 
@@ -93,7 +93,10 @@ class BuildingDetails extends Component {
           />
         </Row>
         <Row>
-          <Title level={4}>
+          <Title
+            level={4}
+            className="washroom-list-header"
+          >
             Washrooms Inside
           </Title>
           {
@@ -141,17 +144,17 @@ BuildingDetails.propTypes = {
   buildingFetching: PropTypes.bool,
   building: PropTypes.shape({
     best_ratings: PropTypes.shape({
-      cleanliness: PropTypes.number.isRequired,
-      privacy: PropTypes.number.isRequired,
-      smell: PropTypes.number.isRequired,
-      toilet_paper_quality: PropTypes.number.isRequired,
-    }).isRequired,
-    created_at: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    maps_service_id: PropTypes.number.isRequired,
-    overall_rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    washroom_count: PropTypes.number.isRequired,
+      cleanliness: PropTypes.number,
+      privacy: PropTypes.number,
+      smell: PropTypes.number,
+      toilet_paper_quality: PropTypes.number,
+    }),
+    created_at: PropTypes.string,
+    id: PropTypes.number,
+    maps_service_id: PropTypes.number,
+    overall_rating: PropTypes.number,
+    title: PropTypes.string,
+    washroom_count: PropTypes.number,
   }).isRequired,
   match: PropTypes.shape({
     params: PropTypes.shape({
