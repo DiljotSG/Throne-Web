@@ -210,7 +210,7 @@ class NearMe extends Component {
             className="filter-radius-text"
           >
             <Text strong>
-              {displayDistance(filter.radius * METERS_PER_KM)}
+              {displayDistance(filter.radius)}
             </Text>
           </Col>
         </Row>
