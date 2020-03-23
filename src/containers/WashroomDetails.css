@@ -50,3 +50,11 @@
   font-size: 32px;
   line-height: 32px;
 }
+
+.ant-checkbox-wrapper {
+  display: block !important;
+}
+
+.filter-amenity-select {
+  width: 100%;
+}
