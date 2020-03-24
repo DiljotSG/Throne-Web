@@ -14,7 +14,7 @@
     "overall_rating": 5,
     "amenities": ["air_dryer"],
     "is_favorite": true,
-    "distance": 19
+    "distance": 0.019
   },{
     "id": 2,
     "building_title": "Armes",
@@ -30,6 +30,6 @@
     "overall_rating": 5,
     "amenities": ["air_freshener"],
     "is_favorite": true,
-    "distance": 19
+    "distance": 0.019
   }
 ]

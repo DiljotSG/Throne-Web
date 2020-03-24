@@ -31,8 +31,6 @@ const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
 
-const METERS_PER_KM = 1000;
-
 const renderBuildings = ((buildings) => {
   if (isEmpty(buildings)) {
     return <Empty description="No buildings near" />;
@@ -201,7 +199,7 @@ class NearMe extends Component {
               onChange={this.handleRadiusChange}
               value={typeof filter.radius === 'number' ? filter.radius : 0}
               tipFormatter={(value) => (
-                locationEnabled ? displayDistance(value * METERS_PER_KM) : 'You must enable location to use this feature.'
+                locationEnabled ? displayDistance(value) : 'You must enable location to use this feature.'
               )}
             />
           </Col>
@@ -210,7 +208,7 @@ class NearMe extends Component {
             className="filter-radius-text"
           >
             <Text strong>
-              {displayDistance(filter.radius * METERS_PER_KM)}
+              {displayDistance(filter.radius)}
             </Text>
           </Col>
         </Row>
