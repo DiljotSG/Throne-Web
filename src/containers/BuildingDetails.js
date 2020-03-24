@@ -169,6 +169,7 @@ class BuildingDetails extends Component {
     const okProps = {
       disabled: (!isEmpty(errors) && attemptedSubmit),
       loading: creatingWashroom,
+      className: 'washroom-create-submit',
     };
 
     if (buildingFetching || isEmpty(building)) {
@@ -213,6 +214,7 @@ class BuildingDetails extends Component {
             <Button
               type="primary"
               onClick={this.showModal}
+              className="washroom-display-modal"
             >
               Add Washroom
             </Button>

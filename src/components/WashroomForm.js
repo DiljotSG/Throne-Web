@@ -42,6 +42,7 @@ const WashroomForm = ({
           <Radio.Button
             key={gender}
             value={gender}
+            className="washroom-form-radio-button"
           >
             {`${genderAsEmoji(gender)} ${genderAsString(gender)}`}
           </Radio.Button>
@@ -57,6 +58,7 @@ const WashroomForm = ({
         max={10}
         onChange={(value) => onChange('floor', value)}
         value={washroom.floor}
+        className="washroom-form-floor-input"
       />
     </Form.Item>
     <Form.Item
@@ -68,6 +70,7 @@ const WashroomForm = ({
         max={50}
         onChange={(value) => onChange('stall_count', value)}
         value={washroom.stall_count}
+        className="washroom-form-stall-input"
       />
     </Form.Item>
     {
@@ -81,6 +84,7 @@ const WashroomForm = ({
               max={50}
               onChange={(value) => onChange('urinal_count', value)}
               value={washroom.urinal_count}
+              className="washroom-form-urinal-input"
             />
           </Form.Item>
         )
@@ -94,6 +98,7 @@ const WashroomForm = ({
         placeholder="Please select"
         onChange={(value) => onChange('amenities', value)}
         value={washroom.amenities}
+        className="washroom-form-amenity-select"
       >
         {ALL_AMENITIES.map((amenity) => (
           <Option key={amenity}>{`${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`}</Option>
@@ -109,6 +114,7 @@ const WashroomForm = ({
         rows={4}
         value={washroom.comment}
         onChange={(event) => onChange('comment', event.target.value)}
+        className="washroom-form-comment-text"
       />
     </Form.Item>
     {

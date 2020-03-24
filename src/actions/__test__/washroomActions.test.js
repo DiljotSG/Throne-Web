@@ -44,7 +44,7 @@ describe('async actions', () => {
     });
   });
 
-  it('creates RECEIVE_WASHROOM event when a washroom is created', () => {
+  it('creates RECEIVE_CREATED_WASHROOM event when a washroom is created', () => {
     const washroom = {
       comment: 'looks great',
       gender: 'men',
@@ -64,7 +64,7 @@ describe('async actions', () => {
 
     const expectedActions = [
       { type: types.CREATE_WASHROOM },
-      { type: types.RECEIVE_WASHROOM, status: 200, washroom: { comment: 'Washroom 1' } },
+      { type: types.RECEIVE_CREATED_WASHROOM, status: 200, washroom: { comment: 'Washroom 1' } },
     ];
 
     const store = mockStore({ washroom: {} });

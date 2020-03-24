@@ -50,7 +50,6 @@ describe('action reducer', () => {
       {
         washroom: { washroom: 'Washroom 1' },
         isFetching: false,
-        creatingWashroom: false,
         status: 200,
       },
     );
