@@ -71,6 +71,14 @@ export function createWashroomAction() {
   };
 }
 
+export const recieveCreatedWashroomAction = (washroom, status) => (
+  {
+    type: actions.RECEIVE_CREATED_WASHROOM,
+    washroom,
+    status,
+  }
+);
+
 export function getWashrooms(latitude, longitude, maxResults, amenities, radius) {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
@@ -152,7 +160,7 @@ export function createWashroom(building, washroom) {
     ).then((response) => {
       if (response.ok) {
         response.json().then((createdWashroom) => {
-          dispatch(getWashroomsForBuilding(createdWashroom.building_id));
+          dispatch(recieveCreatedWashroomAction(createdWashroom, response.status));
         });
       } else {
         dispatch(failure(response.status));

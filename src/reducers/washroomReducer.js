@@ -39,13 +39,21 @@ const washroomReducer = (state = initialState, action) => {
         isFetching: false,
         status: action.status,
         washroom: action.washroom,
-        creatingWashroom: false,
       };
     case actions.CREATE_WASHROOM:
       return {
         ...state,
         isFetching: true,
         creatingWashroom: true,
+      };
+    case actions.RECEIVE_CREATED_WASHROOM:
+      return {
+        ...state,
+        isFetching: false,
+        creatingWashroom: false,
+        status: action.status,
+        buildingWashrooms: [...state.buildingWashrooms, action.washroom],
+        washroom: action.washroom,
       };
     case actions.ADD_FAVORITE:
       return {
