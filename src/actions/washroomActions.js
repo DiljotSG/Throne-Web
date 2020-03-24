@@ -115,35 +115,6 @@ export function getWashroom(id) {
   };
 }
 
-export function createWashroom(building, washroom) {
-  return async function createWashroomAsync(dispatch) {
-    dispatch(createWashroomAction());
-
-    return throneApi.createWashroom(
-      washroom.comment,
-      building.location.longitude,
-      building.location.latitude,
-      washroom.gender,
-      washroom.floor,
-      washroom.urinal_count,
-      washroom.stall_count,
-      building.id,
-      washroom.amenities,
-    ).then((response) => {
-      if (response.ok) {
-        response.json().then((createdWashroom) => {
-          dispatch(receiveWashroom(createdWashroom, response.status));
-        });
-      } else {
-        dispatch(failure(response.status));
-      }
-    }).catch((error) => {
-      dispatch(failure());
-      throw (error);
-    });
-  };
-}
-
 export function getWashroomsForBuilding(id) {
   return async function fetchWashroomsForBuildingAsync(dispatch) {
     dispatch(requestWashroomsForBuilding());
@@ -162,6 +133,37 @@ export function getWashroomsForBuilding(id) {
     });
   };
 }
+
+
+export function createWashroom(building, washroom) {
+  return async function createWashroomAsync(dispatch) {
+    dispatch(createWashroomAction());
+
+    return throneApi.createWashroom(
+      washroom.comment,
+      building.location.longitude,
+      building.location.latitude,
+      washroom.gender,
+      washroom.floor,
+      washroom.urinal_count,
+      washroom.stall_count,
+      building.id,
+      washroom.amenities,
+    ).then((response) => {
+      if (response.ok) {
+        response.json().then((createdWashroom) => {
+          dispatch(getWashroomsForBuilding(createdWashroom.building_id));
+        });
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      throw (error);
+    });
+  };
+}
+
 
 export function favoriteWashroom(id) {
   return async function addFavoriteAsync(dispatch) {
