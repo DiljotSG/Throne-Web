@@ -18,8 +18,8 @@ export default function setupStore(initialState) {
 
 const store = setupStore({});
 
-fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=50000&amenities=', washrooms);
-fetchMock.get('https://testapi.com/buildings?max_results=1000&radius=50000&amenities=', buildings);
+fetchMock.get('https://testapi.com/washrooms?max_results=1000&radius=5&amenities=', washrooms);
+fetchMock.get('https://testapi.com/buildings?max_results=1000&radius=5&amenities=', buildings);
 
 describe('NearMe', () => {
   it('Renders the "Near me" page with tabs', async () => {

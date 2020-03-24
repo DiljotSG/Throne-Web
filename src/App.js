@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
+import Cookies from 'universal-cookie';
+
 
 import {
   Typography,
@@ -23,6 +25,8 @@ import './App.css';
 const { Text } = Typography;
 const { Content } = Layout;
 
+const cookies = new Cookies();
+
 function requireAuth() {
   if (!Auth.authenticated()) {
     this.setState({
@@ -32,7 +36,15 @@ function requireAuth() {
 }
 
 const renderCovid19Warning = () => {
-  notification.info({
+  if (cookies.get('covidNotificationDismissed')) {
+    return null;
+  }
+
+  return notification.info({
+    onClose: () => {
+      // If a user hides the notification, keep it hidden for 8 hours (28800000ms)
+      cookies.set('covidNotificationDismissed', true, { expires: new Date(Date.now() + 28800000) });
+    },
     message: 'Prevent the Spread of COVID-19',
     description: (
       <>
@@ -79,6 +91,14 @@ class App extends Component {
     });
   }
 
+  componentDidUpdate() {
+    const { loggedIn } = this.state;
+
+    if (loggedIn) {
+      renderCovid19Warning();
+    }
+  }
+
   logout() {
     Auth.logout();
 
@@ -109,8 +129,6 @@ class App extends Component {
         />
       );
     }
-
-    renderCovid19Warning();
 
     return (
       <Provider store={store}>

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import {
-  List, Typography, Spin, Rate, Row, Empty, Skeleton,
+  List, Typography, Spin, Rate, Row, Empty, Skeleton, Button,
 } from 'antd';
-
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { isEmpty } from 'lodash';
@@ -194,16 +193,24 @@ class BuildingDetails extends Component {
       washroomsFetching,
       creatingWashroom,
       washroomStatus,
+      history,
     } = this.props;
 
     const { washroom, errors, attemptedSubmit } = this.state;
 
-    if (buildingFetching) {
+    if (buildingFetching || isEmpty(building)) {
       return (<Spin />);
     }
 
     return (
       <>
+        <Button
+          shape="round"
+          onClick={history.goBack}
+          icon="arrow-left"
+          size="large"
+          className="back-button"
+        />
         <Title
           className="details-title"
           level={2}
@@ -221,7 +228,10 @@ class BuildingDetails extends Component {
           />
         </Row>
         <Row>
-          <Title level={4}>
+          <Title
+            level={4}
+            className="washroom-list-header"
+          >
             Washrooms Inside
           </Title>
           {
@@ -289,17 +299,17 @@ BuildingDetails.propTypes = {
   buildingFetching: PropTypes.bool,
   building: PropTypes.shape({
     best_ratings: PropTypes.shape({
-      cleanliness: PropTypes.number.isRequired,
-      privacy: PropTypes.number.isRequired,
-      smell: PropTypes.number.isRequired,
-      toilet_paper_quality: PropTypes.number.isRequired,
-    }).isRequired,
-    created_at: PropTypes.string.isRequired,
-    id: PropTypes.number.isRequired,
-    maps_service_id: PropTypes.number.isRequired,
-    overall_rating: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-    washroom_count: PropTypes.number.isRequired,
+      cleanliness: PropTypes.number,
+      privacy: PropTypes.number,
+      smell: PropTypes.number,
+      toilet_paper_quality: PropTypes.number,
+    }),
+    created_at: PropTypes.string,
+    id: PropTypes.number,
+    maps_service_id: PropTypes.number,
+    overall_rating: PropTypes.number,
+    title: PropTypes.string,
+    washroom_count: PropTypes.number,
   }).isRequired,
   createWashroom: PropTypes.func.isRequired,
   creatingWashroom: PropTypes.bool,
@@ -309,6 +319,9 @@ BuildingDetails.propTypes = {
       id: PropTypes.string.isRequired,
     }).isRequired,
   }).isRequired,
+  history: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 };
 
 BuildingDetails.defaultProps = {
@@ -317,6 +330,9 @@ BuildingDetails.defaultProps = {
   buildingFetching: false,
   creatingWashroom: false,
   washroomStatus: 0,
+  history: {
+    goBack: () => { },
+  },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(BuildingDetails);

@@ -33,3 +33,4 @@ Android | [Throne-Android](https://github.com/NickJosephson/Throne-Android) | [A
 * [Setup](docs/SETUP.md)
 * [Running](docs/RUNNING.md)
 * [Testing](docs/TESTING.md)
+* [Coding Standards](docs/CODING_STANDARDS.md)

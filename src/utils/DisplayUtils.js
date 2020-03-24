@@ -191,7 +191,7 @@ export const buildingPinEmoji = (rating) => {
 };
 
 export const displayDistance = (distance) => (
-  distance > 1000 ? `${(distance / 1000).toFixed(1)} km` : `${(distance).toFixed(0)} m`
+  distance < 1 ? `${(distance * 1000).toFixed(0)} m` : `${(distance).toFixed(1)} km`
 );
 
 export default {
