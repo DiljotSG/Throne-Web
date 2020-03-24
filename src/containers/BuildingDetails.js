@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import {
-  List, Typography, Spin, Rate, Row, Empty, Skeleton, Button,
+  List, Typography, Spin, Rate, Row, Col, Empty, Skeleton, Button, Modal, notification,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -13,6 +13,16 @@ import { ERROR_WASHROOM_EMPTY_COMMENT } from '../constants/Messages';
 import { WashroomListItem, WashroomForm } from '../components';
 
 const { Title, Text } = Typography;
+
+const washroomDefault = {
+  comment: '',
+  gender: 'all',
+  floor: 1,
+  stall_count: 1,
+  urinal_count: 0,
+  building_id: 0,
+  amenities: [],
+};
 
 const renderWashrooms = ((washrooms) => {
   if (isEmpty(washrooms)) {
@@ -35,20 +45,14 @@ const renderWashrooms = ((washrooms) => {
   );
 });
 
+
 class BuildingDetails extends Component {
   constructor() {
     super();
     this.state = {
-      washroom: {
-        comment: '',
-        gender: 'all',
-        floor: 1,
-        stall_count: 1,
-        urinal_count: 0,
-        building_id: 0,
-        amenities: [],
-      },
+      washroom: washroomDefault,
       attemptedSubmit: false,
+      modalVisible: false,
     };
   }
 
@@ -58,6 +62,20 @@ class BuildingDetails extends Component {
 
     this.getBuilding(id);
     this.getWashroomsForBuilding(id);
+  }
+
+  componentDidUpdate(prevProps) {
+    const { washroomStatus } = this.props;
+
+    if (prevProps.washroomStatus !== washroomStatus) {
+      if (washroomStatus === 201) {
+        this.closeModal();
+        notification.success({
+          message: 'Washroom Added',
+          duration: 3,
+        });
+      }
+    }
   }
 
   getBuilding = (id) => {
@@ -90,82 +108,15 @@ class BuildingDetails extends Component {
     }
   }
 
-  handleGenderChange = (event) => {
+  handleChange = (key, value) => {
     const { washroom } = this.state;
-    this.setState(
-      {
-        washroom: {
-          ...washroom,
-          gender: event.target.value,
-        },
+    this.setState({
+      washroom: {
+        ...washroom,
+        [key]: value,
       },
-      this.validate,
-    );
-  };
-
-  handleFloorChange = (value) => {
-    const { washroom } = this.state;
-    this.setState(
-      {
-        washroom: {
-          ...washroom,
-          floor: value,
-        },
-      },
-      this.validate,
-    );
-  }
-
-  handleStallChange = (value) => {
-    const { washroom } = this.state;
-    this.setState(
-      {
-        washroom: {
-          ...washroom,
-          stall_count: value,
-        },
-      },
-      this.validate,
-    );
-  }
-
-  handleUrinalChange = (value) => {
-    const { washroom } = this.state;
-    this.setState(
-      {
-        washroom: {
-          ...washroom,
-          urinal_count: value,
-        },
-      },
-      this.validate,
-    );
-  }
-
-  handleCommentChange = (event) => {
-    const { washroom } = this.state;
-    this.setState(
-      {
-        washroom: {
-          ...washroom,
-          comment: event.target.value,
-        },
-      },
-      this.validate,
-    );
-  }
-
-  handleAmenityChange = (value) => {
-    const { washroom } = this.state;
-    this.setState(
-      {
-        washroom: {
-          ...washroom,
-          amenities: value,
-        },
-      },
-      this.validate,
-    );
+    },
+    this.validate);
   }
 
   validate = () => {
@@ -185,6 +136,19 @@ class BuildingDetails extends Component {
     });
   }
 
+  showModal = () => {
+    this.setState({
+      modalVisible: true,
+    });
+  };
+
+  closeModal = () => {
+    this.setState({
+      modalVisible: false,
+      washroom: washroomDefault,
+    });
+  };
+
   render() {
     const {
       building,
@@ -192,11 +156,20 @@ class BuildingDetails extends Component {
       buildingWashrooms,
       washroomsFetching,
       creatingWashroom,
-      washroomStatus,
       history,
     } = this.props;
 
-    const { washroom, errors, attemptedSubmit } = this.state;
+    const {
+      washroom,
+      errors,
+      attemptedSubmit,
+      modalVisible,
+    } = this.state;
+
+    const okProps = {
+      disabled: (!isEmpty(errors) && attemptedSubmit),
+      loading: creatingWashroom,
+    };
 
     if (buildingFetching || isEmpty(building)) {
       return (<Spin />);
@@ -228,32 +201,47 @@ class BuildingDetails extends Component {
           />
         </Row>
         <Row>
-          <Title
-            level={4}
-            className="washroom-list-header"
-          >
-            Washrooms Inside
-          </Title>
+          <Col span={12}>
+            <Title
+              level={4}
+              className="washroom-list-header"
+            >
+              Washrooms Inside
+            </Title>
+          </Col>
+          <Col span={12} className="washroom-add-button">
+            <Button
+              type="primary"
+              onClick={this.showModal}
+            >
+              Add Washroom
+            </Button>
+          </Col>
+        </Row>
+        <Row>
+
           {
             washroomsFetching
               ? <Skeleton active title={false} />
               : renderWashrooms(buildingWashrooms)
           }
+        </Row>
+        <Modal
+          title="Add Washroom"
+          visible={modalVisible}
+          okText="Add"
+          okButtonProps={okProps}
+          onOk={this.handleSubmit}
+          onCancel={this.closeModal}
+        >
           <WashroomForm
             washroom={washroom}
             onSubmit={this.handleSubmit}
-            onGenderChange={this.handleGenderChange}
-            onFloorChange={this.handleFloorChange}
-            onStallChange={this.handleStallChange}
-            onUrinalChange={this.handleUrinalChange}
-            onCommentChange={this.handleCommentChange}
-            onAmenityChange={this.handleAmenityChange}
-            submitting={creatingWashroom}
+            onChange={this.handleChange}
             errors={errors}
-            created={washroomStatus === 201}
             attemptedSubmit={attemptedSubmit}
           />
-        </Row>
+        </Modal>
       </>
     );
   }
