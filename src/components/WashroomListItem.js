@@ -104,7 +104,7 @@ WashroomListItem.propTypes = {
   item: PropTypes.shape({
     id: PropTypes.number.isRequired,
     comment: PropTypes.string.isRequired,
-    building_title: PropTypes.string.isRequired,
+    building_title: PropTypes.string,
     overall_rating: PropTypes.number.isRequired,
     floor: PropTypes.number.isRequired,
     gender: PropTypes.string.isRequired,
@@ -115,7 +115,9 @@ WashroomListItem.propTypes = {
 };
 
 WashroomListItem.defaultProps = {
-  item: {},
+  item: {
+    building_title: '',
+  },
   BuildingTitle: false,
 };
 

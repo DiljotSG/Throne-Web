@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import {
-  Spin, Row, Col, Divider, Typography, Skeleton, Card, Button, Icon,
+  Spin, Row, Col, Divider, Typography, Card, Button, Icon,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
@@ -23,6 +23,16 @@ const mapDimensions = {
   height: '370px',
 };
 
+const emptyReview = {
+  comment: '',
+  ratings: {
+    cleanliness: 0,
+    privacy: 0,
+    toilet_paper_quality: 0,
+    smell: 0,
+  },
+};
+
 class WashroomDetails extends Component {
   constructor() {
     super();
@@ -33,15 +43,8 @@ class WashroomDetails extends Component {
         longitude: -97.1375209,
         zoom: 14,
       },
-      review: {
-        comment: '',
-        ratings: {
-          cleanliness: 0,
-          privacy: 0,
-          toilet_paper_quality: 0,
-          smell: 0,
-        },
-      },
+      review: emptyReview,
+      created: false,
       attemptedSubmit: false,
     };
   }
@@ -64,11 +67,11 @@ class WashroomDetails extends Component {
     getReviewsForWashroom(id);
   }
 
-  createReview = (id) => {
+  createReview = async (id) => {
     const { createReview } = this.props; // eslint-disable-line no-shadow
     const { review } = this.state;
 
-    createReview(id, review);
+    await createReview(id, review);
   }
 
   handleCommentChange = (event) => {
@@ -124,8 +127,13 @@ class WashroomDetails extends Component {
     this.setState({ attemptedSubmit: true });
 
     if (isEmpty(errors)) {
-      this.createReview(washroom.id);
-      this.setState({ attemptedSubmit: false });
+      this.createReview(washroom.id).then(() => {
+        this.setState({
+          attemptedSubmit: false,
+          review: emptyReview,
+          created: true,
+        });
+      });
     }
   }
 
@@ -158,11 +166,11 @@ class WashroomDetails extends Component {
       reviews,
       reviewsFetching,
       creatingReview,
-      createStatus,
+      history,
     } = this.props;
 
     const {
-      review, errors, attemptedSubmit, viewport,
+      review, errors, attemptedSubmit, viewport, created,
     } = this.state;
 
     if (washroomFetching || isEmpty(washroom)) {
@@ -171,6 +179,13 @@ class WashroomDetails extends Component {
 
     return (
       <>
+        <Button
+          shape="round"
+          onClick={history.goBack}
+          icon="arrow-left"
+          size="large"
+          className="back-button"
+        />
         <Row>
           <Col span={20}>
             <Title className="details-title" level={2}>
@@ -279,19 +294,17 @@ class WashroomDetails extends Component {
                 commentChange={this.handleCommentChange}
                 errors={errors}
                 ratingChange={this.handleRatingChange}
-                created={createStatus === 201}
+                created={created}
                 attemptedSubmit={attemptedSubmit}
               />
             </Card>
           </Col>
           <Col span={24}>
             <Card className="washroom-reviews">
-              <Title level={3}>
-                Reviews
-              </Title>
-              {reviewsFetching
-                ? <Skeleton active title={false} />
-                : <Reviews reviews={reviews} />}
+              <Reviews
+                reviews={reviews}
+                fetching={reviewsFetching}
+              />
             </Card>
           </Col>
         </Row>
@@ -404,6 +417,9 @@ WashroomDetails.propTypes = {
       washroom: PropTypes.object,
     }),
   }),
+  history: PropTypes.shape({
+    goBack: PropTypes.func,
+  }),
 };
 
 WashroomDetails.defaultProps = {
@@ -417,6 +433,9 @@ WashroomDetails.defaultProps = {
       washroom: {},
     }),
   }),
+  history: {
+    goBack: () => {},
+  },
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(WashroomDetails);

@@ -10,6 +10,7 @@ import rootReducer from '../../reducers';
 import Profile from '../Profile';
 
 import user from './data/user.json';
+import reviews from './data/userReviews.json';
 
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
@@ -18,6 +19,7 @@ export default function setupStore(initialState) {
 const store = setupStore({});
 
 fetchMock.get('https://testapi.com/users', user);
+fetchMock.get('https://testapi.com/users/reviews', reviews);
 
 describe('Profile', () => {
   it('Renders the Profile page', async () => {
@@ -30,6 +32,11 @@ describe('Profile', () => {
       );
     });
     component.update();
-    expect(component.find('Title').text()).toEqual('twophase');
+
+    expect(component.find('Title.username').text()).toEqual('twophase');
+
+    expect(component.find('Comment').length).toEqual(2);
+    expect(component.find('Comment').first().prop('author')).toEqual('twophase');
+    expect(component.find('Comment').at(1).prop('author')).toEqual('twophase');
   });
 });

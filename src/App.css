@@ -17,6 +17,8 @@
   .app-content {
     padding: 0;
     margin: 0 15px;
+    margin: 0 15px;
+    width: auto;
   }
 }
 
@@ -24,6 +26,7 @@
   .app-content {
     padding: 0;
     margin: auto;
+    width: 100%;
   }
 }
 
@@ -36,4 +39,23 @@
 .notification-action-button {
   margin-top: 15px;
   display: block;
+}
+
+.back-button {
+  margin-bottom: 15px;
+}
+
+@media (max-width: 767px) {
+  .ant-modal {
+    top: 60px;
+  }
+
+  .ant-modal-body {
+    height: 70vh;
+    overflow: auto;
+  }
+}
+
+.filter-radius-text {
+  text-align: right;
 }
