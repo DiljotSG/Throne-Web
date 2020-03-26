@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Spin, Icon, Row, Col, Card, List, Empty,
+  Typography, Spin, Icon, Row, Col, List, Empty, Skeleton,
 } from 'antd';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
@@ -12,15 +12,15 @@ import { Reviews, WashroomListItem } from '../components';
 
 const { Title } = Typography;
 
-const renderWashrooms = ((washrooms) => {
-  if (isEmpty(washrooms)) {
+const renderWashrooms = ((userWashrooms) => {
+  if (isEmpty(userWashrooms)) {
     return <Empty description="No favorite washrooms yet" />;
   }
   return (
     <List
       className="near-me-list"
       bordered
-      dataSource={washrooms}
+      dataSource={userWashrooms}
       renderItem={(item) => (
         <List.Item
           className="near-me-list-item"
@@ -66,40 +66,43 @@ class Profile extends Component {
       userFetching,
       reviews,
       reviewsFetching,
-      washroomsFetching,
-      washrooms,
+      userWashroomsFetching,
+      userWashrooms,
     } = this.props;
 
-    if (isEmpty(user) && userFetching && washroomsFetching) {
+    if (isEmpty(user) && userFetching) {
       return <Spin />;
     }
     return (
       <>
-        <Icon type="user" className="icon-title" />
+        <Icon
+          type="user"
+          className="icon-title"
+        />
         <Title className="username">
           {user.username}
         </Title>
         <Row
           align="middle"
-          gutter={16}
+          gutter={[16, 24]}
         >
-          <Col lg={14}>
-            <Card>
-              <Reviews
-                reviews={reviews}
-                fetching={reviewsFetching}
-                title="Your reviews"
-                clickable
-              />
-            </Card>
+          <Col lg={{ span: 10, push: 14 }}>
+            <Title level={3}>
+              Your favorites
+            </Title>
+            {
+              userWashroomsFetching
+                ? <Skeleton active title={false} />
+                : renderWashrooms(userWashrooms)
+            }
           </Col>
-          <Col lg={10}>
-            <Card>
-              <Title level={3}>
-                Your favorites
-              </Title>
-              {renderWashrooms(washrooms)}
-            </Card>
+          <Col lg={{ span: 14, pull: 10 }}>
+            <Reviews
+              reviews={reviews}
+              fetching={reviewsFetching}
+              title="Your reviews"
+              clickable
+            />
           </Col>
         </Row>
       </>
@@ -119,9 +122,9 @@ const mapStateToProps = (state) => {
   } = state.reviewReducer;
 
   const {
-    washrooms,
-    isFetching: washroomsFetching,
-    status: washroomsStatus,
+    userWashrooms,
+    isFetching: userWashroomsFetching,
+    status: userWashroomsStatus,
   } = state.washroomReducer;
 
   return {
@@ -129,9 +132,9 @@ const mapStateToProps = (state) => {
     userFetching,
     reviews,
     reviewsFetching,
-    washrooms,
-    washroomsFetching,
-    washroomsStatus,
+    userWashrooms,
+    userWashroomsFetching,
+    userWashroomsStatus,
   };
 };
 
@@ -142,7 +145,7 @@ const mapDispatchToProps = (dispatch) => ({
 });
 
 Profile.propTypes = {
-  washrooms: PropTypes.instanceOf(Array),
+  userWashrooms: PropTypes.instanceOf(Array),
   getCurrentUser: PropTypes.func.isRequired,
   getReviewsForUser: PropTypes.func.isRequired,
   getFavoritesForUser: PropTypes.func.isRequired,
@@ -178,14 +181,14 @@ Profile.propTypes = {
     }),
   ).isRequired,
   reviewsFetching: PropTypes.bool,
-  washroomsFetching: PropTypes.bool,
+  userWashroomsFetching: PropTypes.bool,
 };
 
 Profile.defaultProps = {
   userFetching: false,
   reviewsFetching: true,
-  washroomsFetching: true,
-  washrooms: [],
+  userWashroomsFetching: true,
+  userWashrooms: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

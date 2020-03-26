@@ -25,6 +25,14 @@ export const receiveWashroomsForBuilding = (response, status) => (
   }
 );
 
+export const receiveWashroomsForUser = (response, status) => (
+  {
+    type: actions.RECEIVE_WASHROOMS_FOR_USER,
+    washrooms: response,
+    status,
+  }
+);
+
 export function requestWashroom() {
   return {
     type: actions.REQUEST_WASHROOM,
@@ -42,6 +50,12 @@ export const receiveWashroom = (response, status) => (
 export function requestWashroomsForBuilding() {
   return {
     type: actions.REQUEST_WASHROOMS_FOR_BUILDING,
+  };
+}
+
+export function requestWashroomsForUser() {
+  return {
+    type: actions.REQUEST_WASHROOMS_FOR_USER,
   };
 }
 
@@ -175,12 +189,12 @@ export function getWashroomsForBuilding(id) {
 
 export function getFavoritesForUser() {
   return async function fetchFavoritesForUserAsync(dispatch) {
-    dispatch(requestWashrooms());
+    dispatch(requestWashroomsForUser());
 
     return throneApi.getFavoritesForUser().then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
-          dispatch(receiveWashrooms(washrooms, response.status));
+          dispatch(receiveWashroomsForUser(washrooms, response.status));
         });
       } else {
         dispatch(failure(response.status));
