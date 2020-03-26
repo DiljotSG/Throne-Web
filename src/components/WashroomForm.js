@@ -25,7 +25,6 @@ const WashroomForm = ({
   attemptedSubmit,
 }) => (
   <Form
-    layout="horizontal"
     labelCol={{ span: 4 }}
     wrapperCol={{ span: 20 }}
   >
