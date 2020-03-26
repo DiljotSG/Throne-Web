@@ -221,7 +221,6 @@ class BuildingDetails extends Component {
           </Col>
         </Row>
         <Row>
-
           {
             washroomsFetching
               ? <Skeleton active title={false} />
