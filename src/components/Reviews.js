@@ -45,7 +45,7 @@ const renderBody = (reviews, fetching, pageSize, clickable) => {
         hideOnSinglePage: true,
       }}
       renderItem={(review) => (
-        <Card>
+        <Card className="washroom-review-card">
           <Comment
             className="washroom-review"
             key={review.created_at}
