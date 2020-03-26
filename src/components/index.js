@@ -6,6 +6,7 @@ import WashroomRatings from './WashroomRatings';
 import Reviews from './Reviews';
 import ReviewForm from './ReviewForm';
 import AmenityList from './AmenityList';
+import Filters from './Filters';
 
 export {
   Nav,
@@ -16,4 +17,5 @@ export {
   Reviews,
   ReviewForm,
   AmenityList,
+  Filters,
 };
