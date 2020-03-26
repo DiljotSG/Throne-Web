@@ -23,7 +23,9 @@ const Filters = ({
 }) => (
   <>
     <Title level={3}>Filter</Title>
-    <Text strong>Amenities</Text>
+    <Text strong>
+      Amenities
+    </Text>
     <Select
       placeholder={building ? 'Not supported for buildings yet' : 'Filter by amenity'}
       disabled={building}
