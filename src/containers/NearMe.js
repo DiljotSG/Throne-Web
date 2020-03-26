@@ -96,10 +96,10 @@ class NearMe extends Component {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
-        const { currLatitude, currLongitude } = location;
+        const { latitude: currentLatitude, longitude: currentLongitude } = location.coords;
 
         this.setState({ locationEnabled: true });
-        getBuildings(currLatitude, currLongitude, maxResults, amenities, radius);
+        getBuildings(currentLatitude, currentLongitude, maxResults, amenities, radius);
       }, () => {
         // Get buildings with default location at UofM
         this.setState({ locationEnabled: false });
@@ -123,22 +123,14 @@ class NearMe extends Component {
 
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition((location) => {
-        getWashrooms(
-          location.coords.latitude,
-          location.coords.longitude,
-          maxResults,
-          amenities,
-          radius,
-        );
+        const { latitude: currentLatitude, longitude: currentLongitude } = location.coords;
+
+        this.setState({ locationEnabled: true });
+        getWashrooms(currentLatitude, currentLongitude, maxResults, amenities, radius);
       }, () => {
         // Get buildings with default location at UofM
-        getWashrooms(
-          latitude,
-          longitude,
-          maxResults,
-          amenities,
-          radius,
-        );
+        this.setState({ locationEnabled: false });
+        getWashrooms(latitude, longitude, maxResults, amenities, radius);
         renderNoLocationWarning();
       });
     } else {
