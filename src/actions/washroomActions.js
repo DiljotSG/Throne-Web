@@ -172,7 +172,6 @@ export function createWashroom(building, washroom) {
   };
 }
 
-
 export function favoriteWashroom(id) {
   return async function addFavoriteAsync(dispatch) {
     dispatch(addFavorite());
