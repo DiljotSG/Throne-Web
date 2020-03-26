@@ -151,5 +151,4 @@ WashroomForm.defaultProps = {
   attemptedSubmit: false,
 };
 
-
 export default WashroomForm;
