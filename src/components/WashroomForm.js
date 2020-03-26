@@ -110,6 +110,7 @@ const WashroomForm = ({
       help="E.g. 'Beside the stairwell'"
     >
       <TextArea
+        placeholder="Additional Description"
         rows={4}
         value={washroom.comment}
         onChange={(event) => onChange('comment', event.target.value)}
