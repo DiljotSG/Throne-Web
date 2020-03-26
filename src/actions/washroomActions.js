@@ -17,7 +17,7 @@ export const receiveWashrooms = (response, status) => (
   }
 );
 
-export const receiveWashroomsForBuliding = (response, status) => (
+export const receiveWashroomsForBuilding = (response, status) => (
   {
     type: actions.RECEIVE_WASHROOMS_FOR_BUILDING,
     washrooms: response,
@@ -161,7 +161,7 @@ export function getWashroomsForBuilding(id) {
     return throneApi.getWashroomsForBuilding(id).then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
-          dispatch(receiveWashroomsForBuliding(washrooms, response.status));
+          dispatch(receiveWashroomsForBuilding(washrooms, response.status));
         });
       } else {
         dispatch(failure(response.status));
