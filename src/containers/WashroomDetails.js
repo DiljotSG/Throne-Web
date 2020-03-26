@@ -51,19 +51,22 @@ class WashroomDetails extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    const { match } = this.props;
-    const { id } = match.params;
-    this.getWashroom(id);
-    this.getReviewsForWashroom(id);
+
+    this.getWashroom();
+    this.getReviewsForWashroom();
   }
 
-  getWashroom = (id) => {
-    const { getWashroom } = this.props; // eslint-disable-line no-shadow
+  getWashroom = () => {
+    const { getWashroom, match } = this.props; // eslint-disable-line no-shadow
+    const { id } = match.params;
+
     getWashroom(id);
   }
 
-  getReviewsForWashroom = (id) => {
-    const { getReviewsForWashroom } = this.props; // eslint-disable-line no-shadow
+  getReviewsForWashroom = () => {
+    const { getReviewsForWashroom, match } = this.props; // eslint-disable-line no-shadow
+    const { id } = match.params;
+
     getReviewsForWashroom(id);
   }
 
@@ -71,7 +74,7 @@ class WashroomDetails extends Component {
     const { createReview } = this.props; // eslint-disable-line no-shadow
     const { review } = this.state;
 
-    await createReview(id, review);
+    return createReview(id, review);
   }
 
   handleCommentChange = (event) => {
@@ -127,13 +130,13 @@ class WashroomDetails extends Component {
     this.setState({ attemptedSubmit: true });
 
     if (isEmpty(errors)) {
-      this.createReview(washroom.id).then(() => {
-        this.setState({
-          attemptedSubmit: false,
-          review: emptyReview,
-          created: true,
-        });
+      await this.createReview(washroom.id);
+      this.setState({
+        attemptedSubmit: false,
+        review: emptyReview,
+        created: true,
       });
+      this.getWashroom();
     }
   }
 
