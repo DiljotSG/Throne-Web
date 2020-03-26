@@ -32,7 +32,7 @@ describe('NearMe', () => {
       );
     });
 
-    expect(component.find('Title').text()).toEqual('Near Me');
+    expect(component.find('Title').first().text()).toEqual('Near Me');
     expect(component.find('TabPane')).toHaveLength(2);
     expect(component.find('TabPane').first().prop('tab')).toEqual('Buildings');
     expect(component.find('TabPane').at(1).prop('tab')).toEqual('Washrooms');
