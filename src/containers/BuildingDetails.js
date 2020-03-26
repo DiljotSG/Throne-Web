@@ -228,7 +228,8 @@ class BuildingDetails extends Component {
           }
         </Row>
         <Modal
-          title="Add Washroom"
+          width="580px"
+          title="New Washroom"
           visible={modalVisible}
           okText="Add"
           okButtonProps={okProps}
