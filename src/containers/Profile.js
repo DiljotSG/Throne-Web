@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Spin, Icon, Row, Col, Card,
+  Typography, Spin, Icon, Row, Col, List, Empty, Skeleton,
 } from 'antd';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getCurrentUser } from '../actions/userActions';
 import { getReviewsForUser } from '../actions/reviewActions';
-import { Reviews } from '../components';
+import { getFavoritesForUser } from '../actions/washroomActions';
+import { Reviews, WashroomListItem } from '../components';
 
 const { Title } = Typography;
+
+const renderWashrooms = ((userWashrooms) => {
+  if (isEmpty(userWashrooms)) {
+    return <Empty description="No favorite washrooms yet" />;
+  }
+  return (
+    <List
+      className="near-me-list"
+      bordered
+      dataSource={userWashrooms}
+      renderItem={(item) => (
+        <List.Item
+          className="near-me-list-item"
+          key={item.id}
+        >
+          <WashroomListItem item={item} />
+        </List.Item>
+      )}
+    />
+  );
+});
 
 class Profile extends Component {
   componentDidMount() {
@@ -20,23 +42,32 @@ class Profile extends Component {
     }
 
     this.getReviewsForUser();
+    this.getFavoritesForUser();
   }
 
   getCurrentUser = () => {
     const { getCurrentUser } = this.props; // eslint-disable-line no-shadow
-
     getCurrentUser();
   }
 
   getReviewsForUser = () => {
     const { getReviewsForUser } = this.props; // eslint-disable-line no-shadow
-
     getReviewsForUser();
+  }
+
+  getFavoritesForUser = () => {
+    const { getFavoritesForUser } = this.props; // eslint-disable-line no-shadow
+    getFavoritesForUser();
   }
 
   render() {
     const {
-      user, userFetching, reviews, reviewsFetching,
+      user,
+      userFetching,
+      reviews,
+      reviewsFetching,
+      userWashroomsFetching,
+      userWashrooms,
     } = this.props;
 
     if (isEmpty(user) && userFetching) {
@@ -44,20 +75,34 @@ class Profile extends Component {
     }
     return (
       <>
-        <Icon type="user" className="icon-title" />
+        <Icon
+          type="user"
+          className="icon-title"
+        />
         <Title className="username">
           {user.username}
         </Title>
-        <Row gutter={[16, 16]} align="middle">
-          <Col>
-            <Card>
-              <Reviews
-                reviews={reviews}
-                fetching={reviewsFetching}
-                title="Your reviews"
-                clickable
-              />
-            </Card>
+        <Row
+          align="middle"
+          gutter={[16, 24]}
+        >
+          <Col lg={{ span: 10, push: 14 }}>
+            <Title level={3}>
+              Your favorites
+            </Title>
+            {
+              userWashroomsFetching
+                ? <Skeleton active title={false} />
+                : renderWashrooms(userWashrooms)
+            }
+          </Col>
+          <Col lg={{ span: 14, pull: 10 }}>
+            <Reviews
+              reviews={reviews}
+              fetching={reviewsFetching}
+              title="Your reviews"
+              clickable
+            />
           </Col>
         </Row>
       </>
@@ -76,22 +121,34 @@ const mapStateToProps = (state) => {
     isFetching: reviewsFetching,
   } = state.reviewReducer;
 
+  const {
+    userWashrooms,
+    isFetching: userWashroomsFetching,
+    status: userWashroomsStatus,
+  } = state.washroomReducer;
+
   return {
     user,
     userFetching,
     reviews,
     reviewsFetching,
+    userWashrooms,
+    userWashroomsFetching,
+    userWashroomsStatus,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrentUser: () => dispatch(getCurrentUser()),
   getReviewsForUser: () => dispatch(getReviewsForUser()),
+  getFavoritesForUser: () => dispatch(getFavoritesForUser()),
 });
 
 Profile.propTypes = {
+  userWashrooms: PropTypes.instanceOf(Array),
   getCurrentUser: PropTypes.func.isRequired,
   getReviewsForUser: PropTypes.func.isRequired,
+  getFavoritesForUser: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
     preferences: PropTypes.shape({
@@ -124,11 +181,14 @@ Profile.propTypes = {
     }),
   ).isRequired,
   reviewsFetching: PropTypes.bool,
+  userWashroomsFetching: PropTypes.bool,
 };
 
 Profile.defaultProps = {
   userFetching: false,
   reviewsFetching: true,
+  userWashroomsFetching: true,
+  userWashrooms: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);

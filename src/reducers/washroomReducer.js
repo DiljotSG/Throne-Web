@@ -19,6 +19,11 @@ const washroomReducer = (state = initialState, action) => {
         ...state,
         isFetching: true,
       };
+    case actions.REQUEST_WASHROOMS_FOR_USER:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case actions.RECEIVE_WASHROOMS:
       return {
         ...state,
@@ -32,6 +37,13 @@ const washroomReducer = (state = initialState, action) => {
         isFetching: false,
         status: action.status,
         buildingWashrooms: action.washrooms,
+      };
+    case actions.RECEIVE_WASHROOMS_FOR_USER:
+      return {
+        ...state,
+        isFetching: false,
+        status: action.status,
+        userWashrooms: action.washrooms,
       };
     case actions.RECEIVE_WASHROOM:
       return {
