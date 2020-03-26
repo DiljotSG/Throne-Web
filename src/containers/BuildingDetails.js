@@ -45,7 +45,6 @@ const renderWashrooms = ((washrooms) => {
   );
 });
 
-
 class BuildingDetails extends Component {
   constructor() {
     super();
