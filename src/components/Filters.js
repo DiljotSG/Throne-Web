@@ -22,7 +22,9 @@ const Filters = ({
   submitting,
 }) => (
   <>
-    <Title level={3}>Filter</Title>
+    <Title level={3}>
+      Filter
+    </Title>
     <Text strong>
       Amenities
     </Text>
