@@ -30,6 +30,7 @@ import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
 const { Title, Text } = Typography;
 const { Option } = Select;
 const { TabPane } = Tabs;
+const MAX_RADIUS = 30;
 
 const renderBuildings = ((buildings) => {
   if (isEmpty(buildings)) {
@@ -74,7 +75,7 @@ class NearMe extends Component {
       filter: {
         amenities: [],
         maxResults: 1000,
-        radius: 5,
+        radius: MAX_RADIUS,
         latitude: 49.8080954,
         longitude: -97.1375209,
       },
@@ -194,7 +195,7 @@ class NearMe extends Component {
             <Slider
               disabled={!locationEnabled}
               min={0}
-              max={30}
+              max={MAX_RADIUS}
               step={0.5}
               onChange={this.handleRadiusChange}
               value={typeof filter.radius === 'number' ? filter.radius : 0}
