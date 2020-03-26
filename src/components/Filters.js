@@ -41,7 +41,9 @@ const Filters = ({
       ))}
     </Select>
 
-    <Text strong>Radius</Text>
+    <Text strong>
+      Radius
+    </Text>
     <Row type="flex" justify="space-around" align="middle">
       <Col span={18}>
         <Slider
