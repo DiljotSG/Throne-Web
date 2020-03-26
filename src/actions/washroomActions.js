@@ -173,6 +173,25 @@ export function getWashroomsForBuilding(id) {
   };
 }
 
+export function getFavoritesForUser() {
+  return async function fetchFavoritesForUserAsync(dispatch) {
+    dispatch(requestWashrooms());
+
+    return throneApi.getFavoritesForUser().then((response) => {
+      if (response.ok) {
+        response.json().then((washrooms) => {
+          dispatch(receiveWashrooms(washrooms, response.status));
+        });
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      throw (error);
+    });
+  };
+}
+
 export function favoriteWashroom(id) {
   return async function addFavoriteAsync(dispatch) {
     dispatch(addFavorite());

@@ -1,15 +1,37 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Spin, Icon, Row, Col, Card,
+  Typography, Spin, Icon, Row, Col, Card, List, Empty,
 } from 'antd';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
 import { getCurrentUser } from '../actions/userActions';
 import { getReviewsForUser } from '../actions/reviewActions';
-import { Reviews } from '../components';
+import { getFavoritesForUser } from '../actions/washroomActions';
+import { Reviews, WashroomListItem } from '../components';
 
 const { Title } = Typography;
+
+const renderWashrooms = ((washrooms) => {
+  if (isEmpty(washrooms)) {
+    return <Empty description="No favorite washrooms yet" />;
+  }
+  return (
+    <List
+      className="near-me-list"
+      bordered
+      dataSource={washrooms}
+      renderItem={(item) => (
+        <List.Item
+          className="near-me-list-item"
+          key={item.id}
+        >
+          <WashroomListItem item={item} />
+        </List.Item>
+      )}
+    />
+  );
+});
 
 class Profile extends Component {
   componentDidMount() {
@@ -20,26 +42,35 @@ class Profile extends Component {
     }
 
     this.getReviewsForUser();
+    this.getFavoritesForUser();
   }
 
   getCurrentUser = () => {
     const { getCurrentUser } = this.props; // eslint-disable-line no-shadow
-
     getCurrentUser();
   }
 
   getReviewsForUser = () => {
     const { getReviewsForUser } = this.props; // eslint-disable-line no-shadow
-
     getReviewsForUser();
+  }
+
+  getFavoritesForUser = () => {
+    const { getFavoritesForUser } = this.props; // eslint-disable-line no-shadow
+    getFavoritesForUser();
   }
 
   render() {
     const {
-      user, userFetching, reviews, reviewsFetching,
+      user,
+      userFetching,
+      reviews,
+      reviewsFetching,
+      washroomsFetching,
+      washrooms,
     } = this.props;
 
-    if (isEmpty(user) && userFetching) {
+    if (isEmpty(user) && userFetching && washroomsFetching) {
       return <Spin />;
     }
     return (
@@ -48,8 +79,11 @@ class Profile extends Component {
         <Title className="username">
           {user.username}
         </Title>
-        <Row gutter={[16, 16]} align="middle">
-          <Col>
+        <Row
+          align="middle"
+          gutter={16}
+        >
+          <Col lg={14}>
             <Card>
               <Reviews
                 reviews={reviews}
@@ -57,6 +91,14 @@ class Profile extends Component {
                 title="Your reviews"
                 clickable
               />
+            </Card>
+          </Col>
+          <Col lg={10}>
+            <Card>
+              <Title level={3}>
+                Your favorites
+              </Title>
+              {renderWashrooms(washrooms)}
             </Card>
           </Col>
         </Row>
@@ -76,22 +118,34 @@ const mapStateToProps = (state) => {
     isFetching: reviewsFetching,
   } = state.reviewReducer;
 
+  const {
+    washrooms,
+    isFetching: washroomsFetching,
+    status: washroomsStatus,
+  } = state.washroomReducer;
+
   return {
     user,
     userFetching,
     reviews,
     reviewsFetching,
+    washrooms,
+    washroomsFetching,
+    washroomsStatus,
   };
 };
 
 const mapDispatchToProps = (dispatch) => ({
   getCurrentUser: () => dispatch(getCurrentUser()),
   getReviewsForUser: () => dispatch(getReviewsForUser()),
+  getFavoritesForUser: () => dispatch(getFavoritesForUser()),
 });
 
 Profile.propTypes = {
+  washrooms: PropTypes.instanceOf(Array),
   getCurrentUser: PropTypes.func.isRequired,
   getReviewsForUser: PropTypes.func.isRequired,
+  getFavoritesForUser: PropTypes.func.isRequired,
   user: PropTypes.shape({
     id: PropTypes.number,
     preferences: PropTypes.shape({
@@ -124,11 +178,14 @@ Profile.propTypes = {
     }),
   ).isRequired,
   reviewsFetching: PropTypes.bool,
+  washroomsFetching: PropTypes.bool,
 };
 
 Profile.defaultProps = {
   userFetching: false,
   reviewsFetching: true,
+  washroomsFetching: true,
+  washrooms: [],
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Profile);
