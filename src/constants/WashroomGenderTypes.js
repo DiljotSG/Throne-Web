@@ -3,7 +3,7 @@ export const WOMEN = 'women';
 export const MEN = 'men';
 
 export const GENDERS = [
-  INCLUSIVE,
+  ALL,
   WOMEN,
   MEN,
 ];
