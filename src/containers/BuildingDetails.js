@@ -214,6 +214,7 @@ class BuildingDetails extends Component {
               type="primary"
               onClick={this.showModal}
               className="washroom-display-modal"
+              icon="plus"
             >
               Add Washroom
             </Button>
