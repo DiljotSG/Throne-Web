@@ -55,10 +55,7 @@ const renderCovid19Warning = () => {
             {' '}
           </Text>
           <Text strong>
-            Please remember to wash your hands when visiting a
-            {' '}
-            {getTerminology()}
-            .
+            {`Please remember to wash your hands when visiting a ${getTerminology()}.`}
           </Text>
         </>
         <Button

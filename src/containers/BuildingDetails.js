@@ -99,8 +99,7 @@ class BuildingDetails extends Component {
             level={4}
             className="washroom-list-header"
           >
-            {startCase(getTerminology())}
-            s Inside
+            {`${startCase(getTerminology())}s Inside`}
           </Title>
           {
             washroomsFetching

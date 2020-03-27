@@ -66,9 +66,7 @@ const renderBody = (reviews, fetching, pageSize, clickable) => {
                       to={clickable ? `/washrooms/${review.washroom_id}` : ''}
                       className="washroom-review-link"
                     >
-                      {startCase(getTerminology())}
-                      {' '}
-                      Details
+                      {`${startCase(getTerminology())} Details`}
                       <Icon type="right" />
                     </NavLink>
                     )}
