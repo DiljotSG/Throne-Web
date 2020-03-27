@@ -20,7 +20,7 @@ function handlePreferredTermChange(value) {
   selectedTerm = value;
 }
 
-function saveTermToStorage() {
+function savePreferredTerm() {
   localStorage.setItem(PREFERRED_TERM, selectedTerm);
   message.success(`Preferred Terminology updated to ${selectedTerm}.`);
 }
