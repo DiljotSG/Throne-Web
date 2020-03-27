@@ -15,4 +15,5 @@ export const PREFERRED_TERM_OPTIONS = [
   'loo',
   'can',
 ];
+
 export const PREFERRED_TERM = 'preferredTerm';
