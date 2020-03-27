@@ -7,6 +7,7 @@ import Reviews from './Reviews';
 import ReviewForm from './ReviewForm';
 import AmenityList from './AmenityList';
 import WashroomForm from './WashroomForm';
+import Filters from './Filters';
 
 export {
   Nav,
@@ -18,4 +19,5 @@ export {
   ReviewForm,
   AmenityList,
   WashroomForm,
+  Filters,
 };

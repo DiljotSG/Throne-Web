@@ -108,6 +108,11 @@ class ThroneApi {
     return this.accessEndpoint(GET, url);
   }
 
+  static async getFavoritesForUser() {
+    const url = this.createEndpointURL('users/favorites');
+    return this.accessEndpoint(GET, url);
+  }
+
   static async addFavorite(id) {
     const url = this.createEndpointURL('users/favorites');
     return this.accessEndpoint(POST, url, { washroom_id: id });
