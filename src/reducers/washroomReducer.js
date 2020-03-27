@@ -91,6 +91,7 @@ const washroomReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        creatingWashroom: false,
         status: action.status,
       };
     }
