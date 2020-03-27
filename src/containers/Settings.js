@@ -35,18 +35,16 @@ const Settings = () => (
       placeholder="Preferred Terminology"
       defaultValue={selectedTerm}
     >
-      {
-        PREFERRED_TERM_OPTIONS.map(
-          (object) => (
-            <Option
-              key={object}
-              value={object}
-            >
-              {object}
-            </Option>
-          ),
-        )
-        }
+      {PREFERRED_TERM_OPTIONS.map(
+        (object) => (
+          <Option
+            key={object}
+            value={object}
+          >
+            {object}
+          </Option>
+        ),
+      )}
     </Select>
     <div>
       <Button
