@@ -16,7 +16,7 @@ const { Option } = Select;
 
 let selectedTerm = getTerminology();
 
-function onTermSelected(value) {
+function handlePreferredTermChange(value) {
   selectedTerm = value;
 }
 
@@ -34,7 +34,7 @@ const Settings = () => (
     </Title>
     <Select
       style={{ width: 200 }}
-      onChange={onTermSelected}
+      onChange={handlePreferredTermChange}
       placeholder="Preferred Terminology"
       defaultValue={selectedTerm}
     >
