@@ -1,9 +1,6 @@
 import { startCase } from 'lodash';
 import * as amenities from '../constants/WashroomAmenityTypes';
-import {
-  PREFERRED_TERM,
-  DEFAULT_TERM,
-} from '../constants/PersistentSettings';
+import { PREFERRED_TERM, DEFAULT_TERM } from '../constants/PersistentSettings';
 
 export const genderAsString = (value) => {
   switch (value) {
