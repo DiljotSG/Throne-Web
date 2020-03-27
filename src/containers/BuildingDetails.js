@@ -10,7 +10,6 @@ import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActi
 import { roundToHalf } from '../utils/NumUtils';
 import { WashroomListItem, WashroomForm } from '../components';
 
-import { WashroomListItem } from '../components';
 import { getTerminology } from '../utils/DisplayUtils';
 
 import './BuildingDetails.css';
@@ -123,7 +122,6 @@ class BuildingDetails extends Component {
   }
 
   validate = () => {
-    const { washroom } = this.state;
     const errors = [];
 
     this.setState({
@@ -212,7 +210,9 @@ class BuildingDetails extends Component {
               className="washroom-display-modal"
               icon="plus"
             >
-              Add {startCase(getTerminology())}
+              Add
+              {' '}
+              {startCase(getTerminology())}
             </Button>
           </Col>
         </Row>

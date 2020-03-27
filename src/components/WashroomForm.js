@@ -16,7 +16,7 @@ import {
   genderAsEmoji,
 } from '../utils/DisplayUtils';
 import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
-import { GENDERS, WOMEN } from '../constants/WashroomGenderTypes';
+import { GENDERS } from '../constants/WashroomGenderTypes';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -75,22 +75,18 @@ const WashroomForm = ({
         className="washroom-form-stall-input"
       />
     </Form.Item>
-    {
-        (
-          <Form.Item
-            label="Urinals"
-            name="urinal_count"
-          >
-            <InputNumber
-              min={0}
-              max={50}
-              onChange={(value) => onChange('urinal_count', value)}
-              value={washroom.urinal_count}
-              className="washroom-form-urinal-input"
-            />
-          </Form.Item>
-        )
-      }
+    <Form.Item
+      label="Urinals"
+      name="urinal_count"
+    >
+      <InputNumber
+        min={0}
+        max={50}
+        onChange={(value) => onChange('urinal_count', value)}
+        value={washroom.urinal_count}
+        className="washroom-form-urinal-input"
+      />
+    </Form.Item>
     <Form.Item
       label="Amenities"
       name="amenities"
