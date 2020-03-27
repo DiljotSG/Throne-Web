@@ -89,7 +89,12 @@ class Profile extends Component {
             </Title>
           </Col>
           <Col span={4} align="right">
-            <Button type="default" shape="circle" icon="setting" href="/settings" />
+            <Button
+              type="default"
+              shape="circle"
+              icon="setting"
+              href="/settings"
+            />
           </Col>
         </Row>
         <Row
