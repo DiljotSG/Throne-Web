@@ -138,7 +138,7 @@ class BuildingDetails extends Component {
   showModal = () => {
     this.setState({
       modalVisible: true,
-      errors: []
+      errors: [],
     });
   };
 
