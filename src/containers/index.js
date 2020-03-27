@@ -4,9 +4,10 @@ import Profile from './Profile';
 import Settings from './Settings';
 import WashroomDetails from './WashroomDetails';
 import BuildingDetails from './BuildingDetails';
+import Error from './Error';
 
 import './pages.css';
 
 export {
-  NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails,
+  NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails, Error,
 };

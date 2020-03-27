@@ -16,7 +16,7 @@ import {
 import Auth from './services/Auth';
 
 import {
-  NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails,
+  NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails, Error,
 } from './containers';
 import { Nav, Login } from './components';
 
@@ -145,6 +145,7 @@ class App extends Component {
                 <Route path="/settings" component={Settings} />
                 <Route path="/washrooms/:id" component={WashroomDetails} />
                 <Route path="/buildings/:id" component={BuildingDetails} />
+                <Route component={Error} />
               </Switch>
             </div>
           </Content>
