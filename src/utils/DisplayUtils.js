@@ -198,6 +198,7 @@ export const displayDistance = (distance) => (
 export const getTerminology = () => (
   localStorage.getItem(PREFERRED_TERM) || DEFAULT_TERM
 );
+
 export default {
   genderAsString,
   genderAsEmoji,
