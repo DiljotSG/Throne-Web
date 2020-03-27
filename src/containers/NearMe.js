@@ -4,14 +4,11 @@ import {
   Typography,
   List,
   Icon,
-  Button,
-  Slider,
   Tabs,
   notification,
   Empty,
   Skeleton,
   Row,
-  Select,
   Col,
   Card,
 } from 'antd';
@@ -21,37 +18,12 @@ import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
 import { getBuildings } from '../actions/buildingActions';
 
-import { amenityAsEmoji, amenityAsString, displayDistance } from '../utils/DisplayUtils';
+import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
-import { WashroomListItem, BuildingListItem } from '../components';
-
-import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
+import { MAX_RADIUS } from '../constants/Defaults';
 
 const { Title, Text } = Typography;
-const { Option } = Select;
 const { TabPane } = Tabs;
-const MAX_RADIUS = 30;
-
-const renderBuildings = ((buildings) => {
-  if (isEmpty(buildings)) {
-    return <Empty description="No buildings near" />;
-  }
-  return (
-    <List
-      className="near-me-list"
-      bordered
-      dataSource={buildings}
-      renderItem={(item) => (
-        <List.Item
-          className="near-me-list-item"
-          key={item.id}
-        >
-          <BuildingListItem item={item} />
-        </List.Item>
-      )}
-    />
-  );
-});
 
 const renderNoLocationWarning = () => {
   notification.warning({
@@ -140,85 +112,15 @@ class NearMe extends Component {
     }
   }
 
-  handleSelectChange = (selected) => {
+  handleFilterChange = (key, value) => {
     const { filter } = this.state;
     this.setState({
       filterChanged: true,
       filter: {
         ...filter,
-        amenities: selected,
+        [key]: value,
       },
     });
-  };
-
-  handleRadiusChange = (radius) => {
-    const { filter } = this.state;
-    this.setState({
-      filterChanged: true,
-      filter: {
-        ...filter,
-        radius,
-      },
-    });
-  };
-
-  renderFilters = () => {
-    const { washroomsFetching } = this.props;
-    const { filter, filterChanged, locationEnabled } = this.state;
-
-    return (
-      <>
-        <Title level={3}>Filter Washrooms</Title>
-        <Text strong>Amenities</Text>
-        <Select
-          className="filter-amenity-select"
-          mode="multiple"
-          allowClear
-          onChange={this.handleSelectChange}
-        >
-          {ALL_AMENITIES.map((amenity) => (
-            <Option key={amenity}>{`${amenityAsString(amenity)} ${amenityAsEmoji(amenity)}`}</Option>
-          ))}
-        </Select>
-
-        <Text strong>Radius</Text>
-        <Row type="flex" justify="space-around" align="middle">
-          <Col span={18}>
-            <Slider
-              disabled={!locationEnabled}
-              min={0}
-              max={MAX_RADIUS}
-              step={0.5}
-              onChange={this.handleRadiusChange}
-              value={typeof filter.radius === 'number' ? filter.radius : 0}
-              tipFormatter={(value) => (
-                locationEnabled ? displayDistance(value) : 'You must enable location to use this feature.'
-              )}
-            />
-          </Col>
-          <Col
-            span={6}
-            className="filter-radius-text"
-          >
-            <Text strong>
-              {displayDistance(filter.radius)}
-            </Text>
-          </Col>
-        </Row>
-        <Button
-          key="submit"
-          disabled={!filterChanged}
-          type="primary"
-          loading={filterChanged && washroomsFetching}
-          onClick={() => {
-            this.getWashrooms();
-            this.setState({ filterChanged: false });
-          }}
-        >
-          {filterChanged ? 'Apply Filters' : 'No changes to apply'}
-        </Button>
-      </>
-    );
   };
 
   renderWashrooms = () => {
@@ -249,14 +151,42 @@ class NearMe extends Component {
     );
   };
 
+  renderBuildings = () => {
+    const { buildings, buildingsFetching } = this.props;
+
+    if (isEmpty(buildings) && !buildingsFetching) {
+      return <Empty description="No buildings near" />;
+    }
+
+    if (buildingsFetching) {
+      return <Skeleton active title={false} />;
+    }
+
+    return (
+      <List
+        className="near-me-list"
+        bordered
+        dataSource={buildings}
+        renderItem={(item) => (
+          <List.Item
+            className="near-me-list-item"
+            key={item.id}
+          >
+            <BuildingListItem item={item} />
+          </List.Item>
+        )}
+      />
+    );
+  };
+
   render() {
     const {
       history,
-      washrooms,
       washroomsFetching,
-      buildings,
       buildingsFetching,
     } = this.props;
+
+    const { filter, filterChanged, locationEnabled } = this.state;
 
     return (
       <>
@@ -273,11 +203,27 @@ class NearMe extends Component {
             tab="Buildings"
             key="buildings"
           >
-            {
-            buildingsFetching
-              ? <Skeleton active title={false} />
-              : renderBuildings(buildings)
-            }
+            <Row gutter={[16, 16]} align="middle">
+              <Col lg={{ push: 16, span: 8 }}>
+                <Card disabled={buildingsFetching}>
+                  <Filters
+                    building
+                    filter={filter}
+                    filterChanged={filterChanged}
+                    locationEnabled={locationEnabled}
+                    onChange={this.handleFilterChange}
+                    submitting={filterChanged && buildingsFetching}
+                    onSubmit={() => {
+                      this.getBuildings();
+                      this.setState({ filterChanged: false });
+                    }}
+                  />
+                </Card>
+              </Col>
+              <Col lg={{ pull: 8, span: 16 }}>
+                { this.renderBuildings() }
+              </Col>
+            </Row>
           </TabPane>
           <TabPane
             tab="Washrooms"
@@ -286,11 +232,21 @@ class NearMe extends Component {
             <Row gutter={[16, 16]} align="middle">
               <Col lg={{ push: 16, span: 8 }}>
                 <Card disabled={washroomsFetching}>
-                  {this.renderFilters()}
+                  <Filters
+                    filter={filter}
+                    filterChanged={filterChanged}
+                    locationEnabled={locationEnabled}
+                    onChange={this.handleFilterChange}
+                    submitting={filterChanged && washroomsFetching}
+                    onSubmit={() => {
+                      this.getWashrooms();
+                      this.setState({ filterChanged: false });
+                    }}
+                  />
                 </Card>
               </Col>
               <Col lg={{ pull: 8, span: 16 }}>
-                { this.renderWashrooms(washrooms) }
+                { this.renderWashrooms() }
               </Col>
             </Row>
           </TabPane>
