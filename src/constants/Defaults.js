@@ -1,1 +1,2 @@
-export const MAX_RADIUS = 30; // eslint-disable-line import/prefer-default-export
+export const MAX_RADIUS = 30;
+export const MAX_RESULTS = 50;

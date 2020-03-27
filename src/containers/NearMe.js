@@ -20,7 +20,7 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
-import { MAX_RADIUS } from '../constants/Defaults';
+import { MAX_RADIUS, MAX_RESULTS } from '../constants/Defaults';
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -46,7 +46,7 @@ class NearMe extends Component {
       filterChanged: false,
       filter: {
         amenities: [],
-        maxResults: 1000,
+        maxResults: MAX_RESULTS,
         radius: MAX_RADIUS,
         latitude: 49.8080954,
         longitude: -97.1375209,
