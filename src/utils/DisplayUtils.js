@@ -1,5 +1,7 @@
 import { startCase } from 'lodash';
 import * as amenities from '../constants/WashroomAmenityTypes';
+import { PREFERRED_TERM } from '../constants/PersistentSettings';
+import { WASHROOM_TERMINOLOGY } from '../constants/Defaults';
 
 export const genderAsString = (value) => {
   switch (value) {
@@ -194,6 +196,10 @@ export const displayDistance = (distance) => (
   distance < 1 ? `${(distance * 1000).toFixed(0)} m` : `${(distance).toFixed(1)} km`
 );
 
+export const getTerminology = () => (
+  localStorage.getItem(PREFERRED_TERM) || WASHROOM_TERMINOLOGY
+);
+
 export default {
   genderAsString,
   genderAsEmoji,
@@ -201,4 +207,5 @@ export default {
   amenityAsEmoji,
   ratingAsEmoji,
   displayDistance,
+  getTerminology,
 };
