@@ -11,6 +11,7 @@ import Profile from '../Profile';
 
 import user from './data/user.json';
 import reviews from './data/userReviews.json';
+import favorites from './data/favorites.json';
 
 export default function setupStore(initialState) {
   return createStore(rootReducer, { ...initialState }, applyMiddleware(thunk));
@@ -20,6 +21,7 @@ const store = setupStore({});
 
 fetchMock.get('https://testapi.com/users', user);
 fetchMock.get('https://testapi.com/users/reviews', reviews);
+fetchMock.get('https://testapi.com/users/favorites', favorites);
 
 describe('Profile', () => {
   it('Renders the Profile page', async () => {
