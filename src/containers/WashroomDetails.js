@@ -13,7 +13,7 @@ import {
   WashroomRatings, Reviews, ReviewForm, AmenityList,
 } from '../components';
 
-import { genderAsEmoji, genderAsString } from '../utils/DisplayUtils';
+import { genderAsEmoji, genderAsString, getTerminology } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
@@ -292,7 +292,7 @@ class WashroomDetails extends Component {
                 >
                   <span
                     className="washroom-marker"
-                    aria-label="Washroom location"
+                    aria-label={`${getTerminology()} location`}
                     role="img"
                   >
                     📍
