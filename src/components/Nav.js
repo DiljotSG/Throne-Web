@@ -24,7 +24,7 @@ const Nav = ({ location, logout }) => (
     >
       <Menu.Item key="/"><NavLink to="/">Near Me</NavLink></Menu.Item>
       <Menu.Item key="/map"><NavLink to="/map">Map</NavLink></Menu.Item>
-      <SubMenu title="Me" >
+      <SubMenu title="Me">
         <Menu.Item key="/profile"><NavLink to="/profile">Profile</NavLink></Menu.Item>
         <Menu.Item key="/logout" onClick={logout}>Logout</Menu.Item>
       </SubMenu>
