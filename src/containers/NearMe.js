@@ -20,7 +20,7 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
-import { MAX_RADIUS, MAX_RESULTS } from '../constants/Defaults';
+import { MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS } from '../constants/Defaults';
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -46,7 +46,8 @@ class NearMe extends Component {
       filterChanged: false,
       filter: {
         amenities: [],
-        maxResults: MAX_RESULTS,
+        maxResultsBuildings: MAX_RESULTS_BUILDINGS,
+        maxResultsWashrooms: MAX_RESULTS_WASHROOMS,
         radius: MAX_RADIUS,
         latitude: 49.8080954,
         longitude: -97.1375209,
@@ -63,7 +64,7 @@ class NearMe extends Component {
     const { getBuildings } = this.props; // eslint-disable-line no-shadow
     const { filter } = this.state;
     const {
-      amenities, maxResults, radius, latitude, longitude,
+      amenities, maxResultsBuildings: maxResults, radius, latitude, longitude,
     } = filter;
 
     if ('geolocation' in navigator) {
@@ -90,7 +91,7 @@ class NearMe extends Component {
     const { getWashrooms } = this.props; // eslint-disable-line no-shadow
     const { filter } = this.state;
     const {
-      amenities, maxResults, radius, latitude, longitude,
+      amenities, maxResultsWashrooms: maxResults, radius, latitude, longitude,
     } = filter;
 
     if ('geolocation' in navigator) {
