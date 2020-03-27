@@ -89,6 +89,7 @@ describe('action reducer', () => {
     ).toEqual(
       {
         isFetching: false,
+        creatingWashroom: false,
         status: 401,
       },
     );
