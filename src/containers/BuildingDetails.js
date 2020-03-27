@@ -4,17 +4,13 @@ import {
 } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isEmpty, startCase } from 'lodash';
+import { isEmpty, startCase, isInteger } from 'lodash';
 import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
 import { WashroomListItem, WashroomForm } from '../components';
 
-import { 
-  ERROR_EMPTY_STALL_COUNT,
-  ERROR_EMPTY_URINAL_COUNT,
-  ERROR_EMPTY_FLOOR
-} from '../constants/Messages';
+import { WOMEN } from '../constants/WashroomGenderTypes';
 import { getTerminology } from '../utils/DisplayUtils';
 
 import './BuildingDetails.css';
@@ -24,7 +20,7 @@ const { Title, Text } = Typography;
 const washroomDefault = {
   comment: '',
   gender: 'all',
-  floor: 1,
+  floor: 0,
   stall_count: 1,
   urinal_count: 0,
   building_id: 0,
@@ -71,14 +67,20 @@ class BuildingDetails extends Component {
     this.getWashroomsForBuilding(id);
   }
 
-  componentDidUpdate(prevProps) {
+  componentDidUpdate(prevProp, prevState) {
     const { washroomStatus } = this.props;
+    const { modalVisible } = this.state;
 
-    if (prevProps.washroomStatus !== washroomStatus) {
+    if (modalVisible && prevState.modalVisible) {
       if (washroomStatus === 201) {
         this.closeModal();
         notification.success({
           message: `${startCase(getTerminology())} Added`,
+          duration: 3,
+        });
+      } else if (washroomStatus >= 400) {
+        notification.error({
+          message: `Could Not Add ${startCase(getTerminology())}`,
           duration: 3,
         });
       }
@@ -104,53 +106,44 @@ class BuildingDetails extends Component {
 
   handleSubmit = async () => {
     await this.validate();
-
-    const { errors } = this.state;
     const { building } = this.props;
 
     this.setState({ attemptedSubmit: true });
-    if (isEmpty(errors)) {
-      this.createWashroom(building);
-      this.setState({ attemptedSubmit: false });
-    }
+    this.createWashroom(building);
+    this.setState({ attemptedSubmit: false });
   }
 
   handleChange = (key, value) => {
     const { washroom } = this.state;
+
     this.setState({
       washroom: {
         ...washroom,
-        [key]: value,
+        [key]: this.validateInput(key, value),
       },
-    },
-    this.validate);
+    });
   }
 
   validate = () => {
     const { washroom } = this.state;
-    const errors = [];
+    if (washroom.gender === WOMEN) {
+      washroom.urinal_count = 0;
+    }
+  }
 
-    if (washroom.floor !== '') {
-      errors.push(ERROR_EMPTY_FLOOR);
+  validateInput = (key, value) => {
+    const { washroom } = this.state;
+    if (typeof (washroom[key]) === 'number') {
+      if (!isInteger(value)) {
+        return washroomDefault[key];
+      }
     }
-    
-    if (washroom.stall_count !== '') {
-      errors.push(ERROR_EMPTY_STALL_COUNT);
-    }
-    
-    if (washroom.urinal_count !== '') {
-      errors.push(ERROR_EMPTY_URINAL_COUNT);
-    }
-
-    this.setState({
-      errors,
-    });
+    return value;
   }
 
   showModal = () => {
     this.setState({
       modalVisible: true,
-      errors: [],
     });
   };
 
@@ -173,13 +166,12 @@ class BuildingDetails extends Component {
 
     const {
       washroom,
-      errors,
       attemptedSubmit,
       modalVisible,
     } = this.state;
 
     const okProps = {
-      disabled: (!isEmpty(errors) && attemptedSubmit),
+      disabled: attemptedSubmit,
       loading: creatingWashroom,
       className: 'washroom-create-submit',
     };
@@ -253,8 +245,6 @@ class BuildingDetails extends Component {
             washroom={washroom}
             onSubmit={this.handleSubmit}
             onChange={this.handleChange}
-            errors={errors}
-            attemptedSubmit={attemptedSubmit}
           />
         </Modal>
       </>

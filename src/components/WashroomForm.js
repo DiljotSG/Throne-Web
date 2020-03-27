@@ -6,9 +6,7 @@ import {
   Radio,
   InputNumber,
   Select,
-  Alert,
 } from 'antd';
-import { isEmpty } from 'lodash';
 import {
   amenityAsString,
   amenityAsEmoji,
@@ -16,7 +14,7 @@ import {
   genderAsEmoji,
 } from '../utils/DisplayUtils';
 import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
-import { GENDERS } from '../constants/WashroomGenderTypes';
+import { GENDERS, WOMEN } from '../constants/WashroomGenderTypes';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -24,8 +22,6 @@ const { Option } = Select;
 const WashroomForm = ({
   washroom,
   onChange,
-  errors,
-  attemptedSubmit,
 }) => (
   <Form
     labelCol={{ span: 4 }}
@@ -75,18 +71,23 @@ const WashroomForm = ({
         className="washroom-form-stall-input"
       />
     </Form.Item>
-    <Form.Item
-      label="Urinals"
-      name="urinal_count"
-    >
-      <InputNumber
-        min={0}
-        max={50}
-        onChange={(value) => onChange('urinal_count', value)}
-        value={washroom.urinal_count}
-        className="washroom-form-urinal-input"
-      />
-    </Form.Item>
+    {
+        washroom.gender !== WOMEN
+        && (
+          <Form.Item
+            label="Urinals"
+            name="urinal_count"
+          >
+            <InputNumber
+              min={0}
+              max={50}
+              onChange={(value) => onChange('urinal_count', value)}
+              value={washroom.urinal_count}
+              className="washroom-form-urinal-input"
+            />
+          </Form.Item>
+        )
+      }
     <Form.Item
       label="Amenities"
       name="amenities"
@@ -116,16 +117,6 @@ const WashroomForm = ({
         className="washroom-form-comment-text"
       />
     </Form.Item>
-    { !isEmpty(errors) && attemptedSubmit && (
-      <Alert
-        message={errors.map((error) => (
-          <li key={error}>{error}</li>
-        ))}
-        type="error"
-        showIcon
-        closable={false}
-      />
-    )}
   </Form>
 );
 
@@ -139,14 +130,10 @@ WashroomForm.propTypes = {
     amenities: PropTypes.instanceOf(Array),
   }).isRequired,
   onChange: PropTypes.func,
-  errors: PropTypes.arrayOf(PropTypes.string),
-  attemptedSubmit: PropTypes.bool,
 };
 
 WashroomForm.defaultProps = {
   onChange: () => { },
-  errors: [],
-  attemptedSubmit: false,
 };
 
 export default WashroomForm;
