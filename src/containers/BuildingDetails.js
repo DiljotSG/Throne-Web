@@ -9,8 +9,6 @@ import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
 import { WashroomListItem, WashroomForm } from '../components';
-
-import { WOMEN } from '../constants/WashroomGenderTypes';
 import { getTerminology } from '../utils/DisplayUtils';
 
 import './BuildingDetails.css';
@@ -105,7 +103,6 @@ class BuildingDetails extends Component {
   }
 
   handleSubmit = async () => {
-    await this.validate();
     const { building } = this.props;
 
     this.setState({ attemptedSubmit: true });
@@ -122,13 +119,6 @@ class BuildingDetails extends Component {
         [key]: this.validateInput(key, value),
       },
     });
-  }
-
-  validate = () => {
-    const { washroom } = this.state;
-    if (washroom.gender === WOMEN) {
-      washroom.urinal_count = 0;
-    }
   }
 
   validateInput = (key, value) => {
