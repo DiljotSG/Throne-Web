@@ -67,9 +67,9 @@ class BuildingDetails extends Component {
 
   componentDidUpdate(prevProp, prevState) {
     const { washroomStatus } = this.props;
-    const { modalVisible } = this.state;
+    const { washroom, modalVisible } = this.state;
 
-    if (modalVisible && prevState.modalVisible) {
+    if (modalVisible && prevState.modalVisible && prevState.washroom === washroom) {
       if (washroomStatus === 201) {
         this.closeModal();
         notification.success({
