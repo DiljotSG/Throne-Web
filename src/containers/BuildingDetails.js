@@ -10,7 +10,11 @@ import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActi
 import { roundToHalf } from '../utils/NumUtils';
 import { WashroomListItem, WashroomForm } from '../components';
 
-import { ERROR_EMPTY_FIELDS } from '../constants/Messages';
+import { 
+  ERROR_EMPTY_STALL_COUNT,
+  ERROR_EMPTY_URINAL_COUNT,
+  ERROR_EMPTY_FLOOR
+} from '../constants/Messages';
 import { getTerminology } from '../utils/DisplayUtils';
 
 import './BuildingDetails.css';
@@ -126,8 +130,16 @@ class BuildingDetails extends Component {
     const { washroom } = this.state;
     const errors = [];
 
-    if (washroom.floor !== '' || washroom.stall_count === '' || washroom.urinal_count === '') {
-      errors.push(ERROR_EMPTY_FIELDS);
+    if (washroom.floor !== '') {
+      errors.push(ERROR_EMPTY_FLOOR);
+    }
+    
+    if (washroom.stall_count !== '') {
+      errors.push(ERROR_EMPTY_STALL_COUNT);
+    }
+    
+    if (washroom.urinal_count !== '') {
+      errors.push(ERROR_EMPTY_URINAL_COUNT);
     }
 
     this.setState({
