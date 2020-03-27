@@ -10,6 +10,7 @@ import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActi
 import { roundToHalf } from '../utils/NumUtils';
 import { WashroomListItem, WashroomForm } from '../components';
 
+import { ERROR_EMPTY_FIELDS } from '../constants/Messages';
 import { getTerminology } from '../utils/DisplayUtils';
 
 import './BuildingDetails.css';
@@ -122,7 +123,12 @@ class BuildingDetails extends Component {
   }
 
   validate = () => {
+    const { washroom } = this.state;
     const errors = [];
+
+    if (washroom.floor !== '' || washroom.stall_count === '' || washroom.urinal_count === '') {
+      errors.push(ERROR_EMPTY_FIELDS);
+    }
 
     this.setState({
       errors,
@@ -132,6 +138,7 @@ class BuildingDetails extends Component {
   showModal = () => {
     this.setState({
       modalVisible: true,
+      errors: []
     });
   };
 
@@ -210,9 +217,7 @@ class BuildingDetails extends Component {
               className="washroom-display-modal"
               icon="plus"
             >
-              Add
-              {' '}
-              {startCase(getTerminology())}
+              {`Add ${startCase(getTerminology())}`}
             </Button>
           </Col>
         </Row>

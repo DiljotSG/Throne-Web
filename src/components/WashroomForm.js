@@ -116,8 +116,7 @@ const WashroomForm = ({
         className="washroom-form-comment-text"
       />
     </Form.Item>
-    {
-        !isEmpty(errors) && attemptedSubmit && (
+      { !isEmpty(errors) && attemptedSubmit && (
           <Alert
             message={errors.map((error) => (
               <li key={error}>{error}</li>
