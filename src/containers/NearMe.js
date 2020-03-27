@@ -56,6 +56,7 @@ class NearMe extends Component {
   }
 
   componentDidMount() {
+    document.title = 'Near Me - Throne';
     this.getWashrooms();
     this.getBuildings();
   }

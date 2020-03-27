@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import {
-  Spin, Row, Col, Divider, Typography, Card, Button, Icon,
+  Spin, Row, Col, Divider, Typography, Card, Button, Icon, Statistic,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
@@ -161,6 +161,36 @@ class WashroomDetails extends Component {
     this.setState({ viewport });
   }
 
+  renderStats = () => {
+    const { washroom } = this.props;
+
+    return (
+      <Card
+        className="washroom-stats"
+      >
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Statistic
+              title="Stalls"
+              value={washroom.stall_count}
+              className="washroom-stall-count"
+            />
+          </Col>
+          { washroom.urinal_count > 0
+            && (
+              <Col span={12}>
+                <Statistic
+                  title="Urinals"
+                  value={washroom.urinal_count}
+                  className="washroom-urinal-count"
+                />
+              </Col>
+            )}
+        </Row>
+      </Card>
+    );
+  }
+
   render() {
     const {
       washroom,
@@ -286,6 +316,7 @@ class WashroomDetails extends Component {
             </Card>
           </Col>
           <Col sm={24} md={10}>
+            { this.renderStats() }
             <AmenityList amenities={washroom.amenities} />
           </Col>
           <Col span={24}>
@@ -375,6 +406,8 @@ WashroomDetails.propTypes = {
       cleanliness: PropTypes.number,
       toilet_paper_quality: PropTypes.number,
     }),
+    stall_count: PropTypes.number,
+    urinal_count: PropTypes.number,
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
     building_title: PropTypes.string,

@@ -41,6 +41,14 @@
   border-color: #E50000 !important;
 }
 
+.washroom-stats {
+  margin-bottom: 16px !important;
+}
+
+.washroom-stats .ant-col {
+  text-align: center;
+}
+
 .map-container {
   margin-top: 16px !important;
 }
