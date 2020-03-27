@@ -55,7 +55,7 @@ const Settings = () => (
       <Button
         type="primary"
         className="save-terminology-button"
-        onClick={saveTermToStorage}
+        onClick={savePreferredTerm}
       >
         Save
       </Button>
