@@ -225,7 +225,7 @@ class BuildingDetails extends Component {
         </Row>
         <Modal
           width="580px"
-          title="New Washroom"
+          title={`New ${startCase(getTerminology())}`}
           visible={modalVisible}
           okText="Add"
           okButtonProps={okProps}
