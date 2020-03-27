@@ -1,9 +1,11 @@
-export const DEFAULT_TERM = 'washroom';
+import { WASHROOM_TERMINOLOGY } from './Defaults';
+
+
 export const PREFERRED_TERM_OPTIONS = [
   'john',
   'crapper',
   'latrine',
-  DEFAULT_TERM,
+  WASHROOM_TERMINOLOGY,
   'bathroom',
   'toilet',
   'restroom',
