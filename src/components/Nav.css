@@ -14,3 +14,7 @@
   max-width: 1200px;
   margin: auto;
 }
+
+.ant-menu-submenu-selected {
+  background: #1890ff !important;
+}
