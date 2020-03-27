@@ -75,10 +75,7 @@ class Profile extends Component {
     }
     return (
       <>
-        <Row
-          align="middle"
-          gutter={[16, 24]}
-        >
+        <Row align="middle" gutter={[16, 24]}>
           <Col span={20}>
             <Icon
               type="user"
@@ -98,10 +95,7 @@ class Profile extends Component {
             />
           </Col>
         </Row>
-        <Row
-          align="middle"
-          gutter={[16, 24]}
-        >
+        <Row align="middle" gutter={[16, 24]}>
           <Col lg={{ span: 10, push: 14 }}>
             <Title level={3}>
               Your favorites
