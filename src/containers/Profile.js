@@ -90,6 +90,7 @@ class Profile extends Component {
           </Col>
           <Col span={4} align="right">
             <Button
+              size="large"
               type="default"
               shape="circle"
               icon="setting"
