@@ -144,7 +144,7 @@ export function getWashroomsForBuilding(id) {
     return throneApi.getWashroomsForBuilding(id).then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
-          dispatch(receiveWashroomsForBuliding(washrooms, response.status));
+          dispatch(receiveWashroomsForBuilding(washrooms, response.status));
         });
       } else {
         dispatch(failure(response.status));
