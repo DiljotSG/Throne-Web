@@ -113,10 +113,10 @@ class NearMe extends Component {
     }
   }
 
-  handleFilterChange = (key, value) => {
+  handleFilterChange = (key, value, requiresFetch = true) => {
     const { filter } = this.state;
     this.setState({
-      filterChanged: true,
+      filterChanged: requiresFetch,
       filter: {
         ...filter,
         [key]: value,

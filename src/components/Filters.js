@@ -78,7 +78,7 @@ const Filters = ({
       <Row>
         <Switch
           checked={filter.displayEmptyBuildings}
-          onChange={(value) => { onChange('displayEmptyBuildings', value); }}
+          onChange={(value) => { onChange('displayEmptyBuildings', value, false); }}
           className="filter-switch"
         />
         <Text strong>
