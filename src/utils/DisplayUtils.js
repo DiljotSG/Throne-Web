@@ -198,14 +198,9 @@ export const displayDistance = (distance) => (
   distance < 1 ? `${(distance * 1000).toFixed(0)} m` : `${(distance).toFixed(1)} km`
 );
 
-export const getTerminology = () => {
-  const preferredTerm = localStorage.getItem(PREFERRED_TERM);
-  if (preferredTerm == null) {
-    return DEFAULT_TERM;
-  }
-  return preferredTerm;
-};
-
+export const getTerminology = () => (
+  localStorage.getItem(PREFERRED_TERM) || DEFAULT_TERM
+);
 export default {
   genderAsString,
   genderAsEmoji,
