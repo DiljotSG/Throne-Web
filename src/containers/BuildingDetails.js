@@ -10,6 +10,7 @@ import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActi
 import { roundToHalf } from '../utils/NumUtils';
 import './BuildingDetails.css';
 import { ERROR_WASHROOM_EMPTY_COMMENT } from '../constants/Messages';
+import { WOMEN } from '../constants/WashroomGenderTypes';
 import { WashroomListItem, WashroomForm } from '../components';
 
 const { Title, Text } = Typography;
@@ -126,7 +127,7 @@ class BuildingDetails extends Component {
       errors.push(ERROR_WASHROOM_EMPTY_COMMENT);
     }
 
-    if (washroom.gender === 'women') {
+    if (washroom.gender === WOMEN) {
       washroom.urinal_count = 0;
     }
 

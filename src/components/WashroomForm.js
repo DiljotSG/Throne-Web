@@ -13,7 +13,7 @@ import {
   amenityAsString, amenityAsEmoji, genderAsString, genderAsEmoji,
 } from '../utils/DisplayUtils';
 import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
-import { GENDERS } from '../constants/WashroomGenderTypes';
+import { GENDERS, WOMEN } from '../constants/WashroomGenderTypes';
 
 const { TextArea } = Input;
 const { Option } = Select;
@@ -73,7 +73,7 @@ const WashroomForm = ({
       />
     </Form.Item>
     {
-        washroom.gender !== 'women' && (
+        washroom.gender !== WOMEN && (
           <Form.Item
             label="Urinals"
             name="urinal_count"
