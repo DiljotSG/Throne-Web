@@ -14,10 +14,10 @@ import {
   Card,
 } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import { isEmpty, startCase } from 'lodash';
 import moment from 'moment';
 import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
-import { ratingAsEmoji } from '../utils/DisplayUtils';
+import { ratingAsEmoji, getTerminology } from '../utils/DisplayUtils';
 
 import './Reviews.css';
 
@@ -66,7 +66,7 @@ const renderBody = (reviews, fetching, pageSize, clickable) => {
                       to={clickable ? `/washrooms/${review.washroom_id}` : ''}
                       className="washroom-review-link"
                     >
-                      Washroom Details
+                      {`${startCase(getTerminology())} Details`}
                       <Icon type="right" />
                     </NavLink>
                     )}

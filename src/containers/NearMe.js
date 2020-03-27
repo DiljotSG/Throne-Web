@@ -12,7 +12,7 @@ import {
   Col,
   Card,
 } from 'antd';
-import { trim, isEmpty } from 'lodash';
+import { trim, isEmpty, startCase } from 'lodash';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { getWashrooms } from '../actions/washroomActions';
@@ -21,6 +21,7 @@ import { getBuildings } from '../actions/buildingActions';
 import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
 import { MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS } from '../constants/Defaults';
+import { getTerminology } from '../utils/DisplayUtils';
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -130,7 +131,8 @@ class NearMe extends Component {
     const { washrooms, washroomsFetching } = this.props;
 
     if (isEmpty(washrooms) && !washroomsFetching) {
-      return <Empty description="No washrooms near" />;
+      const description = `No ${getTerminology()}s near`;
+      return <Empty description={description} />;
     }
 
     if (washroomsFetching) {
@@ -237,7 +239,7 @@ class NearMe extends Component {
             </Row>
           </TabPane>
           <TabPane
-            tab="Washrooms"
+            tab={startCase(`${getTerminology()}s`)}
             key="washrooms"
           >
             <Row gutter={[16, 16]} align="middle">

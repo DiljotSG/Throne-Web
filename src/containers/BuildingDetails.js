@@ -4,14 +4,16 @@ import {
 } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { isEmpty, startCase } from 'lodash';
 import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
-import './BuildingDetails.css';
-import { ERROR_WASHROOM_EMPTY_COMMENT } from '../constants/Messages';
-import { WOMEN } from '../constants/WashroomGenderTypes';
 import { WashroomListItem, WashroomForm } from '../components';
+
+import { WashroomListItem } from '../components';
+import { getTerminology } from '../utils/DisplayUtils';
+
+import './BuildingDetails.css';
 
 const { Title, Text } = Typography;
 
@@ -27,7 +29,8 @@ const washroomDefault = {
 
 const renderWashrooms = ((washrooms) => {
   if (isEmpty(washrooms)) {
-    return <Empty description="No washrooms yet" />;
+    const description = `No ${getTerminology()}s yet`;
+    return <Empty description={description} />;
   }
   return (
     <List
@@ -71,7 +74,7 @@ class BuildingDetails extends Component {
       if (washroomStatus === 201) {
         this.closeModal();
         notification.success({
-          message: 'Washroom Added',
+          message: `${startCase(getTerminology())} Added`,
           duration: 3,
         });
       }
@@ -122,14 +125,6 @@ class BuildingDetails extends Component {
   validate = () => {
     const { washroom } = this.state;
     const errors = [];
-
-    if (washroom.comment.length === 0) {
-      errors.push(ERROR_WASHROOM_EMPTY_COMMENT);
-    }
-
-    if (washroom.gender === WOMEN) {
-      washroom.urinal_count = 0;
-    }
 
     this.setState({
       errors,
@@ -207,7 +202,7 @@ class BuildingDetails extends Component {
               level={4}
               className="washroom-list-header"
             >
-              Washrooms Inside
+              {`${startCase(getTerminology())}s Inside`}
             </Title>
           </Col>
           <Col span={12} className="washroom-add-button">
@@ -217,7 +212,7 @@ class BuildingDetails extends Component {
               className="washroom-display-modal"
               icon="plus"
             >
-              Add Washroom
+              Add {startCase(getTerminology())}
             </Button>
           </Col>
         </Row>

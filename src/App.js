@@ -14,6 +14,7 @@ import {
 } from 'antd';
 
 import Auth from './services/Auth';
+import { getTerminology } from './utils/DisplayUtils';
 
 import {
   NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails, Error,
@@ -54,7 +55,7 @@ const renderCovid19Warning = () => {
             {' '}
           </Text>
           <Text strong>
-            Please remember to wash your hands when visiting a washroom.
+            {`Please remember to wash your hands when visiting a ${getTerminology()}.`}
           </Text>
         </>
         <Button

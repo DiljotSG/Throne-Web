@@ -10,7 +10,10 @@ import {
 } from 'antd';
 import { isEmpty } from 'lodash';
 import {
-  amenityAsString, amenityAsEmoji, genderAsString, genderAsEmoji,
+  amenityAsString,
+  amenityAsEmoji,
+  genderAsString,
+  genderAsEmoji,
 } from '../utils/DisplayUtils';
 import { ALL_AMENITIES } from '../constants/WashroomAmenityTypes';
 import { GENDERS, WOMEN } from '../constants/WashroomGenderTypes';
@@ -73,7 +76,7 @@ const WashroomForm = ({
       />
     </Form.Item>
     {
-        washroom.gender !== WOMEN && (
+        (
           <Form.Item
             label="Urinals"
             name="urinal_count"

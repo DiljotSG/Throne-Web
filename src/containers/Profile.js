@@ -9,12 +9,14 @@ import { getCurrentUser } from '../actions/userActions';
 import { getReviewsForUser } from '../actions/reviewActions';
 import { getFavoritesForUser } from '../actions/washroomActions';
 import { Reviews, WashroomListItem } from '../components';
+import { getTerminology } from '../utils/DisplayUtils';
 
 const { Title } = Typography;
 
 const renderWashrooms = ((userWashrooms) => {
   if (isEmpty(userWashrooms)) {
-    return <Empty description="No favorite washrooms yet" />;
+    const description = `No favorite ${getTerminology()}s yet`;
+    return <Empty description={description} />;
   }
   return (
     <List
