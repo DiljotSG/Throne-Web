@@ -1,54 +1,65 @@
 import React from 'react';
-import PropTypes from 'prop-types';
-import { Typography, Icon, Select, Button } from 'antd';
-import { PREFERRED_TERM_OPTIONS, DEFAULT_TERM } from '../constants/PersistentSettings';
+import {
+  Typography, Icon, Select, Button,
+} from 'antd';
+import {
+  PREFERRED_TERM_OPTIONS,
+  PREFERRED_TERM,
+} from '../constants/PersistentSettings';
+
+import { getTerminology } from '../utils/DisplayUtils';
 
 import './Settings.css';
 
 const { Title } = Typography;
 const { Option } = Select;
 
-// This needs to be made into a component somehow
+let selectedTerm = getTerminology();
+
+function termSelected(value) {
+  selectedTerm = value;
+}
+
+function saveTermToStorage() {
+  localStorage.setItem(PREFERRED_TERM, selectedTerm);
+}
+
 const Settings = () => (
   <>
     <Icon type="setting" className="icon-title" />
     <Title>Settings</Title>
+    <Title level={3}>
+      Preferred Terminology
+    </Title>
     <Select
       style={{ width: 200 }}
-      onChange={console.log}
+      onChange={termSelected}
       placeholder="Preferred Terminology"
+      defaultValue={selectedTerm}
     >
       {
         PREFERRED_TERM_OPTIONS.map(
           (object) => (
-                <Option 
-                  key={object}
-                  value={object}
-                >
-                  {object}
-                </Option>
-            )
-          )
+            <Option
+              key={object}
+              value={object}
+            >
+              {object}
+            </Option>
+          ),
+        )
         }
     </Select>
     <div>
       <Button
         type="primary"
         className="save-terminology-button"
-        onClick={(value) => (console.log(value))}
+        onClick={saveTermToStorage}
       >
         Save
       </Button>
     </div>
   </>
 );
-
-Settings.propTypes = {
-  washrooms: PropTypes.instanceOf(String),
-};
-
-Settings.defaultProps = {
-  terminology: DEFAULT_TERM
-};
 
 export default Settings;
