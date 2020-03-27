@@ -1,6 +1,5 @@
 import { WASHROOM_TERMINOLOGY } from './Defaults';
 
-
 export const PREFERRED_TERM_OPTIONS = [
   'john',
   'crapper',
