@@ -50,6 +50,7 @@ class NearMe extends Component {
         radius: MAX_RADIUS,
         latitude: 49.8080954,
         longitude: -97.1375209,
+        displayEmptyBuildings: false,
       },
     };
   }
@@ -152,7 +153,9 @@ class NearMe extends Component {
   };
 
   renderBuildings = () => {
-    const { buildings, buildingsFetching } = this.props;
+    const { buildingsFetching } = this.props;
+    let { buildings } = this.props;
+    const { filter } = this.state;
 
     if (isEmpty(buildings) && !buildingsFetching) {
       return <Empty description="No buildings near" />;
@@ -160,6 +163,12 @@ class NearMe extends Component {
 
     if (buildingsFetching) {
       return <Skeleton active title={false} />;
+    }
+
+    if (!filter.displayEmptyBuildings) {
+      buildings = buildings.filter((building) => (
+        building.washroom_count > 0
+      ));
     }
 
     return (
