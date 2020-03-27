@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import {
-  Typography, Spin, Icon, Row, Col, List, Empty, Skeleton,
+  Typography, Spin, Icon, Row, Col, List, Empty, Skeleton, Button,
 } from 'antd';
 import { isEmpty } from 'lodash';
 import { connect } from 'react-redux';
@@ -75,13 +75,23 @@ class Profile extends Component {
     }
     return (
       <>
-        <Icon
-          type="user"
-          className="icon-title"
-        />
-        <Title className="username">
-          {user.username}
-        </Title>
+        <Row
+          align="middle"
+          gutter={[16, 24]}
+        >
+          <Col span={20}>
+            <Icon
+              type="user"
+              className="icon-title"
+            />
+            <Title className="username">
+              {user.username}
+            </Title>
+          </Col>
+          <Col span={4} align="right">
+            <Button type="default" shape="circle" icon="setting" href="/settings" />
+          </Col>
+        </Row>
         <Row
           align="middle"
           gutter={[16, 24]}
