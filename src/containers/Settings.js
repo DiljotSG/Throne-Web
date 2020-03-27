@@ -2,10 +2,7 @@ import React from 'react';
 import {
   Typography, Icon, Select, Button, message,
 } from 'antd';
-import {
-  PREFERRED_TERM_OPTIONS,
-  PREFERRED_TERM,
-} from '../constants/PersistentSettings';
+import { PREFERRED_TERM_OPTIONS, PREFERRED_TERM } from '../constants/PersistentSettings';
 
 import { getTerminology } from '../utils/DisplayUtils';
 
