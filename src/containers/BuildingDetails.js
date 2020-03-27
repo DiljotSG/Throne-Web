@@ -89,8 +89,9 @@ class BuildingDetails extends Component {
             { 'Building rating: ' }
           </Text>
           <Rate
-            className="building-rate-overall"
             disabled
+            className="building-rate-overall"
+            allowHalf
             value={roundToHalf(building.overall_rating)}
           />
         </Row>
