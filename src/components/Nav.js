@@ -9,8 +9,11 @@ import './Nav.css';
 const { SubMenu } = Menu;
 const { Header } = Layout;
 
+// get the selected nav key
+//  if pathname is /washrooms or /buildings: the selected key should be '/'
+//  else: selected key is the pathname
 const selectedKeys = (pathname) => (
-  ['/washrooms', '/buildings'].some((element) => element.substring(pathname)) ? ['/'] : [pathname]
+  ['/washrooms', '/buildings'].indexOf(pathname) > -1 ? ['/'] : [pathname]
 );
 
 const Nav = ({ location, logout }) => (
@@ -19,7 +22,7 @@ const Nav = ({ location, logout }) => (
     <Menu
       theme="dark"
       mode="horizontal"
-      defaultSelectedKeys={selectedKeys(location)}
+      defaultSelectedKeys={selectedKeys(location.pathname)}
       className="nav-menu"
     >
       <Menu.Item key="/"><NavLink to="/">Near Me</NavLink></Menu.Item>
