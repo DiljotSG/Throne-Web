@@ -4,19 +4,21 @@ import {
 } from 'antd';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { isEmpty } from 'lodash';
+import { isEmpty, startCase } from 'lodash';
 import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
 import './BuildingDetails.css';
 
 import { WashroomListItem } from '../components';
+import { getTerminology } from '../utils/DisplayUtils';
 
 const { Title, Text } = Typography;
 
 const renderWashrooms = ((washrooms) => {
   if (isEmpty(washrooms)) {
-    return <Empty description="No washrooms yet" />;
+    const description = `No ${getTerminology()}s yet`;
+    return <Empty description={description} />;
   }
   return (
     <List
@@ -97,7 +99,8 @@ class BuildingDetails extends Component {
             level={4}
             className="washroom-list-header"
           >
-            Washrooms Inside
+            {startCase(getTerminology())}
+            s Inside
           </Title>
           {
             washroomsFetching

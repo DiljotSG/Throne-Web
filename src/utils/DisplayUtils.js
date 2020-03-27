@@ -213,5 +213,5 @@ export default {
   amenityAsEmoji,
   ratingAsEmoji,
   displayDistance,
-  getTerminology
+  getTerminology,
 };

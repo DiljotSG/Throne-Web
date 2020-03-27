@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Typography, Icon, Select, Button,
+  Typography, Icon, Select, Button, message,
 } from 'antd';
 import {
   PREFERRED_TERM_OPTIONS,
@@ -22,6 +22,7 @@ function termSelected(value) {
 
 function saveTermToStorage() {
   localStorage.setItem(PREFERRED_TERM, selectedTerm);
+  message.success(`Preferred Terminology updated to ${selectedTerm}.`);
 }
 
 const Settings = () => (
