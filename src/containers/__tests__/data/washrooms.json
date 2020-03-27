@@ -19,7 +19,9 @@
     "location": {
       "latitude": 49.8080954,
       "longitude": -97.1375209
-    }
+    },
+    "stall_count": 1,
+    "urinal_count": 2
   },
   {
     "id": 2,
