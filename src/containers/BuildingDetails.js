@@ -102,7 +102,7 @@ class BuildingDetails extends Component {
     createWashroom(building, washroom);
   }
 
-  handleSubmit = async () => {
+  handleSubmit = () => {
     const { building } = this.props;
 
     this.setState({ attemptedSubmit: true });
@@ -116,7 +116,7 @@ class BuildingDetails extends Component {
     this.setState({
       washroom: {
         ...washroom,
-        [key]: this.validateInput(key, value),
+        [key]: this.validateField(key, value),
       },
     });
   }
