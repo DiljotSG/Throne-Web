@@ -1,4 +1,5 @@
 export const PREFERRED_TERM_OPTIONS = [
+  'throne',
   'john',
   'crapper',
   'latrine',
