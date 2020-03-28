@@ -70,6 +70,10 @@ describe('WashroomDetails', () => {
     expect(component.find('Rate').find('.washroom-rate-privacy').first().prop('value')).toBe(2);
     expect(component.find('Rate').find('.washroom-rate-toilet-paper-quality').first().prop('value')).toBe(4);
     expect(component.find('Rate').find('.washroom-rate-smell').first().prop('value')).toBe(1);
+    expect(component.find('Statistic.washroom-urinal-count').prop('title')).toBe('Urinals');
+    expect(component.find('Statistic.washroom-urinal-count').prop('value')).toBe(2);
+    expect(component.find('Statistic.washroom-stall-count').prop('title')).toBe('Stalls');
+    expect(component.find('Statistic.washroom-stall-count').prop('value')).toBe(1);
     expect(component.find('li.ant-list-item').length).toBe(1);
     expect(component.find('li.ant-list-item').first().text()).toBe('Air Dryer 💨');
     expect(component.find('InteractiveMap').first().prop('latitude')).toBe(49.8080954);

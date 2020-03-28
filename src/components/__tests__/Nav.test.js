@@ -14,10 +14,9 @@ describe('Nav', () => {
         />
       </Router>,
     );
-    expect(component.find('NavLink').length).toEqual(4);
+    expect(component.find('NavLink').length).toEqual(2);
     expect(component.find('NavLink').at(0).text()).toEqual('Near Me');
     expect(component.find('NavLink').at(1).text()).toEqual('Map');
-    expect(component.find('NavLink').at(2).text()).toEqual('Profile');
-    expect(component.find('NavLink').at(3).find('svg').length).toEqual(1);
+    expect(component.find('SubMenu').at(4).text()).toEqual('Me');
   });
 });

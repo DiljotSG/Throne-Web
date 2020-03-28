@@ -13,7 +13,7 @@
 }
 
 .washroom-rate-average {
-  color: #FBD78C !important;
+  color: #FFD560 !important;
 }
 
 .washroom-favorite-button {
@@ -39,6 +39,14 @@
 .washroom-favorite-button-unselected:hover {
   color: #E50000 !important;
   border-color: #E50000 !important;
+}
+
+.washroom-stats {
+  margin-bottom: 16px !important;
+}
+
+.washroom-stats .ant-col {
+  text-align: center;
 }
 
 .map-container {

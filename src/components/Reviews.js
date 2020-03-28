@@ -1,13 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import {
-  Row, Col, Comment, Avatar, Divider, Empty, Skeleton, Typography, List, Icon,
+  Row,
+  Col,
+  Comment,
+  Avatar,
+  Divider,
+  Empty,
+  Skeleton,
+  Typography,
+  List,
+  Icon,
+  Card,
 } from 'antd';
 import { NavLink } from 'react-router-dom';
-import { isEmpty } from 'lodash';
+import { isEmpty, startCase } from 'lodash';
 import moment from 'moment';
 import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
-import { ratingAsEmoji } from '../utils/DisplayUtils';
+import { ratingAsEmoji, getTerminology } from '../utils/DisplayUtils';
 
 import './Reviews.css';
 
@@ -35,43 +45,45 @@ const renderBody = (reviews, fetching, pageSize, clickable) => {
         hideOnSinglePage: true,
       }}
       renderItem={(review) => (
-        <Comment
-          className="washroom-review"
-          key={review.created_at}
-          author={review.user.username}
-          avatar={(
-            <Avatar>
-              {review.user.username.charAt(0).toUpperCase()}
-            </Avatar>
+        <Card className="washroom-review-card">
+          <Comment
+            className="washroom-review"
+            key={review.created_at}
+            author={review.user.username}
+            avatar={(
+              <Avatar>
+                {review.user.username.charAt(0).toUpperCase()}
+              </Avatar>
+              )}
+            datetime={moment(review.created_at).fromNow()}
+            content={(
+              <Row>
+                <Col sm={14} md={16} className="washroom-review-comment">
+                  {review.comment}
+                  { clickable
+                    && (
+                    <NavLink
+                      to={clickable ? `/washrooms/${review.washroom_id}` : ''}
+                      className="washroom-review-link"
+                    >
+                      {`${startCase(getTerminology())} Details`}
+                      <Icon type="right" />
+                    </NavLink>
+                    )}
+                </Col>
+                <Col sm={10} md={8} className="washroom-review-rating">
+                  { WASHROOM_RATING_CATEGORIES.map((type, i) => (
+                    <React.Fragment key={type}>
+                      {i > 0 ? <Divider type="vertical" /> : ''}
+                      {ratingAsEmoji(type)}
+                      {review.ratings[type]}
+                    </React.Fragment>
+                  ))}
+                </Col>
+              </Row>
             )}
-          datetime={moment(review.created_at).fromNow()}
-          content={(
-            <Row>
-              <Col sm={14} md={16} className="washroom-review-comment">
-                {review.comment}
-                { clickable
-                  && (
-                  <NavLink
-                    to={clickable ? `/washrooms/${review.washroom_id}` : ''}
-                    className="washroom-review-link"
-                  >
-                    Washroom Details
-                    <Icon type="right" />
-                  </NavLink>
-                  )}
-              </Col>
-              <Col sm={10} md={8} className="washroom-review-rating">
-                { WASHROOM_RATING_CATEGORIES.map((type, i) => (
-                  <React.Fragment key={type}>
-                    {i > 0 ? <Divider type="vertical" /> : ''}
-                    {ratingAsEmoji(type)}
-                    {review.ratings[type]}
-                  </React.Fragment>
-                ))}
-              </Col>
-            </Row>
-          )}
-        />
+          />
+        </Card>
       )}
     />
   );
@@ -87,7 +99,6 @@ const Reviews = ({
     {renderBody(reviews, fetching, pageSize, clickable)}
   </>
 );
-
 
 Reviews.propTypes = {
   reviews: PropTypes.arrayOf(

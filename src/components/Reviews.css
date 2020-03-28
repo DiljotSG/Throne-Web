@@ -3,3 +3,11 @@
   display: block;
   color: #888;
 }
+
+.washroom-review-card {
+  margin-bottom: -1px !important;
+}
+
+.washroom-review {
+  margin: -15px 0px !important;
+}

@@ -55,4 +55,53 @@ describe('BuildingDetails', () => {
     expect(component.find('.washroom-list-item-rating').first().prop('value')).toBe(5);
     expect(component.find('.washroom-list-item-distance-value').first().text()).toBe('19 m');
   });
+
+  it('Creates a new washroom', async () => {
+    let component;
+
+    const washroomDetails = {
+      comment: 'Test comment',
+      gender: 'men',
+      floor: 2,
+      stall_count: 4,
+      urinal_count: 7,
+      building_id: 1,
+      amenities: ['auto_sink', 'auto_toilet'],
+    };
+
+    await act(async () => {
+      const match = { params: { id: '1' } };
+
+      component = mount(
+        <Router>
+          <BuildingDetails
+            store={store}
+            match={match}
+            location={{}}
+          />
+        </Router>,
+      );
+    });
+    component.update();
+
+    // Set Washroom
+    component.find('BuildingDetails').setState({ washroom: washroomDetails });
+
+    await act(async () => {
+      await component.find('Button.washroom-display-modal').first().simulate('click');
+    });
+    component.update();
+
+    const modal = component.find('Modal').first();
+    const menRadioButton = modal.find('RadioButton.washroom-form-radio-button').at(2);
+
+    // Check Fields
+    expect(menRadioButton.prop('value')).toBe(washroomDetails.gender);
+    expect(menRadioButton.find('Radio').prop('checked')).toBe(true);
+    expect(modal.find('InputNumber.washroom-form-floor-input').first().prop('value')).toBe(washroomDetails.floor);
+    expect(modal.find('InputNumber.washroom-form-stall-input').first().prop('value')).toBe(washroomDetails.stall_count);
+    expect(modal.find('InputNumber.washroom-form-urinal-input').first().prop('value')).toBe(washroomDetails.urinal_count);
+    expect(modal.find('Select.washroom-form-amenity-select').first().prop('value')).toBe(washroomDetails.amenities);
+    expect(modal.find('TextArea.washroom-form-comment-text').first().prop('value')).toBe(washroomDetails.comment);
+  });
 });

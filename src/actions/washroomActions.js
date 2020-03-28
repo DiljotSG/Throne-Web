@@ -17,9 +17,17 @@ export const receiveWashrooms = (response, status) => (
   }
 );
 
-export const receiveWashroomsForBuliding = (response, status) => (
+export const receiveWashroomsForBuilding = (response, status) => (
   {
     type: actions.RECEIVE_WASHROOMS_FOR_BUILDING,
+    washrooms: response,
+    status,
+  }
+);
+
+export const receiveWashroomsForUser = (response, status) => (
+  {
+    type: actions.RECEIVE_WASHROOMS_FOR_USER,
     washrooms: response,
     status,
   }
@@ -42,6 +50,12 @@ export const receiveWashroom = (response, status) => (
 export function requestWashroomsForBuilding() {
   return {
     type: actions.REQUEST_WASHROOMS_FOR_BUILDING,
+  };
+}
+
+export function requestWashroomsForUser() {
+  return {
+    type: actions.REQUEST_WASHROOMS_FOR_USER,
   };
 }
 
@@ -70,6 +84,14 @@ export function createWashroomAction() {
     type: actions.CREATE_WASHROOM,
   };
 }
+
+export const recieveCreatedWashroomAction = (washroom, status) => (
+  {
+    type: actions.RECEIVE_CREATED_WASHROOM,
+    washroom,
+    status,
+  }
+);
 
 export function getWashrooms(latitude, longitude, maxResults, amenities, radius) {
   return async function fetchWashroomsAsync(dispatch) {
@@ -115,34 +137,14 @@ export function getWashroom(id) {
   };
 }
 
-export function createWashroom(
-  comment,
-  longitude,
-  latitude,
-  gender,
-  floor,
-  urinalCount,
-  stallCount,
-  buildingId,
-  amenities,
-) {
-  return async function createWashroomAsync(dispatch) {
-    dispatch(createWashroomAction());
+export function getWashroomsForBuilding(id) {
+  return async function fetchWashroomsForBuildingAsync(dispatch) {
+    dispatch(requestWashroomsForBuilding());
 
-    return throneApi.createWashroom(
-      comment,
-      longitude,
-      latitude,
-      gender,
-      floor,
-      urinalCount,
-      stallCount,
-      buildingId,
-      amenities,
-    ).then((response) => {
+    return throneApi.getWashroomsForBuilding(id).then((response) => {
       if (response.ok) {
-        response.json().then((createdWashroom) => {
-          dispatch(receiveWashroom(createdWashroom, response.status));
+        response.json().then((washrooms) => {
+          dispatch(receiveWashroomsForBuilding(washrooms, response.status));
         });
       } else {
         dispatch(failure(response.status));
@@ -154,14 +156,44 @@ export function createWashroom(
   };
 }
 
-export function getWashroomsForBuilding(id) {
-  return async function fetchWashroomsForBuildingAsync(dispatch) {
-    dispatch(requestWashroomsForBuilding());
 
-    return throneApi.getWashroomsForBuilding(id).then((response) => {
+export function createWashroom(building, washroom) {
+  return async function createWashroomAsync(dispatch) {
+    dispatch(createWashroomAction());
+
+    return throneApi.createWashroom(
+      washroom.comment,
+      building.location.longitude,
+      building.location.latitude,
+      washroom.gender,
+      washroom.floor,
+      washroom.urinal_count,
+      washroom.stall_count,
+      building.id,
+      washroom.amenities,
+    ).then((response) => {
+      if (response.ok) {
+        response.json().then((createdWashroom) => {
+          dispatch(recieveCreatedWashroomAction(createdWashroom, response.status));
+        });
+      } else {
+        dispatch(failure(response.status));
+      }
+    }).catch((error) => {
+      dispatch(failure());
+      throw (error);
+    });
+  };
+}
+
+export function getFavoritesForUser() {
+  return async function fetchFavoritesForUserAsync(dispatch) {
+    dispatch(requestWashroomsForUser());
+
+    return throneApi.getFavoritesForUser().then((response) => {
       if (response.ok) {
         response.json().then((washrooms) => {
-          dispatch(receiveWashroomsForBuliding(washrooms, response.status));
+          dispatch(receiveWashroomsForUser(washrooms, response.status));
         });
       } else {
         dispatch(failure(response.status));

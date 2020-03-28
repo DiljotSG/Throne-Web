@@ -19,6 +19,11 @@ const washroomReducer = (state = initialState, action) => {
         ...state,
         isFetching: true,
       };
+    case actions.REQUEST_WASHROOMS_FOR_USER:
+      return {
+        ...state,
+        isFetching: true,
+      };
     case actions.RECEIVE_WASHROOMS:
       return {
         ...state,
@@ -33,19 +38,34 @@ const washroomReducer = (state = initialState, action) => {
         status: action.status,
         buildingWashrooms: action.washrooms,
       };
+    case actions.RECEIVE_WASHROOMS_FOR_USER:
+      return {
+        ...state,
+        isFetching: false,
+        status: action.status,
+        userWashrooms: action.washrooms,
+      };
     case actions.RECEIVE_WASHROOM:
       return {
         ...state,
         isFetching: false,
         status: action.status,
         washroom: action.washroom,
-        creatingWashroom: false,
       };
     case actions.CREATE_WASHROOM:
       return {
         ...state,
         isFetching: true,
         creatingWashroom: true,
+      };
+    case actions.RECEIVE_CREATED_WASHROOM:
+      return {
+        ...state,
+        isFetching: false,
+        creatingWashroom: false,
+        status: action.status,
+        buildingWashrooms: [...state.buildingWashrooms, action.washroom],
+        washroom: action.washroom,
       };
     case actions.ADD_FAVORITE:
       return {
@@ -71,6 +91,7 @@ const washroomReducer = (state = initialState, action) => {
       return {
         ...state,
         isFetching: false,
+        creatingWashroom: false,
         status: action.status,
       };
     }

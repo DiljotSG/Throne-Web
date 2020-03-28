@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ReactMapGL, { GeolocateControl, Marker, Popup } from 'react-map-gl';
 import {
-  Spin, Row, Col, Divider, Typography, Card, Button, Icon,
+  Spin, Row, Col, Divider, Typography, Card, Button, Icon, Statistic,
 } from 'antd';
 import PropTypes from 'prop-types';
 import { isEmpty } from 'lodash';
@@ -13,7 +13,7 @@ import {
   WashroomRatings, Reviews, ReviewForm, AmenityList,
 } from '../components';
 
-import { genderAsEmoji, genderAsString } from '../utils/DisplayUtils';
+import { genderAsEmoji, genderAsString, getTerminology } from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
@@ -51,19 +51,22 @@ class WashroomDetails extends Component {
 
   componentDidMount() {
     window.addEventListener('resize', this.handleResize);
-    const { match } = this.props;
-    const { id } = match.params;
-    this.getWashroom(id);
-    this.getReviewsForWashroom(id);
+
+    this.getWashroom();
+    this.getReviewsForWashroom();
   }
 
-  getWashroom = (id) => {
-    const { getWashroom } = this.props; // eslint-disable-line no-shadow
+  getWashroom = () => {
+    const { getWashroom, match } = this.props; // eslint-disable-line no-shadow
+    const { id } = match.params;
+
     getWashroom(id);
   }
 
-  getReviewsForWashroom = (id) => {
-    const { getReviewsForWashroom } = this.props; // eslint-disable-line no-shadow
+  getReviewsForWashroom = () => {
+    const { getReviewsForWashroom, match } = this.props; // eslint-disable-line no-shadow
+    const { id } = match.params;
+
     getReviewsForWashroom(id);
   }
 
@@ -71,7 +74,7 @@ class WashroomDetails extends Component {
     const { createReview } = this.props; // eslint-disable-line no-shadow
     const { review } = this.state;
 
-    await createReview(id, review);
+    return createReview(id, review);
   }
 
   handleCommentChange = (event) => {
@@ -127,13 +130,13 @@ class WashroomDetails extends Component {
     this.setState({ attemptedSubmit: true });
 
     if (isEmpty(errors)) {
-      this.createReview(washroom.id).then(() => {
-        this.setState({
-          attemptedSubmit: false,
-          review: emptyReview,
-          created: true,
-        });
+      await this.createReview(washroom.id);
+      this.setState({
+        attemptedSubmit: false,
+        review: emptyReview,
+        created: true,
       });
+      this.getWashroom();
     }
   }
 
@@ -156,6 +159,36 @@ class WashroomDetails extends Component {
     viewport = { ...viewport, ...mapDimensions };
 
     this.setState({ viewport });
+  }
+
+  renderStats = () => {
+    const { washroom } = this.props;
+
+    return (
+      <Card
+        className="washroom-stats"
+      >
+        <Row type="flex" justify="center">
+          <Col span={12}>
+            <Statistic
+              title="Stalls"
+              value={washroom.stall_count}
+              className="washroom-stall-count"
+            />
+          </Col>
+          { washroom.urinal_count > 0
+            && (
+              <Col span={12}>
+                <Statistic
+                  title="Urinals"
+                  value={washroom.urinal_count}
+                  className="washroom-urinal-count"
+                />
+              </Col>
+            )}
+        </Row>
+      </Card>
+    );
   }
 
   render() {
@@ -259,7 +292,7 @@ class WashroomDetails extends Component {
                 >
                   <span
                     className="washroom-marker"
-                    aria-label="Washroom location"
+                    aria-label={`${getTerminology()} location`}
                     role="img"
                   >
                     📍
@@ -283,6 +316,7 @@ class WashroomDetails extends Component {
             </Card>
           </Col>
           <Col sm={24} md={10}>
+            { this.renderStats() }
             <AmenityList amenities={washroom.amenities} />
           </Col>
           <Col span={24}>
@@ -372,6 +406,8 @@ WashroomDetails.propTypes = {
       cleanliness: PropTypes.number,
       toilet_paper_quality: PropTypes.number,
     }),
+    stall_count: PropTypes.number,
+    urinal_count: PropTypes.number,
     amenities: PropTypes.instanceOf(Array),
     is_favorite: PropTypes.bool,
     building_title: PropTypes.string,

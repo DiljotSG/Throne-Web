@@ -14,9 +14,10 @@ import {
 } from 'antd';
 
 import Auth from './services/Auth';
+import { getTerminology } from './utils/DisplayUtils';
 
 import {
-  NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails,
+  NearMe, Map, Profile, Settings, WashroomDetails, BuildingDetails, Error,
 } from './containers';
 import { Nav, Login } from './components';
 
@@ -54,7 +55,7 @@ const renderCovid19Warning = () => {
             {' '}
           </Text>
           <Text strong>
-            Please remember to wash your hands when visiting a washroom.
+            {`Please remember to wash your hands when visiting a ${getTerminology()}.`}
           </Text>
         </>
         <Button
@@ -145,6 +146,7 @@ class App extends Component {
                 <Route path="/settings" component={Settings} />
                 <Route path="/washrooms/:id" component={WashroomDetails} />
                 <Route path="/buildings/:id" component={BuildingDetails} />
+                <Route component={Error} />
               </Switch>
             </div>
           </Content>

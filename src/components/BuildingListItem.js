@@ -4,9 +4,10 @@ import {
   Row, Col, Typography, Rate,
 } from 'antd';
 
+import { startCase } from 'lodash';
 import { NavLink } from 'react-router-dom';
 import { roundToHalf } from '../utils/NumUtils';
-import { displayDistance } from '../utils/DisplayUtils';
+import { displayDistance, getTerminology } from '../utils/DisplayUtils';
 import './BuildingListItem.css';
 
 const { Text } = Typography;
@@ -26,7 +27,7 @@ const BuildingListItem = ({ item }) => (
         </Text>
         <div className="in-line">
           <Text className="building-list-item-washroom-count">
-            {`Washrooms: ${item.washroom_count}`}
+            {`${startCase(getTerminology())}s: ${item.washroom_count}`}
           </Text>
         </div>
         <div className="in-line">
