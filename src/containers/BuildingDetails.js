@@ -121,7 +121,7 @@ class BuildingDetails extends Component {
     });
   }
 
-  validateInput = (key, value) => {
+  validateField = (key, value) => {
     const { washroom } = this.state;
     if (typeof (washroom[key]) === 'number') {
       if (!isInteger(value)) {
