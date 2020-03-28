@@ -123,10 +123,8 @@ class BuildingDetails extends Component {
 
   validateField = (key, value) => {
     const { washroom } = this.state;
-    if (typeof (washroom[key]) === 'number') {
-      if (!isInteger(value)) {
-        return washroomDefault[key];
-      }
+    if (typeof (washroom[key]) === 'number' && !isInteger(value)) {
+      return washroomDefault[key];
     }
     return value;
   }
