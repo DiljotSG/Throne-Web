@@ -93,7 +93,6 @@ describe('BuildingDetails', () => {
     component.update();
 
     const modal = component.find('Modal').first();
-
     const menRadioButton = modal.find('RadioButton.washroom-form-radio-button').at(2);
 
     // Check Fields
