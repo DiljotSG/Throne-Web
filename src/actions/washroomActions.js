@@ -85,6 +85,14 @@ export function createWashroomAction() {
   };
 }
 
+export const recieveCreatedWashroomAction = (washroom, status) => (
+  {
+    type: actions.RECEIVE_CREATED_WASHROOM,
+    washroom,
+    status,
+  }
+);
+
 export function getWashrooms(latitude, longitude, maxResults, amenities, radius) {
   return async function fetchWashroomsAsync(dispatch) {
     dispatch(requestWashrooms());
@@ -129,34 +137,14 @@ export function getWashroom(id) {
   };
 }
 
-export function createWashroom(
-  comment,
-  longitude,
-  latitude,
-  gender,
-  floor,
-  urinalCount,
-  stallCount,
-  buildingId,
-  amenities,
-) {
-  return async function createWashroomAsync(dispatch) {
-    dispatch(createWashroomAction());
+export function getWashroomsForBuilding(id) {
+  return async function fetchWashroomsForBuildingAsync(dispatch) {
+    dispatch(requestWashroomsForBuilding());
 
-    return throneApi.createWashroom(
-      comment,
-      longitude,
-      latitude,
-      gender,
-      floor,
-      urinalCount,
-      stallCount,
-      buildingId,
-      amenities,
-    ).then((response) => {
+    return throneApi.getWashroomsForBuilding(id).then((response) => {
       if (response.ok) {
-        response.json().then((createdWashroom) => {
-          dispatch(receiveWashroom(createdWashroom, response.status));
+        response.json().then((washrooms) => {
+          dispatch(receiveWashroomsForBuilding(washrooms, response.status));
         });
       } else {
         dispatch(failure(response.status));
@@ -168,14 +156,25 @@ export function createWashroom(
   };
 }
 
-export function getWashroomsForBuilding(id) {
-  return async function fetchWashroomsForBuildingAsync(dispatch) {
-    dispatch(requestWashroomsForBuilding());
 
-    return throneApi.getWashroomsForBuilding(id).then((response) => {
+export function createWashroom(building, washroom) {
+  return async function createWashroomAsync(dispatch) {
+    dispatch(createWashroomAction());
+
+    return throneApi.createWashroom(
+      washroom.comment,
+      building.location.longitude,
+      building.location.latitude,
+      washroom.gender,
+      washroom.floor,
+      washroom.urinal_count,
+      washroom.stall_count,
+      building.id,
+      washroom.amenities,
+    ).then((response) => {
       if (response.ok) {
-        response.json().then((washrooms) => {
-          dispatch(receiveWashroomsForBuilding(washrooms, response.status));
+        response.json().then((createdWashroom) => {
+          dispatch(recieveCreatedWashroomAction(createdWashroom, response.status));
         });
       } else {
         dispatch(failure(response.status));

@@ -50,7 +50,6 @@ describe('action reducer', () => {
       {
         washroom: { washroom: 'Washroom 1' },
         isFetching: false,
-        creatingWashroom: false,
         status: 200,
       },
     );
@@ -90,6 +89,7 @@ describe('action reducer', () => {
     ).toEqual(
       {
         isFetching: false,
+        creatingWashroom: false,
         status: 401,
       },
     );
