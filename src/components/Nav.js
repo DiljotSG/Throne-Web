@@ -10,11 +10,14 @@ const { SubMenu } = Menu;
 const { Header } = Layout;
 
 // get the selected nav key
-//  if pathname is /washrooms or /buildings: the selected key should be '/'
+//  if pathname is /washrooms or /buildings (with ID parameter): the selected key should be '/'
 //  else: selected key is the pathname
-const selectedKeys = (pathname) => (
-  ['/washrooms', '/buildings'].indexOf(pathname) > -1 ? ['/'] : [pathname]
-);
+const selectedKeys = (pathname) => {
+  const washroomBuildingDetails = /((washrooms)|(buildings))(\/\d+)?/;
+  const firstKey = washroomBuildingDetails.test(pathname);
+
+  return firstKey ? ['/'] : [pathname];
+};
 
 const Nav = ({ location, logout }) => (
   <Header>
