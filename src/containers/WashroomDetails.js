@@ -13,7 +13,9 @@ import {
   WashroomRatings, Reviews, ReviewForm, AmenityList,
 } from '../components';
 
-import { genderAsEmoji, genderAsString, getTerminology } from '../utils/DisplayUtils';
+import {
+  genderAsEmoji, genderAsString, getTerminology, washroomTabName,
+} from '../utils/DisplayUtils';
 import './WashroomDetails.css';
 
 const { Title, Text } = Typography;
@@ -54,6 +56,12 @@ class WashroomDetails extends Component {
 
     this.getWashroom();
     this.getReviewsForWashroom();
+  }
+
+  componentDidUpdate() {
+    const { washroom, washroomFetching } = this.props;
+
+    document.title = washroomTabName(washroom, washroomFetching);
   }
 
   getWashroom = () => {

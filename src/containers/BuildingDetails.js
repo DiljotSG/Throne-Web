@@ -9,7 +9,7 @@ import { getBuilding } from '../actions/buildingActions';
 import { getWashroomsForBuilding, createWashroom } from '../actions/washroomActions';
 import { roundToHalf } from '../utils/NumUtils';
 import { WashroomListItem, WashroomForm } from '../components';
-import { getTerminology } from '../utils/DisplayUtils';
+import { getTerminology, buildingTabName } from '../utils/DisplayUtils';
 
 import './BuildingDetails.css';
 
@@ -66,8 +66,10 @@ class BuildingDetails extends Component {
   }
 
   componentDidUpdate(prevProp, prevState) {
-    const { washroomStatus } = this.props;
+    const { building, buildingFetching, washroomStatus } = this.props;
     const { washroom, modalVisible } = this.state;
+
+    document.title = buildingTabName(building, buildingFetching);
 
     if (modalVisible && prevState.modalVisible && prevState.washroom === washroom) {
       if (washroomStatus === 201) {
