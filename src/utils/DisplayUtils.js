@@ -177,6 +177,19 @@ export const ratingAsEmoji = (value) => {
   }
 };
 
+export const ratingAsString = (value) => {
+  switch (value) {
+    case 'cleanliness':
+    case 'privacy':
+    case 'smell':
+      return startCase(value);
+    case 'toilet_paper_quality':
+      return 'Paper Quality';
+    default:
+      return '';
+  }
+};
+
 export const buildingPinEmoji = (rating) => {
   let icon = '👑';
   if (rating <= 0) {

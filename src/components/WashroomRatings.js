@@ -3,9 +3,9 @@ import PropTypes from 'prop-types';
 import {
   Row, Col, Rate,
 } from 'antd';
-import { startCase, kebabCase } from 'lodash';
+import { kebabCase } from 'lodash';
 import { roundToHalf } from '../utils/NumUtils';
-import { ratingAsEmoji } from '../utils/DisplayUtils';
+import { ratingAsEmoji, ratingAsString } from '../utils/DisplayUtils';
 import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
 import '../containers/WashroomDetails.css';
 
@@ -32,7 +32,7 @@ const WashroomRatings = ({
       <React.Fragment key={type}>
         <Row>
           <Col span={12}>
-            {`${ratingAsEmoji(type)} ${startCase(type)}`}
+            {`${ratingAsEmoji(type)} ${ratingAsString(type)}`}
           </Col>
           <Col span={12} className="washroom-rate-value">
             <Rate
