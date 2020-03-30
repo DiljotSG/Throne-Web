@@ -5,10 +5,9 @@ import { WASHROOM_TERMINOLOGY } from '../constants/Defaults';
 
 export const genderAsString = (value) => {
   switch (value) {
-    case 'men':
-      return startCase(value);
     case 'women':
-      return startCase(value);
+    case 'men':
+      return `${startCase(value)}'s`;
     case 'all':
       return 'Inclusive';
     default:
@@ -200,12 +199,11 @@ export const getTerminology = () => (
   localStorage.getItem(PREFERRED_TERM) || WASHROOM_TERMINOLOGY
 );
 
-export default {
-  genderAsString,
-  genderAsEmoji,
-  amenityAsString,
-  amenityAsEmoji,
-  ratingAsEmoji,
-  displayDistance,
-  getTerminology,
-};
+export const washroomTabName = (washroom) => (
+  `${washroom.building_title} - ${genderAsString(washroom.gender)} Floor ${washroom.floor}`
+);
+
+
+export const buildingTabName = (building) => (
+  building.title
+);

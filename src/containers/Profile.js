@@ -10,6 +10,7 @@ import { getReviewsForUser } from '../actions/reviewActions';
 import { getFavoritesForUser } from '../actions/washroomActions';
 import { Reviews, WashroomListItem } from '../components';
 import { getTerminology } from '../utils/DisplayUtils';
+import { APP_NAME } from '../constants/Globals';
 
 const { Title } = Typography;
 
@@ -37,6 +38,7 @@ const renderWashrooms = ((userWashrooms) => {
 
 class Profile extends Component {
   componentDidMount() {
+    document.title = `${APP_NAME} - Profile`;
     const { user } = this.props;
 
     if (isEmpty(user)) {

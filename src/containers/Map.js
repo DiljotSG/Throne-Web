@@ -15,6 +15,9 @@ import {
 import { getBuildings } from '../actions/buildingActions';
 import { roundToHalf } from '../utils/NumUtils';
 import { buildingPinEmoji } from '../utils/DisplayUtils';
+
+import { APP_NAME } from '../constants/Globals';
+
 import './Map.css';
 
 const { Title } = Typography;
@@ -38,6 +41,8 @@ class Map extends Component {
   }
 
   componentDidMount() {
+    document.title = `${APP_NAME} - Map`;
+
     const { buildings } = this.props;
     window.addEventListener('resize', this.handleResize);
 

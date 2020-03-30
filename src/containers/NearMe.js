@@ -21,6 +21,7 @@ import { getBuildings } from '../actions/buildingActions';
 import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
 import { MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS } from '../constants/Defaults';
+import { APP_NAME } from '../constants/Globals';
 import { getTerminology } from '../utils/DisplayUtils';
 
 const { Title, Text } = Typography;
@@ -58,7 +59,7 @@ class NearMe extends Component {
   }
 
   componentDidMount() {
-    document.title = 'Near Me - Throne';
+    document.title = `${APP_NAME} - Near Me`;
     this.getWashrooms();
     this.getBuildings();
   }
