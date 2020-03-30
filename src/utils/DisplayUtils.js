@@ -162,7 +162,7 @@ export const amenityAsEmoji = (value) => {
   }
 };
 
-export const ratingAsEmoji = (value) => {
+export const ratingCategoryAsEmoji = (value) => {
   switch (value) {
     case 'cleanliness':
       return '✨';
@@ -177,16 +177,12 @@ export const ratingAsEmoji = (value) => {
   }
 };
 
-export const ratingAsString = (value) => {
+export const ratingCategoryAsString = (value) => {
   switch (value) {
-    case 'cleanliness':
-    case 'privacy':
-    case 'smell':
-      return startCase(value);
     case 'toilet_paper_quality':
       return 'Paper Quality';
     default:
-      return '';
+      return startCase(value);
   }
 };
 

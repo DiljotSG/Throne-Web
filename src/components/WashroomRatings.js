@@ -5,7 +5,7 @@ import {
 } from 'antd';
 import { kebabCase } from 'lodash';
 import { roundToHalf } from '../utils/NumUtils';
-import { ratingAsEmoji, ratingAsString } from '../utils/DisplayUtils';
+import { ratingCategoryAsEmoji, ratingCategoryAsString } from '../utils/DisplayUtils';
 import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
 import '../containers/WashroomDetails.css';
 
@@ -32,7 +32,7 @@ const WashroomRatings = ({
       <React.Fragment key={type}>
         <Row>
           <Col span={12}>
-            {`${ratingAsEmoji(type)} ${ratingAsString(type)}`}
+            {`${ratingCategoryAsEmoji(type)} ${ratingCategoryAsString(type)}`}
           </Col>
           <Col span={12} className="washroom-rate-value">
             <Rate
