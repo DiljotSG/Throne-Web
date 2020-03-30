@@ -1,8 +1,7 @@
-import { startCase, isEmpty } from 'lodash';
+import { startCase } from 'lodash';
 import * as amenities from '../constants/WashroomAmenityTypes';
 import { PREFERRED_TERM } from '../constants/PersistentSettings';
 import { WASHROOM_TERMINOLOGY } from '../constants/Defaults';
-import { APP_NAME } from '../constants/Globals';
 
 export const genderAsString = (value) => {
   switch (value) {
@@ -200,18 +199,11 @@ export const getTerminology = () => (
   localStorage.getItem(PREFERRED_TERM) || WASHROOM_TERMINOLOGY
 );
 
-export const washroomTabName = (washroom, fetching) => {
-  if (isEmpty(washroom) || fetching) {
-    return `Washroom Details - ${APP_NAME}`;
-  }
+export const washroomTabName = (washroom) => (
+  `${washroom.building_title} - ${genderAsString(washroom.gender)} Floor ${washroom.floor}`
+);
 
-  return `${washroom.building_title} - ${genderAsString(washroom.gender)} Floor ${washroom.floor}`;
-};
 
-export const buildingTabName = (building, fetching) => {
-  if (isEmpty(building) || fetching) {
-    return `Building Details - ${APP_NAME}`;
-  }
-
-  return building.title;
-};
+export const buildingTabName = (building) => (
+  building.title
+);

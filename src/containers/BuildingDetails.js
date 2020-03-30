@@ -69,7 +69,9 @@ class BuildingDetails extends Component {
     const { building, buildingFetching, washroomStatus } = this.props;
     const { washroom, modalVisible } = this.state;
 
-    document.title = buildingTabName(building, buildingFetching);
+    if (!isEmpty(building) && !buildingFetching) {
+      document.title = buildingTabName(building);
+    }
 
     if (modalVisible && prevState.modalVisible && prevState.washroom === washroom) {
       if (washroomStatus === 201) {

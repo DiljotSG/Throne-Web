@@ -61,7 +61,9 @@ class WashroomDetails extends Component {
   componentDidUpdate() {
     const { washroom, washroomFetching } = this.props;
 
-    document.title = washroomTabName(washroom, washroomFetching);
+    if (!isEmpty(washroom) && !washroomFetching) {
+      document.title = washroomTabName(washroom);
+    }
   }
 
   getWashroom = () => {
