@@ -23,7 +23,7 @@ const Filters = ({
   onSubmit,
   submitting,
 }) => (
-  <>
+  <div className="filter">
     <Title level={3}>
       Filter
     </Title>
@@ -95,7 +95,7 @@ const Filters = ({
     >
       {filterChanged ? 'Apply Filters' : 'No changes to apply'}
     </Button>
-  </>
+  </div>
 );
 
 Filters.propTypes = {

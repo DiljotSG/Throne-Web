@@ -1,5 +1,5 @@
-.ant-row {
-  margin-bottom: 15px;
+.filter .ant-row {
+  margin-bottom: 15px !important;
 }
 
 .filter-switch {
