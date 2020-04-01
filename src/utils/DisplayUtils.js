@@ -212,7 +212,6 @@ export const washroomTabName = (washroom) => (
   `${washroom.building_title} - ${genderAsString(washroom.gender)} Floor ${washroom.floor}`
 );
 
-
 export const buildingTabName = (building) => (
   building.title
 );
