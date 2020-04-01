@@ -17,6 +17,7 @@ import { roundToHalf } from '../utils/NumUtils';
 import { buildingPinEmoji } from '../utils/DisplayUtils';
 
 import { APP_NAME } from '../constants/Globals';
+import { LATITUDE, LONGITUDE } from '../constants/Defaults';
 
 import './Map.css';
 
@@ -33,8 +34,8 @@ class Map extends Component {
     this.state = {
       viewport: {
         ...mapDimensions(),
-        latitude: 49.8080954,
-        longitude: -97.1375209,
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
         zoom: 14,
       },
     };
