@@ -20,7 +20,9 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
-import { MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS, LATITUDE, LONGITUDE } from '../constants/Defaults';
+import {
+  MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS, LATITUDE, LONGITUDE,
+} from '../constants/Defaults';
 import { APP_NAME } from '../constants/Globals';
 import { getTerminology } from '../utils/DisplayUtils';
 
