@@ -56,7 +56,7 @@ To limit the scope of this project, the Android application will consist of a wr
 
 ## User Stories
 
-All user stories and tasks will be tracked using GitHub Issues which can be found on the repository page found [here](https://github.com/DiljotSG/throne-app).
+All user stories and tasks will be tracked using GitHub Issues which can be found on the repository page found [here](https://github.com/DiljotSG/throne-backend).
 
 ### High Priority
 

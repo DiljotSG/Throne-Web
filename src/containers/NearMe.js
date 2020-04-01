@@ -20,7 +20,10 @@ import { getBuildings } from '../actions/buildingActions';
 
 import { WashroomListItem, BuildingListItem, Filters } from '../components';
 
-import { MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS } from '../constants/Defaults';
+import {
+  MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS, LATITUDE, LONGITUDE,
+} from '../constants/Defaults';
+import { APP_NAME } from '../constants/Globals';
 import { getTerminology } from '../utils/DisplayUtils';
 
 const { Title, Text } = Typography;
@@ -50,15 +53,15 @@ class NearMe extends Component {
         maxResultsBuildings: MAX_RESULTS_BUILDINGS,
         maxResultsWashrooms: MAX_RESULTS_WASHROOMS,
         radius: MAX_RADIUS,
-        latitude: 49.8080954,
-        longitude: -97.1375209,
+        latitude: LATITUDE,
+        longitude: LONGITUDE,
         displayEmptyBuildings: false,
       },
     };
   }
 
   componentDidMount() {
-    document.title = 'Near Me - Throne';
+    document.title = `${APP_NAME} - Near Me`;
     this.getWashrooms();
     this.getBuildings();
   }

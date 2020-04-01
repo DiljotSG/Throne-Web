@@ -17,7 +17,7 @@ import { NavLink } from 'react-router-dom';
 import { isEmpty, startCase } from 'lodash';
 import moment from 'moment';
 import { WASHROOM_RATING_CATEGORIES } from '../constants/WashroomRatingCategories';
-import { ratingAsEmoji, getTerminology } from '../utils/DisplayUtils';
+import { ratingCategoryAsEmoji, getTerminology } from '../utils/DisplayUtils';
 
 import './Reviews.css';
 
@@ -75,7 +75,7 @@ const renderBody = (reviews, fetching, pageSize, clickable) => {
                   { WASHROOM_RATING_CATEGORIES.map((type, i) => (
                     <React.Fragment key={type}>
                       {i > 0 ? <Divider type="vertical" /> : ''}
-                      {ratingAsEmoji(type)}
+                      {ratingCategoryAsEmoji(type)}
                       {review.ratings[type]}
                     </React.Fragment>
                   ))}

@@ -63,7 +63,7 @@ describe('WashroomDetails', () => {
     component.update();
 
     expect(component.find('.details-title').first().text()).toBe('Science Library');
-    expect(component.find('.details-gender').first().text()).toBe('🚺 Women');
+    expect(component.find('.details-gender').first().text()).toBe("🚺 Women's");
     expect(component.find('.details-floor-comment').first().text()).toBe('Floor 2 | Washroom 1');
     expect(component.find('Rate').find('.washroom-rate-overall').first().prop('value')).toBe(5);
     expect(component.find('Rate').find('.washroom-rate-cleanliness').first().prop('value')).toBe(3);
