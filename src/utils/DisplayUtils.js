@@ -218,4 +218,4 @@ export const buildingTabName = (building) => (
 
 export const isMobile = (width) => (
   width < 992
-)
+);

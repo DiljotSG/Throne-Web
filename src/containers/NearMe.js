@@ -223,7 +223,7 @@ class NearMe extends Component {
             <Row gutter={[16, 16]} align="middle">
               <Col lg={{ push: 16, span: 8 }}>
                 <Collapse
-                  defaultActiveKey={ isMobile(window.innerWidth) ? '' : 'filters'}
+                  defaultActiveKey={isMobile(window.innerWidth) ? '' : 'filters'}
                   disabled={buildingsFetching}
                 >
                   <Panel
@@ -260,7 +260,7 @@ class NearMe extends Component {
             <Row gutter={[16, 16]} align="middle">
               <Col lg={{ push: 16, span: 8 }}>
                 <Collapse
-                  defaultActiveKey={ isMobile(window.innerWidth) ? '' : 'filters'}
+                  defaultActiveKey={isMobile(window.innerWidth) ? '' : 'filters'}
                   disabled={washroomsFetching}
                 >
                   <Panel
