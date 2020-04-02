@@ -10,7 +10,7 @@ import {
   Skeleton,
   Row,
   Col,
-  Card,
+  Collapse,
 } from 'antd';
 import { trim, isEmpty, startCase } from 'lodash';
 import { connect } from 'react-redux';
@@ -24,10 +24,11 @@ import {
   MAX_RADIUS, MAX_RESULTS_BUILDINGS, MAX_RESULTS_WASHROOMS, LATITUDE, LONGITUDE,
 } from '../constants/Defaults';
 import { APP_NAME } from '../constants/Globals';
-import { getTerminology } from '../utils/DisplayUtils';
+import { getTerminology, isMobile } from '../utils/DisplayUtils';
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
+const { Panel } = Collapse;
 
 const renderNoLocationWarning = () => {
   notification.warning({
@@ -221,20 +222,31 @@ class NearMe extends Component {
           >
             <Row gutter={[16, 16]} align="middle">
               <Col lg={{ push: 16, span: 8 }}>
-                <Card disabled={buildingsFetching}>
-                  <Filters
-                    building
-                    filter={filter}
-                    filterChanged={filterChanged}
-                    locationEnabled={locationEnabled}
-                    onChange={this.handleFilterChange}
-                    submitting={filterChanged && buildingsFetching}
-                    onSubmit={() => {
-                      this.getBuildings();
-                      this.setState({ filterChanged: false });
-                    }}
-                  />
-                </Card>
+                <Collapse
+                  defaultActiveKey={ isMobile(window.innerWidth) ? '' : 'filters'}
+                  disabled={buildingsFetching}
+                >
+                  <Panel
+                    key="filters"
+                    header="Filters"
+                    extra={
+                      <Icon type="filter" />
+                    }
+                  >
+                    <Filters
+                      building
+                      filter={filter}
+                      filterChanged={filterChanged}
+                      locationEnabled={locationEnabled}
+                      onChange={this.handleFilterChange}
+                      submitting={filterChanged && buildingsFetching}
+                      onSubmit={() => {
+                        this.getBuildings();
+                        this.setState({ filterChanged: false });
+                      }}
+                    />
+                  </Panel>
+                </Collapse>
               </Col>
               <Col lg={{ pull: 8, span: 16 }}>
                 { this.renderBuildings() }
@@ -247,19 +259,30 @@ class NearMe extends Component {
           >
             <Row gutter={[16, 16]} align="middle">
               <Col lg={{ push: 16, span: 8 }}>
-                <Card disabled={washroomsFetching}>
-                  <Filters
-                    filter={filter}
-                    filterChanged={filterChanged}
-                    locationEnabled={locationEnabled}
-                    onChange={this.handleFilterChange}
-                    submitting={filterChanged && washroomsFetching}
-                    onSubmit={() => {
-                      this.getWashrooms();
-                      this.setState({ filterChanged: false });
-                    }}
-                  />
-                </Card>
+                <Collapse
+                  defaultActiveKey={ isMobile(window.innerWidth) ? '' : 'filters'}
+                  disabled={washroomsFetching}
+                >
+                  <Panel
+                    key="filters"
+                    header="Filters"
+                    extra={
+                      <Icon type="filter" />
+                    }
+                  >
+                    <Filters
+                      filter={filter}
+                      filterChanged={filterChanged}
+                      locationEnabled={locationEnabled}
+                      onChange={this.handleFilterChange}
+                      submitting={filterChanged && washroomsFetching}
+                      onSubmit={() => {
+                        this.getWashrooms();
+                        this.setState({ filterChanged: false });
+                      }}
+                    />
+                  </Panel>
+                </Collapse>
               </Col>
               <Col lg={{ pull: 8, span: 16 }}>
                 { this.renderWashrooms() }
