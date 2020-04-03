@@ -215,3 +215,7 @@ export const washroomTabName = (washroom) => (
 export const buildingTabName = (building) => (
   building.title
 );
+
+export const isMobile = (width) => (
+  width < 992
+);
