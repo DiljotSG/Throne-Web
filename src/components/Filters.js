@@ -11,7 +11,7 @@ import { amenityAsEmoji, amenityAsString, displayDistance } from '../utils/Displ
 
 import './Filters.css';
 
-const { Title, Text } = Typography;
+const { Text } = Typography;
 const { Option } = Select;
 
 const Filters = ({
@@ -24,9 +24,6 @@ const Filters = ({
   submitting,
 }) => (
   <div className="filter">
-    <Title level={3}>
-      Filter
-    </Title>
     <Row>
       <Text strong>
         Amenities
