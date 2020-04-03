@@ -11,11 +11,12 @@ import './WashroomListItem.css';
 
 const { Text } = Typography;
 
-const renderFavoriteIcon = (isFavorite) => {
+const renderFavoriteIcon = (isFavorite, hasText) => {
   if (isFavorite) {
     return (
       <>
-        <Divider type="vertical" />
+        { hasText
+          && <Divider type="vertical" /> }
         <span
           aria-label="Favorite"
           role="img"
@@ -52,7 +53,10 @@ const WashroomListItem = ({ item, buildingTitle }) => (
               ? item.comment
               : item.building_title
           }
-          {renderFavoriteIcon(item.is_favorite)}
+          {renderFavoriteIcon(
+            item.is_favorite,
+            (buildingTitle && item.comment) || (!buildingTitle),
+          )}
         </Text>
         <div className="in-line">
           <Text className="list-item-gender">
