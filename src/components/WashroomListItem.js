@@ -53,7 +53,7 @@ const WashroomListItem = ({ item, buildingTitle }) => (
               ? item.comment
               : item.building_title
           }
-          {renderFavoriteIcon(item.is_favorite, buildingTitle && item.comment)}
+          {renderFavoriteIcon(item.is_favorite, (buildingTitle && item.comment) || (!buildingTitle) )}
         </Text>
         <div className="in-line">
           <Text className="list-item-gender">
